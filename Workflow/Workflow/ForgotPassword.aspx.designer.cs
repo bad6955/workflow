@@ -10,7 +10,7 @@
 namespace Workflow {
     
     
-    public partial class Login {
+    public partial class ForgotPassword {
         
         /// <summary>
         /// form1 control.
@@ -40,21 +40,21 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox password;
         
         /// <summary>
-        /// loginBtn control.
+        /// matchedPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button loginBtn;
+        protected global::System.Web.UI.WebControls.TextBox matchedPassword;
         
         /// <summary>
-        /// forgotBtn control.
+        /// changeBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button forgotBtn;
+        protected global::System.Web.UI.WebControls.Button changeBtn;
     }
 }

@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Venture Creation Log in</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -12,6 +12,7 @@
             <asp:TextBox runat="server" ID="email" placeholder="Email"></asp:TextBox>
             <asp:TextBox runat="server" ID="password" placeholder="Password"></asp:TextBox>
             <asp:Button runat="server" ID="loginBtn" Text="Login" OnClick="loginBtn_Click" />
+            <asp:Button runat="server" ID="forgotBtn" Text="Forgot Password" OnClick="forgotBtn_Click" />
         </div>
     </form>
 </body>

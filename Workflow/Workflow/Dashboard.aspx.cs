@@ -11,8 +11,12 @@ namespace Workflow
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             //accessing the application variable set on the login code-behind and displaying it out to the user
-            user.Text = "Welcome back, " + Application["userEmail"].ToString();
+            //For testing purpose, added in user to prevent error, when need to test the server
+            // remove the "User" and uncomment the rest of code
+            user.Text = "Welcome back, User"/* + Application["userEmail"].ToString()*/;
+
         }
     }
 }
