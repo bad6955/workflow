@@ -23,12 +23,12 @@ namespace Workflow
         //Events in code-behind can be created using the OnClick attribute in an <ASP:*** /> tag
         //  you can either tie the page's event to an existing method in the code-behind, or 
         //  auto generate a new event with a name similar to the below
-        protected void loginBtn_Click(object sender, EventArgs e)
+        protected void LoginBtn_Click(object sender, EventArgs e)
         {
             //Check the user's infomation before logging in
             if (vaildedLogIn() == true)
             {
-                Application["userEmail"] = email.Text; // setting an Application variable so it can be accessed on other pages securely
+                Session["userEmail"] = Email.Text; // setting an session variable so it can be accessed on other pages securely
                 Project p = new Project(); //creating new model class instance
                 Response.Redirect("Dashboard.aspx"); //redirecting the user from Login.aspx to Dashboard.aspx
             }
@@ -47,9 +47,9 @@ namespace Workflow
             // putting in the correct email and password. After 
             // 5 attempt, will lock out from any more attempt and forced to 
             // change their password.
-            /*if(email.Text == validatedUser)
+            /*if(Email.Text == validatedUser)
             {
-                if(email.Text == validatedPass)
+                if(Email.Text == validatedPass)
                 {
                     return true;
                 }
@@ -60,7 +60,7 @@ namespace Workflow
         }
 
         //If user forgot password, run the following code
-        protected void forgotBtn_Click(object sender, EventArgs e)
+        protected void ForgotBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ForgotPassword.aspx");
             //Should the user be automactlly log in 

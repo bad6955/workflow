@@ -1,0 +1,14 @@
+﻿<%@ Master Language="C#" Inherits="Workflow.Admin" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+	<title>Admin</title>
+</head>
+<body>
+<div id="container">
+<form runat="server">
+    <asp:ContentPlaceHolder id="contentPlaceHolder" runat="server" /> 
+</form>
+</div>
+</body>
+</html>

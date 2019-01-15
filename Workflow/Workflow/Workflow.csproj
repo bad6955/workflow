@@ -146,6 +146,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Workflows.aspx" />
+    <Content Include="Admin.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForgotPassword.aspx.cs">
@@ -198,6 +199,12 @@
     <Compile Include="Workflows.aspx.designer.cs">
       <DependentUpon>Workflows.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -226,6 +233,11 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

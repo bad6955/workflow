@@ -11,7 +11,7 @@
 namespace Workflow {
 	
 	
-	public partial class Login {
+	public partial class Admin {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm form1;
 		
@@ -19,8 +19,8 @@ namespace Workflow {
 		
 		protected System.Web.UI.WebControls.TextBox Password;
 		
-		protected System.Web.UI.WebControls.Button LoginBtn;
+		protected System.Web.UI.WebControls.TextBox PasswordRepeat;
 		
-		protected System.Web.UI.WebControls.Button ForgotBtn;
+		protected System.Web.UI.WebControls.Button RegisterBtn;
 	}
 }
