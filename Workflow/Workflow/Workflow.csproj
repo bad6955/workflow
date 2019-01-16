@@ -149,6 +149,7 @@
     <Content Include="Admin.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConn.cs" />
     <Compile Include="Firebase.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>

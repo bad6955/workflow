@@ -1,6 +1,7 @@
 ﻿using Firebase.Auth;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,7 +12,8 @@ namespace Workflow
     {
         public static FirebaseAuthProvider GetAuthProvider()
         {
-            return new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAEa4tI_IPceDWsVkIf86AgyFozzmeC6tI"));
+            String API_KEY = ConfigurationManager.AppSettings.Get("FirebaseAPIKey");
+            return new FirebaseAuthProvider(new FirebaseConfig(API_KEY));
         }
 
         public static bool CreateNewUser(String email, String pass, String displayName, bool verificationEmail)
