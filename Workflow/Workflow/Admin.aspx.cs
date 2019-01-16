@@ -24,18 +24,19 @@ namespace Workflow
 
             if (pass.Equals(pass2))
             {
-                CreateNewUser(email, pass, displayName, verificationEmail);
+                if(Firebase.CreateNewUser(email, pass, displayName, verificationEmail))
+                {
+                    //display user created msg
+                }
+                else
+                {
+                    //display user failed to be created msg
+                }
             }
             else
             {
                 //throw error, passwords don't match
             }
-        }
-
-        private void CreateNewUser(String email, String pass, String displayName, bool verificationEmail)
-        {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAEa4tI_IPceDWsVkIf86AgyFozzmeC6tI"));
-            authProvider.CreateUserWithEmailAndPasswordAsync(email, pass, displayName, verificationEmail);
         }
     }
 }
