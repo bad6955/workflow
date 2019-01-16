@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Models;
+using Firebase.Auth;
 
 namespace Workflow
 {
@@ -27,13 +28,12 @@ namespace Workflow
             //Check the user's infomation before logging in
             if (ValidateLogin(email, pass))
             {
-                Session["userEmail"] = email; // setting an session variable so it can be accessed on other pages securely
-                Project p = new Project(); //creating new model class instance
+                //display good login msg
                 Response.Redirect("Dashboard.aspx"); //redirecting the user from Login.aspx to Dashboard.aspx
             }
             else
             {
-                //Display error here
+                //Display bad login msg
 
             }
 
@@ -42,16 +42,14 @@ namespace Workflow
         //Valid the user loging in
         protected bool ValidateLogin(String email, String pass)
         {
-            if(Firebase.LoginUser(email, pass))
+            //validates the user's credentials against Firebase
+            User user = Firebase.LoginUser(email, pass);
+            if (user != null)
             {
-                //display good login msg
+                Session["FirebaseUser"] = user;
                 return true;
             }
-            else
-            {
-                //display bad login msg
-                return false;
-            }
+            return false;
 
             //The following code will be use to determine if the user is
             // putting in the correct email and password. After 

@@ -24,7 +24,8 @@ namespace Workflow
 
             if (pass.Equals(pass2))
             {
-                if(Firebase.CreateNewUser(email, pass, displayName, verificationEmail))
+                User user = Firebase.CreateNewUser(email, pass, displayName, verificationEmail);
+                if (user != null)
                 {
                     //display user created msg
                 }

@@ -1,10 +1,7 @@
 ﻿using Firebase.Auth;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Workflow
 {
@@ -16,38 +13,24 @@ namespace Workflow
             return new FirebaseAuthProvider(new FirebaseConfig(API_KEY));
         }
 
-        public static bool CreateNewUser(String email, String pass, String displayName, bool verificationEmail)
+        public static User CreateNewUser(String email, String pass, String displayName, bool verificationEmail)
         {
             FirebaseAuthLink auth = FirebaseUtil.AttemptCreateNewUser(email, pass, displayName, verificationEmail);
             if (auth != null)
             {
-                if (auth.User != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return auth.User;
             }
-            return false;
+            return null;
         }
 
-        public static bool LoginUser(String email, String pass)
+        public static User LoginUser(String email, String pass)
         {
             FirebaseAuthLink auth = FirebaseUtil.AttemptLoginUser(email, pass);
             if (auth != null)
             {
-                if (auth.User != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return auth.User;
             }
-            return false;
+            return null;
         }
     }
 
