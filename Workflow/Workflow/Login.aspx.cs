@@ -11,10 +11,13 @@ namespace Workflow
 {
     public partial class Login : System.Web.UI.Page
     {
-        //Create a conntect to server here
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //checks if the user is logged in and redirects them to their dashboard
+            if (Session["FirebaseUser"] != null)
+            {
+                Response.Redirect("Dashboard.aspx");
+            }
         }
 
         //Events in code-behind can be created using the OnClick attribute in an <ASP:*** /> tag
@@ -39,7 +42,7 @@ namespace Workflow
 
         }
 
-        //Valid the user loging in
+        //Validate the user login
         protected bool ValidateLogin(String email, String pass)
         {
             //validates the user's credentials against Firebase
@@ -70,8 +73,6 @@ namespace Workflow
         protected void ForgotBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ForgotPassword.aspx");
-            //Should the user be automactlly log in 
-            // or do they need to enter their log in info again?
         }
     }
 }
