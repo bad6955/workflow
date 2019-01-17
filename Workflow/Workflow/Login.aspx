@@ -16,17 +16,4 @@
         </div>
     </form>
 </body>
-<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
-<script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAEa4tI_IPceDWsVkIf86AgyFozzmeC6tI",
-        authDomain: "venturecreationsworkflow.firebaseapp.com",
-        databaseURL: "https://venturecreationsworkflow.firebaseio.com",
-        projectId: "venturecreationsworkflow",
-        storageBucket: "venturecreationsworkflow.appspot.com",
-        messagingSenderId: "75896481614"
-      };
-      firebase.initializeApp(config);
-</script>
 </html>
