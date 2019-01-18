@@ -6,6 +6,7 @@ html, body {
     width: 100%;
 }
 
+/****************************** NAVIGATION CSS *******************************/
 #navigation {
 	font-family: 'Titillium Web', sans-serif;
 }
@@ -20,7 +21,6 @@ html, body {
 	font-size: 25px;
 }
 
-/****************************** NAVIGATION CSS *******************************/
 #dashboard-body {
 	position: relative;
 }
@@ -33,7 +33,6 @@ html, body {
 	width: 14em;
 	overflow: auto;
 	background-color: #616161;
-	z-index: -100;
 }
 
 #side-bar img {
@@ -54,7 +53,7 @@ html, body {
   width: 100%;
 }
 
-#side-bar li a {
+#side-bar li {
   display: block;
   color: #e0e0e0;
   padding: 1.3em 1.7em;
@@ -62,17 +61,20 @@ html, body {
   font-size: 21px;
 }
 
-#side-bar li a.active {
+#side-bar #current {
   background-color: #bdbdbd;
   color: #616161;
 }
-#side-bar a {
-  padding-bottom: 0;
-}
 
-#side-bar li a:hover:not(.active) {
-  background-color: #555;
-  color: white;
+#current, #workflow, #form, #project, #logout {
+    border: none;
+    color: black;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 21px;
 }
 
 #account-dropdown {
@@ -80,6 +82,8 @@ html, body {
 	color: white;
 	float: right;
 }
+
+/****************************** DASHBOARD *******************************/
 
 #vc-coach-dashboard {
 	margin-left: 14em;
@@ -108,46 +112,57 @@ html, body {
 /****************************** LOGIN PAGE CSS *******************************/
 #login h1 {
     font-family: 'Titillium Web', sans-serif;
-    font-size: 53px;
+    font-size: 40px;
     margin: 0;
-}
-p {
-    font-family: 'Titillium Web', sans-serif;
 }
 #login {
-    width: 80%;
-}
-#login-left, #login-right {
-    margin: 0;
+    width: 400px;
+    height: 500px;
     position: absolute;
+    background-color: rgb(255, 214, 183, 0.2);
     top: 50%;
-    width: 50%;
+    left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 2em;
+    border: 1px solid black;
 }
-#login-left {
-    left: 25%;
-    /*border-right: 1px solid #553300;*/
-}
-#login-right {
-    left: 75%;
-}
-#white-background {
-    background-color: #d95e00;
-    z-index: -1000;
-    float: right;
-    height: 100%;
-    width: 50%;
-}
-#login hr {
-    width: 70%;
-    border-top: 1px;
-    border-color: black;
-}
+
 .login-text {
     margin: 0 auto;
     text-align: center;
     font-family: 'Titillium Web', sans-serif;
+}
+#login input[type=text], #login input[type=password] {
+    padding: 1.5em 4em;
+    margin: 1.5em;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: black;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    background-image: url('../icons/person.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
+#login #LoginBtn, #login #ForgotBtn {
+    border: none;
+    color: black;
+    background: transparent;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1.5em;
+    cursor: pointer;
+}
+
+#login #LoginBtn {
+    border-radius: 30px;
+    background-color: #d95e00;
 }
 
 /* not a cry for help (yet) just the help button id */

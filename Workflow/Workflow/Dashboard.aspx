@@ -20,11 +20,11 @@
             </div>
             <div id="side-bar">
                 <ul>
-                    <li><a class="active"><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="current">Dashboard</asp:Label></a></li>
-                    <li><a><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" /><asp:Label runat="server" ID="Label1">Workflows</asp:Label></a></li>
-                    <li><a><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" /><asp:Label runat="server" ID="Label2">Projects</asp:Label></a></li>
-                    <li><a><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" /><asp:Label runat="server" ID="Label3">Forms</asp:Label></a></li>
-                    <li><a><asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" /></a></li>
+                    <li><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="current">Dashboard</asp:Label></li>
+                    <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
+                    <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
+                    <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms" /></li>
+                    <li><asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" /></li>
                 </ul>
                 <div id="help"><img src="assets/icons/help.png" /></div>
             </div>
