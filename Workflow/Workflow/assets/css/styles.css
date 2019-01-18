@@ -2,6 +2,8 @@ html, body {
 	top: 0;
 	margin: 0;
 	padding: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #navigation {
@@ -18,7 +20,7 @@ html, body {
 	font-size: 25px;
 }
 
-/*************** NAVIGATION CSS ****************/
+/****************************** NAVIGATION CSS *******************************/
 #dashboard-body {
 	position: relative;
 }
@@ -103,6 +105,33 @@ html, body {
 	position: relative;
 }
 
+/****************************** LOGIN PAGE CSS *******************************/
+#login h1 {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 45px;
+}
+#login {
+    width: 80%;
+}
+#login-left, #login-right {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#login-left {
+    left: 25%;
+    border-right: 1px solid #553300;
+}
+#login-right {
+    left: 75%;
+}
+.login-text {
+    margin: 0 auto;
+    text-align: center;
+}
 
 /* not a cry for help (yet) just the help button id */
 #help {
