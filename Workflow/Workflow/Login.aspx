@@ -13,8 +13,8 @@
     <div id="login">
         <div id="login-left">
             <div class="login-text">
-                <h1>Venture Creations</h1>
-                <p><i>Insert some Venture Creations related quote or review or something....</i></p>
+                <h1>Venture Creations</h1> <hr>
+                <p><i>Where brilliant minds assemble and collaborate, where they pool together their individual talents across disciplines in service of big ideas and creative solutions.</i></p>
             </div>
         </div>
         <div id="login-right">
@@ -30,5 +30,6 @@
             </div>
         </div>
     </div>
+    <div id="white-background"></div>
 </body>
 </html>

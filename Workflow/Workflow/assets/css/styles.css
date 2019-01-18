@@ -108,7 +108,11 @@ html, body {
 /****************************** LOGIN PAGE CSS *******************************/
 #login h1 {
     font-family: 'Titillium Web', sans-serif;
-    font-size: 45px;
+    font-size: 53px;
+    margin: 0;
+}
+p {
+    font-family: 'Titillium Web', sans-serif;
 }
 #login {
     width: 80%;
@@ -123,14 +127,27 @@ html, body {
 }
 #login-left {
     left: 25%;
-    border-right: 1px solid #553300;
+    /*border-right: 1px solid #553300;*/
 }
 #login-right {
     left: 75%;
 }
+#white-background {
+    background-color: #d95e00;
+    z-index: -1000;
+    float: right;
+    height: 100%;
+    width: 50%;
+}
+#login hr {
+    width: 70%;
+    border-top: 1px;
+    border-color: black;
+}
 .login-text {
     margin: 0 auto;
     text-align: center;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 /* not a cry for help (yet) just the help button id */
