@@ -4,11 +4,11 @@
 
 body {
     background: linear-gradient(350deg, #d95e00, #d95e00, #ffd6b7);
-    background-size: 600% 600%;
-    -webkit-animation: Gradient 8.5s ease infinite;
-    -moz-animation: Gradient 8.5s ease infinite;
-    -o-animation: Gradient 8.5s ease infinite;
-    animation: Gradient 8.5s ease infinite;
+    background-size: 300% 300%;
+    -webkit-animation: Gradient 7s ease infinite;
+    -moz-animation: Gradient 7s ease infinite;
+    -o-animation: Gradient 7s ease infinite;
+    animation: Gradient 7s ease infinite;
 }
 
 @-webkit-keyframes Gradient {

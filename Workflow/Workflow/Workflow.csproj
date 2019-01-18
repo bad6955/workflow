@@ -138,6 +138,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\gradient_style.css" />
     <Content Include="assets\css\styles.css" />
     <Content Include="assets\icons\dashboard.png" />
     <Content Include="assets\icons\form.png" />
@@ -148,6 +149,7 @@
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="gradient_style.css" />
     <Content Include="Projects.aspx" />
     <Content Include="Web.config" />
     <Content Include="Login.aspx" />
