@@ -18,7 +18,7 @@ namespace Workflow
             if(Session["FirebaseUser"] != null)
             {
                 User fbUser = (User)Session["FirebaseUser"];
-                user.Text = "Welcome back, " + fbUser.Email;
+                //user.Text = "Welcome back, " + fbUser.Email;
             }
             //kicks them out if they arent
             else

@@ -1,0 +1,111 @@
+html, body {
+	top: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#navigation {
+	font-family: 'Titillium Web', sans-serif;
+}
+
+#top-bar {
+	width: 100%;
+	height: 2.5em;
+	background-color: #dc7a32;
+}
+#top-bar h1 {
+	margin: 0;
+	font-size: 25px;
+}
+
+/*************** NAVIGATION CSS ****************/
+#dashboard-body {
+	position: relative;
+}
+
+#side-bar {
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	height: 100%;
+	width: 14em;
+	overflow: auto;
+	background-color: #616161;
+	z-index: -100;
+}
+
+#side-bar img {
+	width: 30px;
+	height: 30px;
+}
+
+#side-bar hr {
+	width: 50%;
+	margin: 0 auto;
+	border: 0.5px solid #3f3f3f;
+}
+
+#side-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#side-bar li a {
+  display: block;
+  color: #e0e0e0;
+  padding: 1.3em 1.7em;
+  text-decoration: none;
+  font-size: 21px;
+}
+
+#side-bar li a.active {
+  background-color: #bdbdbd;
+  color: #616161;
+}
+#side-bar a {
+  padding-bottom: 0;
+}
+
+#side-bar li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+#account-dropdown {
+	padding-right: 2em;
+	color: white;
+	float: right;
+}
+
+#vc-coach-dashboard {
+	margin-left: 13em;
+}
+
+#vc-coach-dashboard-top {
+	width: 90%;
+	margin: 0 auto;
+	margin-bottom: 1em;
+	height: 100px;
+	background-color: gray;
+}
+
+#vc-coach-dashboard-bottom {
+	width: 90%;
+	background-color: gray;
+	margin: 0 auto;
+}
+
+#completion-bar {
+	width: 100px;
+	height: 100px;
+	position: relative;
+}
+
+
+/* not a cry for help (yet) just the help button id */
+#help {
+	margin: 0 auto;
+	text-align: center;
+}

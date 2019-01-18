@@ -138,6 +138,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\styles.css" />
+    <Content Include="assets\icons\dashboard.png" />
+    <Content Include="assets\icons\form.png" />
+    <Content Include="assets\icons\help.png" />
+    <Content Include="assets\icons\home.png" />
+    <Content Include="assets\icons\project.png" />
+    <Content Include="assets\icons\workflow.png" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />
@@ -202,6 +209,7 @@
     </Compile>
     <Compile Include="Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
@@ -221,7 +229,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51327</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
