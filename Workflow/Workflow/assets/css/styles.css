@@ -83,11 +83,13 @@ html, body {
 	float: right;
 }
 
+/****************************** Offset to prevent content going under the nav *******************************/
+#content-body {
+    margin-left: 14em;
+}
+
 /****************************** DASHBOARD *******************************/
 
-#vc-coach-dashboard {
-	margin-left: 14em;
-}
 
 #vc-coach-dashboard-top {
 	width: 90%;
@@ -115,9 +117,14 @@ html, body {
     font-size: 40px;
     margin: 0;
 }
+#login img {
+    width: 120px;
+    height: 120px;
+    padding-bottom: 2em;
+}
 #login {
     width: 400px;
-    height: 500px;
+    height: 600px;
     position: absolute;
     background-color: rgb(255, 214, 183, 0.2);
     top: 50%;

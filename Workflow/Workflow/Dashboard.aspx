@@ -30,7 +30,7 @@
             </div>
         </div>
     </form>
-    <div id="vc-coach-dashboard">
+    <div id="content-body">
 			<h1>Dashboard</h1>
 			<div id="vc-coach-dashboard-top">
 			
