@@ -112,36 +112,36 @@ html, body {
 }
 
 /****************************** LOGIN PAGE CSS *******************************/
-#login h1 {
+#login h1, #forgot-password h1 {
     font-family: 'Titillium Web', sans-serif;
     font-size: 40px;
     margin: 0;
 }
-#login img {
+#login img, #forgot-password img {
     width: 120px;
     height: 120px;
     padding-bottom: 2em;
 }
-#login {
+#login, #forgot-password {
     width: 400px;
     height: 600px;
     position: absolute;
-    background-color: rgb(255, 214, 183, 0.2);
+    background-color: #fffcf7;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 2em;
-    border: 1px solid black;
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
 }
 
-.login-text {
+.login-text, #forgot-password {
     margin: 0 auto;
     text-align: center;
     font-family: 'Titillium Web', sans-serif;
 }
-#login input[type=text], #login input[type=password] {
+#login input[type=text], #login input[type=password], #forgot-password input[type=text] {
     padding: 1.5em 4em;
     margin: 1.5em;
     border-radius: 6px;
@@ -150,11 +150,20 @@ html, body {
     background: transparent;
     border: none;
     border-bottom: 1px solid black;
-    background-image: url('../icons/person.png');
+}
+#login #Email, #forgot-password #email {
+    background-image: url('../icons/email.png');
+    background-size: 35px 35px;
     background-position: 10px 10px;
     background-repeat: no-repeat;
 }
-#login #LoginBtn, #login #ForgotBtn {
+#login #Password, #forgot-password #password, #forgot-password #matchedPassword {
+    background-image: url('../icons/password.png');
+    background-size: 35px 35px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
+#login #LoginBtn, #login #ForgotBtn, #forgot-password #changeBtn {
     border: none;
     color: black;
     background: transparent;
@@ -167,10 +176,14 @@ html, body {
     cursor: pointer;
 }
 
-#login #LoginBtn {
+#login #LoginBtn, #forgot-password #changeBtn {
     border-radius: 30px;
     background-color: #d95e00;
+    color: white;
 }
+
+/****************************** FORGOT PASSWORD PAGE CSS *******************************/
+
 
 /* not a cry for help (yet) just the help button id */
 #help {
