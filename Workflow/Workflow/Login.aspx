@@ -13,7 +13,7 @@
     <div id="login">
         <div id="login-right">
             <div class="login-text">
-                <img src="assets/icons/rit_logo.png" />
+                <img src="assets/icons/rit_insignia.png" />
                 <h1>LOG IN</h1>
                 <form id="form1" runat="server">
                     <div>

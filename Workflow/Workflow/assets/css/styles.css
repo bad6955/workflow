@@ -1,3 +1,34 @@
+﻿/*
+    * RIT TEAM LONDON SENIOR DEVELOPMENT PROJECT - VENTURE CREATIONS WORKFLOW SYSTEM.
+    * SPONSOR: Venture Creations
+    * DEVELOPMENT TEAM: Kevin Reynolds, Brie McIntosh, Ryan Plazony, Matt Mallette, Becca Dingman, Shawn Bishop, Adi Cengic
+    * ® 2018-2019
+
+    May Documentation Doge protect and remind you to always comment your code on your journey through this, and every other, file.  
+                                                                                Go in peace. Make us proud.
+                                                                                        <3 Brie
+
+                                            ░░░░░░░░░▄░░░░░░░░░░░░░░▄
+                                            ░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌
+                                            ░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐
+                                            ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
+                                            ░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
+                                            ░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌
+                                            ░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌
+                                            ░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
+                                            ░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌
+                                            ░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌
+                                            ▌▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐
+                                            ▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
+                                            ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐
+                                            ░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌
+                                            ░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐
+                                            ░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌
+                                            ░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
+                                            ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
+                                            ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀
+    ////////////asside to future Brie - path to the icons/imgs?/////////////
+*/
 html, body {
 	top: 0;
 	margin: 0;
@@ -12,9 +43,13 @@ html, body {
 }
 
 #top-bar {
-	width: 100%;
-	height: 2.5em;
-	background-color: #dc7a32;
+    width: 100%;
+    height: 3em;
+    background-color: #dc7a32;
+    background-image: url("../icons/rit_logo.png");
+    background-size: 370px 2.5em;
+    background-position: 2em 3px;
+    background-repeat: no-repeat;
 }
 #top-bar h1 {
 	margin: 0;
@@ -77,6 +112,12 @@ html, body {
     font-size: 21px;
 }
 
+/* not a cry for help (yet) just the help button id */
+#help {
+    margin: 0 auto;
+    text-align: center;
+}
+
 #account-dropdown {
 	padding-right: 2em;
 	color: white;
@@ -88,7 +129,7 @@ html, body {
     margin-left: 14em;
 }
 
-/****************************** DASHBOARD *******************************/
+/****************************** DASHBOARD PAGE *******************************/
 
 
 #vc-coach-dashboard-top {
@@ -111,7 +152,10 @@ html, body {
 	position: relative;
 }
 
-/****************************** LOGIN PAGE CSS *******************************/
+/****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
+/* These two share most (see also: all) of the same design so if you change someone on one, do
+    so with the knowledge that you're 100% changing something on another page as well.
+*/
 #login h1, #forgot-password h1 {
     font-family: 'Titillium Web', sans-serif;
     font-size: 40px;
@@ -180,13 +224,4 @@ html, body {
     border-radius: 30px;
     background-color: #d95e00;
     color: white;
-}
-
-/****************************** FORGOT PASSWORD PAGE CSS *******************************/
-
-
-/* not a cry for help (yet) just the help button id */
-#help {
-	margin: 0 auto;
-	text-align: center;
 }

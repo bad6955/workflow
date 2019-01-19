@@ -12,7 +12,7 @@
 <body>
     <<form id="form1" runat="server">
         <div id="forgot-password">
-            <img src="assets/icons/rit_logo.png" />
+            <img src="assets/icons/rit_insignia.png" />
             <h1>RESET PASSWORD</h1>
             <asp:TextBox runat="server" ID="email" placeholder="Email"></asp:TextBox>
             <asp:TextBox runat="server" ID="password" placeholder="Password"></asp:TextBox>
