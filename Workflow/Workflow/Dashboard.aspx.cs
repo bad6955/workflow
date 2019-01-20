@@ -15,7 +15,7 @@ namespace Workflow
             //accessing the application variable set on the login code-behind and displaying it out to the user
 
             //validates that the user is logged in
-            if(Session["FirebaseUser"] != null)
+            if (Session["FirebaseUser"] != null)
             {
                 User fbUser = (User)Session["FirebaseUser"];
                 //user.Text = "Welcome back, " + fbUser.Email;

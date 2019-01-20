@@ -33,7 +33,7 @@
     <div id="content-body">
 			<h1>Dashboard</h1>
 			<div id="vc-coach-dashboard-top">
-			
+			<!-- Some kind of graphs? like "how many active projects" -->
 			</div>
 			<div id="vc-coach-dashboard-bottom">
 				<h2>My Projects</h2> 

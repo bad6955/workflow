@@ -138,6 +138,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccountSettings.aspx" />
     <Content Include="assets\css\gradient_style.css" />
     <Content Include="assets\css\styles.css" />
     <Content Include="assets\icons\dashboard.png" />
@@ -158,6 +159,13 @@
     <Content Include="Admin.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountSettings.aspx.cs">
+      <DependentUpon>AccountSettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccountSettings.aspx.designer.cs">
+      <DependentUpon>AccountSettings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DBConn.cs" />
     <Compile Include="Firebase.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
