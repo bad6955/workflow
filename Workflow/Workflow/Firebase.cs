@@ -32,6 +32,11 @@ namespace Workflow
             }
             return null;
         }
+
+        public static bool ForgotPassword(String email)
+        {
+            return FirebaseUtil.ResetPassword(email);
+        }
     }
 
     public static class FirebaseUtil
@@ -70,5 +75,22 @@ namespace Workflow
             }
             return null;
         }
+
+        public static bool ResetPassword(String email)
+        {
+            var authProvider = Firebase.GetAuthProvider();
+            Task task = authProvider.SendPasswordResetEmailAsync(email);
+            try
+            {
+                task.Wait();
+                return true;
+            }
+            catch (Exception e)
+            {
+            }
+            return false;
+        }
+
+
     }
 }

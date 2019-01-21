@@ -195,13 +195,13 @@ html, body {
     border: none;
     border-bottom: 1px solid black;
 }
-#login #Email, #forgot-password #email {
+#login #Email, #forgot-password #Email {
     background-image: url('../icons/email.png');
     background-size: 35px 35px;
     background-position: 10px 10px;
     background-repeat: no-repeat;
 }
-#login #Password, #forgot-password #password, #forgot-password #matchedPassword {
+#login #Password {
     background-image: url('../icons/password.png');
     background-size: 35px 35px;
     background-position: 10px 10px;
@@ -224,4 +224,12 @@ html, body {
     border-radius: 30px;
     background-color: #d95e00;
     color: white;
+}
+
+.error{
+    color:red;
+}
+
+.success{
+    color:green;
 }

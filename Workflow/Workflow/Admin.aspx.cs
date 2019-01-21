@@ -8,6 +8,20 @@ namespace Workflow
 
     public partial class Admin : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //validates that the user is logged in
+            if (Session["FirebaseUser"] != null)
+            {
+                User fbUser = (User)Session["FirebaseUser"];
+            }
+            //kicks them out if they arent
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+
         //Register a new user in the system
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {

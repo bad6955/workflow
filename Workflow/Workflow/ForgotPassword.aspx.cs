@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Firebase.Auth;
 
 namespace Workflow
 {
@@ -12,29 +13,26 @@ namespace Workflow
         //Create a conntect to server here or get the conntection from login.aspx
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         //Run the follow code when the user want to change their password.
-        protected void changeBtn_Click(object sender, EventArgs e)
+        protected void ChangeBtn_Click(object sender, EventArgs e)
         {
-            checkPassword();
-        }
-        //This method will check the newly created password 
-        //Should we also check the server password to see if there is a match?
-        protected void checkPassword()
-        {
-            if(password.Text == matchedPassword.Text)
+            if (Email.Text.Length > 0)
             {
-                //Change the password on the server using email provided
-
-                //Redriect to login
-                Response.Redirect("Login.aspx");                
-            }else
+                if (Firebase.ForgotPassword(Email.Text))
+                {
+                    SuccessLabel.Text = "Check your email for a password reset link!";
+                }
+                else
+                {
+                    ErrorLabel.Text = "Error resetting password";
+                }
+            }
+            else
             {
-                //Display the error message
+                ErrorLabel.Text = "Please enter your email!";
             }
         }
-        
     }
 }

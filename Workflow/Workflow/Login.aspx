@@ -17,6 +17,7 @@
                 <h1>LOG IN</h1>
                 <form id="form1" runat="server">
                     <div>
+                        <asp:Label runat="server" ID="ErrorLabel" CssClass="error"></asp:Label>
                         <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox><br />
                         <asp:TextBox runat="server" ID="Password" TextMode="Password" placeholder="Password"></asp:TextBox><br />
                         <asp:Button runat="server" ID="LoginBtn" Text="Login" OnClick="LoginBtn_Click" /><br />

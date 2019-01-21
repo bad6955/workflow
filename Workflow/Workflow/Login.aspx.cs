@@ -31,13 +31,12 @@ namespace Workflow
             //Check the user's infomation before logging in
             if (ValidateLogin(email, pass))
             {
-                //display good login msg
                 Response.Redirect("Dashboard.aspx"); //redirecting the user from Login.aspx to Dashboard.aspx
             }
             else
             {
                 //Display bad login msg
-
+                ErrorLabel.Text = "Invalid email or password";
             }
 
         }

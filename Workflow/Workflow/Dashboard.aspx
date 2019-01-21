@@ -9,13 +9,12 @@
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
 <body>
-    <div id="Title"><asp:Label runat="server" ID="user"></asp:Label></div>
     <form id="form1" runat="server">
         <!-- this will be the nav for now --> 
         <div id="navigation">
             <div id="top-bar">
                 <div id="account-dropdown">
-				    <h1>Username</h1>
+				    <h1><asp:Label runat="server" ID="user"></asp:Label></h1>
 			    </div>
             </div>
             <div id="side-bar">
@@ -23,7 +22,7 @@
                     <li><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="current">Dashboard</asp:Label></li>
                     <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
                     <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
-                    <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms" /></li>
+                    <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms"/></li>
                     <li><asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" /></li>
                 </ul>
                 <div id="help"><img src="assets/icons/help.png" /></div>
