@@ -34,5 +34,10 @@ namespace Workflow
                 ErrorLabel.Text = "Please enter your email!";
             }
         }
+        //Return to login page
+        protected void ReturnBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
     }
 }

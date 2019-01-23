@@ -25,13 +25,15 @@
                 </div>
             </div>
             <div id="side-bar">
-                <ul>
-                    <li><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="current">Dashboard</asp:Label></li>
-                    <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
-                    <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
-                    <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms"/></li>
+                <div id="side-bar-top-content">
+                    <ul>
+                        <li><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="current" Text="Dashboard"></asp:Label></li>
+                        <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
+                        <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
+                        <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms"/></li>
                     
-                </ul>
+                    </ul>
+                </div>
                 <div id="help"><img src="assets/icons/help.png" /></div>
             </div>
         </div>
