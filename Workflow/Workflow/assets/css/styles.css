@@ -30,11 +30,12 @@
     ////////////asside to future Brie - path to the icons/imgs?/////////////
 */
 html, body {
-	top: 0;
-	margin: 0;
-	padding: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 /****************************** NAVIGATION CSS *******************************/
@@ -52,8 +53,72 @@ html, body {
     background-repeat: no-repeat;
 }
 #top-bar h1 {
-	margin: 0;
-	font-size: 25px;
+    font-size: 25px;
+    line-height: 45px;
+    display: inline;
+    vertical-align: middle;
+}
+
+#top-bar img {
+    vertical-align: middle;
+}
+
+#right {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+#account-dropdown {
+    padding-right: 2em;
+    color: white;
+    position: relative;
+    display: inline-block;
+    height: 3em;
+}
+
+#dropdown-content {
+    display: none;
+    position: absolute;
+    font-size: 18px;
+    width: 100%;
+}
+
+#dropdown-content a {
+    color: black;
+    width: inherit;
+    text-decoration: none;
+    background-color: #bcbcbc;
+    display: block;
+}
+#right h2 {
+    font-size: 18px;
+    padding: 1em;
+    margin: 0;
+    font-weight: normal;
+}
+
+#dropdown-content a:hover, #logout:hover {
+    background-color: #f1f1f1;
+}
+
+#account-dropdown:hover #dropdown-content {
+    display: block;
+}
+
+#logout {
+    border: none;
+    background-color: #bcbcbc;
+    color: black;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    width: inherit;
+    padding: 1em;
+    text-align: left;
+    font-weight: normal;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 #dashboard-body {
@@ -101,7 +166,7 @@ html, body {
   color: #616161;
 }
 
-#current, #workflow, #form, #project, #logout {
+#current, #workflow, #form, #project {
     border: none;
     color: black;
     background: transparent;
@@ -116,12 +181,6 @@ html, body {
 #help {
     margin: 0 auto;
     text-align: center;
-}
-
-#account-dropdown {
-	padding-right: 2em;
-	color: white;
-	float: right;
 }
 
 /****************************** Offset to prevent content going under the nav *******************************/

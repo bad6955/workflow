@@ -13,9 +13,16 @@
         <!-- this will be the nav for now --> 
         <div id="navigation">
             <div id="top-bar">
-                <div id="account-dropdown">
-				    <h1><asp:Label runat="server" ID="user"></asp:Label></h1>
-			    </div>
+                <div id="right">
+                    <div id="account-dropdown">
+                        <img src="assets/icons/person.png" />
+				        <h1><asp:Label runat="server" ID="user"></asp:Label></h1>
+                        <div id="dropdown-content">
+                            <a href="AccountSettings.aspx"><h2>Account Settings</h2></a>
+                            <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" />
+                        </div>
+			        </div>
+                </div>
             </div>
             <div id="side-bar">
                 <ul>
@@ -23,7 +30,7 @@
                     <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
                     <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
                     <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms"/></li>
-                    <li><asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" /></li>
+                    
                 </ul>
                 <div id="help"><img src="assets/icons/help.png" /></div>
             </div>
