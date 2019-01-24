@@ -67,6 +67,24 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox PasswordRepeat;
         
         /// <summary>
+        /// RoleSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList RoleSelect;
+        
+        /// <summary>
+        /// CompanySelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CompanySelect;
+        
+        /// <summary>
         /// RegisterBtn control.
         /// </summary>
         /// <remarks>

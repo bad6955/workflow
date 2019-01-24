@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Web;
 
@@ -11,11 +11,11 @@ namespace Workflow
     {
         //The 'DBConnString' value still needs to be filled out for our DB in the Web.Config file
         string connStr = ConfigurationManager.ConnectionStrings["DBConnString"].ConnectionString;
-        SqlConnection conn;
+        MySqlConnection conn;
 
         public void OpenConnection()
         {
-            conn = new SqlConnection(connStr);
+            conn = new MySqlConnection(connStr);
             conn.Open();
         }
 
@@ -24,20 +24,7 @@ namespace Workflow
             conn.Close();
         }
 
-        public void ExecuteQueries(string query)
-        {
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.ExecuteNonQuery();
-        }
-
-        public SqlDataReader DataReader(string query)
-        {
-            SqlCommand cmd = new SqlCommand(query, conn);
-            SqlDataReader dr = cmd.ExecuteReader();
-            return dr;
-        }
-
-        public int ExecuteInsertCommand(SqlCommand cmd)
+        public void ExecuteInsertCommand(MySqlCommand cmd)
         {
             OpenConnection();
             //executes the insert statement provided in the CMD
@@ -45,20 +32,18 @@ namespace Workflow
             cmd.ExecuteNonQuery();
             cmd.Prepare();
             //gets the ID of the inserted ^
-            cmd.CommandText = "SELECT LAST_INSERT_ID()";
-            int id = (int)cmd.ExecuteScalar();
-            CloseConnection();
-            return id;
+            //cmd.CommandText = "SELECT LAST_INSERT_ID()";
+            //int id = (int)cmd.ExecuteScalar();
+            //return id;
         }
 
-        public SqlDataReader ExecuteSelectCommand(SqlCommand cmd)
+        public MySqlDataReader ExecuteSelectCommand(MySqlCommand cmd)
         {
             OpenConnection();
             //executes the select statement provided in the CMD
             cmd.Connection = conn;
             cmd.Prepare();
-            SqlDataReader dr = cmd.ExecuteReader();
-            CloseConnection();
+            MySqlDataReader dr = cmd.ExecuteReader();
             return dr;
         }
     }

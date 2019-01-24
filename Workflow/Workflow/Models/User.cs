@@ -9,26 +9,26 @@ namespace Workflow.Models
     {
         int id;
         int groupId;
-        string token;
+        int companyId;
         string email;
         string firstName;
         string lastName;
         Firebase.Auth.User firebaseUser;
 
-        public User(/*int groupId, string token,*/ string email, string firstName, string lastName)
+        public User(int id, int groupId, int companyId, string email, string firstName, string lastName)
         {
-            //this.groupId = groupId;
-            //this.token = token;
+            this.id = id;
+            this.groupId = groupId;
+            this.companyId = companyId;
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
         }
 
-        public User(int id, int groupId, string token, string email, string firstName, string lastName)
+        public User(int groupId, int companyId, string email, string firstName, string lastName)
         {
-            this.id = id;
             this.groupId = groupId;
-            this.token = token;
+            this.companyId = companyId;
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -48,11 +48,6 @@ namespace Workflow.Models
         public int getGroupId()
         {
             return groupId;
-        }
-
-        public string getToken()
-        {
-            return token;
         }
 
         public string getEmail()

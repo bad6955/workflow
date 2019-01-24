@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Web;
 using Workflow.Models;
@@ -9,12 +9,14 @@ namespace Workflow.Data
 {
     public static class UserUtil
     {
-        public static User CreateUser(string email, string firstName, string lastName)
+        public static User CreateUser(int roleId, int companyId, string email, string firstName, string lastName)
         {
-            User u = new User(email, firstName, lastName);
-            string createQuery = "INSERT INTO Users (Email, FirstName, LastName) VALUES (@email,@firstName,@lastName)";
+            User u = new User(roleId, companyId, email, firstName, lastName);
+            string createQuery = "INSERT INTO Users (RoleID, CompanyID, Email, FirstName, LastName) VALUES (@roleId,@companyId,@email,@firstName,@lastName)";
 
-            SqlCommand cmd = new SqlCommand(createQuery);
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@roleId", roleId);
+            cmd.Parameters.AddWithValue("@companyId", companyId);
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@firstName", firstName);
             cmd.Parameters.AddWithValue("@lastName", lastName);
@@ -28,10 +30,10 @@ namespace Workflow.Data
         public static User CreateUser(int groupId, string token, string email, string firstName, string lastName)
         {
             User u = new User(groupId, token, email, firstName, lastName);
-            string createQuery = "INSERT INTO Users (GroupID, Token, Email, FirstName, LastName) VALUES (@groupId,@token,@email,@firstName,@lastName)";
+            string createQuery = "INSERT INTO Users (RoleID, Token, Email, FirstName, LastName) VALUES (@roleId,@token,@email,@firstName,@lastName)";
 
             SqlCommand cmd = new SqlCommand(createQuery);
-            cmd.Parameters.AddWithValue("@groupId", groupId);
+            cmd.Parameters.AddWithValue("@roleId", roleId);
             cmd.Parameters.AddWithValue("@token", token);
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@firstName", firstName);
@@ -47,13 +49,18 @@ namespace Workflow.Data
 
         public static User GetUser(string email)
         {
-            string createQuery = "SELECT ID, GroupID, Token, Email, FirstName, LastName from Users where Email = @email";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName from Users where Email = @email";
 
-            SqlCommand cmd = new SqlCommand(createQuery);
+            MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@email", email);
             DBConn conn = new DBConn();
-            SqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-            User u = new User((int) dr["ID"], (int) dr["GroupID"], (string) dr["Token"], (string) dr["Email"], (string) dr["FirstName"], (string) dr["LastName"]);
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            User u = null;
+            while (dr.Read())
+            {
+                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"]);
+            }
+            conn.CloseConnection();
             return u;
         }
     }

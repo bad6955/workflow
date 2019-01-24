@@ -9,6 +9,16 @@ namespace Workflow
 
     public partial class Admin : System.Web.UI.Page
     {
+        //prevents users from using back button to return to login protected pages
+        protected override void OnInit(EventArgs e)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.MinValue);
+
+            base.OnInit(e);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //validates that the user is logged in
@@ -19,8 +29,22 @@ namespace Workflow
             //kicks them out if they arent
             else
             {
-                Response.Redirect("Login.aspx");
+                //Response.Redirect("Login.aspx");
             }
+
+            //fills out role selector dropdown
+            RoleSelect.DataSource = RoleUtil.GetRoles();
+            RoleSelect.DataTextField = "roleName";
+            RoleSelect.DataValueField = "roleId";
+            RoleSelect.DataBind();
+            RoleSelect.SelectedIndex = 0;
+
+            //fills out company dropdown
+            CompanySelect.DataSource = CompanyUtil.GetCompanies();
+            CompanySelect.DataTextField = "companyName";
+            CompanySelect.DataValueField = "companyId";
+            CompanySelect.DataBind();
+            CompanySelect.SelectedIndex = 0;
         }
 
         //Register a new user in the system
@@ -31,6 +55,8 @@ namespace Workflow
             string lastName = LastName.Text;
             string pass = Password.Text;
             string pass2 = PasswordRepeat.Text;
+            int roleId = int.Parse(RoleSelect.SelectedValue);
+            int companyId = int.Parse(CompanySelect.SelectedValue);
             string displayName = "";
             bool verificationEmail = true;
 
@@ -39,28 +65,44 @@ namespace Workflow
             //Create the new user account
             //Send an email to the new user
 
-            if (pass.Equals(pass2))
+            //checks that a role was selected for the user
+            if(roleId != -1)
             {
-                //creates the user in firebase
-                User fbUser = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
-                if (fbUser != null)
+                if (companyId != -1)
                 {
-                    //creates the user in the DB
-                    if (firstName.Length > 0 && lastName.Length > 0)
+                    if (pass.Equals(pass2))
                     {
-                        UserUtil.CreateUser(email, firstName, lastName);
-                    }
+                        //creates the user in firebase
+                        Firebase.Auth.User fbUser = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
+                        if (fbUser != null)
+                        {
+                            //creates the user in the DB
+                            if (firstName.Length > 0 && lastName.Length > 0)
+                            {
+                                User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
+                                u.setFirebaseUser(fbUser);
+                            }
 
-                    //display user created msg
+                            //display user created msg
+                        }
+                        else
+                        {
+                            //display user failed to be created msg
+                        }
+                    }
+                    else
+                    {
+                        //throw error, passwords don't match
+                    }
                 }
                 else
                 {
-                    //display user failed to be created msg
+                    //throw error, please select company for user
                 }
             }
             else
             {
-                //throw error, passwords don't match
+                //throw error, please select role for new user
             }
         }
 

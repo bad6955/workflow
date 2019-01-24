@@ -9,16 +9,19 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <span>Create User</span>
+            <span>Create User</span><br />
             <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
             <asp:TextBox runat="server" ID="FirstName" placeholder="First Name"></asp:TextBox>
             <asp:TextBox runat="server" ID="LastName" placeholder="Last Name"></asp:TextBox>
             <asp:TextBox runat="server" ID="Password" placeholder="Password"></asp:TextBox>
             <asp:TextBox runat="server" ID="PasswordRepeat" placeholder="Repeat Password"></asp:TextBox>
+            <asp:DropDownList runat="server" ID="RoleSelect"></asp:DropDownList>
+            <asp:DropDownList runat="server" ID="CompanySelect"></asp:DropDownList>
             <asp:Button runat="server" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
         </div>
+        <hr />
         <div>
-            <span>Create Company</span>
+            <span>Create Company</span><br />
             <asp:TextBox runat="server" ID="Company" placeholder="Company Name"></asp:TextBox>
             <asp:Button runat="server" ID="CompanyBtn" Text="Create Company" OnClick="CompanyBtn_Click" />
         </div>

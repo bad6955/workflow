@@ -7,6 +7,7 @@ namespace Workflow.Models
 {
     public class Company
     {
+        int companyId;
         string companyName;
         
         public Company(string companyName)
@@ -14,9 +15,22 @@ namespace Workflow.Models
             this.companyName = companyName;
         }
 
-        public string GetCompanyName()
+        public Company(int companyId, string companyName)
         {
-            return companyName;
+            this.companyId = companyId;
+            this.companyName = companyName;
+        }
+
+        public string CompanyName
+        {
+            get { return companyName; }
+            set { companyName = value; }
+        }
+
+        public int CompanyId
+        {
+            get { return companyId; }
+            set { companyId = value; }
         }
     }
 }
