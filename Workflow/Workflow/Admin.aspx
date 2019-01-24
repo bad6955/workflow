@@ -10,8 +10,10 @@
     <form id="form1" runat="server">
         <div>
             <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
+            <asp:TextBox runat="server" ID="FirstName" placeholder="First Name"></asp:TextBox>
+            <asp:TextBox runat="server" ID="LastName" placeholder="Last Name"></asp:TextBox>
             <asp:TextBox runat="server" ID="Password" placeholder="Password"></asp:TextBox>
-            <asp:TextBox runat="server" ID="PasswordRepeat" placeholder="Password"></asp:TextBox>
+            <asp:TextBox runat="server" ID="PasswordRepeat" placeholder="Repeat Password"></asp:TextBox>
             <asp:Button runat="server" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
         </div>
     </form>

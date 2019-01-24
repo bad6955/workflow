@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Workflow.Data;
 using Workflow.Models;
 
 namespace Workflow
@@ -44,11 +45,11 @@ namespace Workflow
         protected bool ValidateLogin(string email, string pass)
         {
             //validates the user's credentials against Firebase
-            User user = new User();
-            user.firebaseUser = FirebaseUtil.LoginUser(email, pass);
+            User user = UserUtil.GetUser(email);
+            user.setFirebaseUser(FirebaseUtil.LoginUser(email, pass));
             if (user != null)
             {
-                Session["FirebaseUser"] = user;
+                Session["User"] = user;
                 return true;
             }
             return false;

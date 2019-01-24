@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.UI;
 using Firebase.Auth;
+using Workflow.Data;
 
 namespace Workflow
 {
@@ -26,6 +27,8 @@ namespace Workflow
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
             string email = Email.Text;
+            string firstName = FirstName.Text;
+            string lastName = LastName.Text;
             string pass = Password.Text;
             string pass2 = PasswordRepeat.Text;
             string displayName = "";
@@ -38,9 +41,16 @@ namespace Workflow
 
             if (pass.Equals(pass2))
             {
-                User user = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
-                if (user != null)
+                //creates the user in firebase
+                User fbUser = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
+                if (fbUser != null)
                 {
+                    //creates the user in the DB
+                    if(firstName.Length > 0 && lastName.Length > 0)
+                    {
+                        UserUtil.CreateUser(email, firstName, lastName);
+                    }
+
                     //display user created msg
                 }
                 else

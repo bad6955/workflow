@@ -164,6 +164,7 @@
     <Compile Include="AccountSettings.aspx.designer.cs">
       <DependentUpon>AccountSettings.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data\UserUtil.cs" />
     <Compile Include="DBConn.cs" />
     <Compile Include="FirebaseUtil.cs" />
     <Compile Include="ForgotPassword.aspx.cs">

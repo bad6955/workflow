@@ -16,7 +16,7 @@
                 <div id="right">
                     <div id="account-dropdown">
                         <img src="assets/icons/person.png" />
-				        <h1><asp:Label runat="server" ID="user"></asp:Label></h1>
+				        <h1><asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
                             <a href="AccountSettings.aspx"><h2>Account Settings</h2></a>
                             <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Firebase.Auth;
+using Workflow.Models;
 
 namespace Workflow
 {
@@ -23,10 +23,10 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //validates that the user is logged in
-            if (Session["FirebaseUser"] != null)
+            if (Session["User"] != null)
             {
-                User fbUser = (User)Session["FirebaseUser"];
-                user.Text = fbUser.Email;
+                User user = (User)Session["User"];
+                userLbl.Text = user.getEmail();
             }
             //kicks them out if they arent
             else

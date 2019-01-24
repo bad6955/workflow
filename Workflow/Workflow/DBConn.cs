@@ -36,5 +36,30 @@ namespace Workflow
             SqlDataReader dr = cmd.ExecuteReader();
             return dr;
         }
+
+        public int ExecuteInsertCommand(SqlCommand cmd)
+        {
+            OpenConnection();
+            //executes the insert statement provided in the CMD
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            cmd.Prepare();
+            //gets the ID of the inserted ^
+            cmd.CommandText = "SELECT LAST_INSERT_ID()";
+            int id = (int)cmd.ExecuteScalar();
+            CloseConnection();
+            return id;
+        }
+
+        public SqlDataReader ExecuteSelectCommand(SqlCommand cmd)
+        {
+            OpenConnection();
+            //executes the select statement provided in the CMD
+            cmd.Connection = conn;
+            cmd.Prepare();
+            SqlDataReader dr = cmd.ExecuteReader();
+            CloseConnection();
+            return dr;
+        }
     }
 }
