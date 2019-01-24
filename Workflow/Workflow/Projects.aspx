@@ -4,58 +4,45 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <%-- The script handle events from the buttons --%>
-    <script runat="server">
-        void Page_Load(Object sender, EventArgs e)
-        {
-            dashboard.Click += new EventHandler(this.dashboardBtn_Click);
-            workflow.Click += new EventHandler(this.workflowBtn_Click);
-            form.Click += new EventHandler(this.formBtn_Click);
-            logout.Click += new EventHandler(this.logoutBtn_Click);
-        }
-
-        void dashboardBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        void workflowBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        void formBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        void logoutBtn_Click(Object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
-            Response.Redirect("Login.aspx");
-        }
-
-    </script>
     <title>Project</title>
+    <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
 <body>
     <%-- --%>
-    <div id="Title"><h1>Projects</h1></div>
-    
     <form id="form1" runat="server">
         <%-- this will be the nav for now --%>
-        <div id="nav">
-            <asp:Button runat="server" ID="dashboard" Text="Dashboard" OnClick="dashboardBtn_Click" />
-            <asp:Button runat="server" ID="workflow" Text="Workflow" OnClick="workflowBtn_Click" />
-            <asp:Label runat="server" ID="project">Project</asp:Label>
-            <asp:Button runat="server" ID ="form" Text="Form" OnClick="formBtn_Click" />
-            <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="logoutBtn_Click" />
+        <div id="navigation">
+            <div id="top-bar">
+                <div id="right">
+                    <div id="account-dropdown">
+                        <img src="assets/icons/person.png" />
+				        <h1><asp:Label runat="server" ID="userLbl"></asp:Label></h1>
+                        <div id="dropdown-content">
+                            <a href="AccountSettings.aspx"><h2>Account Settings</h2></a>
+                            <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" />
+                        </div>
+			        </div>
+                </div>
+            </div>
+            <div id="side-bar">
+                <div id="side-bar-top-content">
+                    <ul>
+                        <li><img src="assets/icons/dashboard.png" /><asp:Label runat="server" ID="dashboard" OnClick="DashboardBtn_Click" Text="Dashboard"></asp:Label></li>
+                        <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
+                        <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="current" Text="Projects" /></li>
+                        <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form" OnClick="FormBtn_Click" Text="Forms"/></li>
+                    </ul>
+                </div>
+                <div id="help"><img src="assets/icons/help.png" /></div>
+            </div>
         </div>
-        <div>
-        </div>
+        <div id="content-body">
+			<h1>Projects</h1>
+			<div>
+                
+			</div>
+		</div>
     </form>
-    <div id="footer"><h3>This is a footer</h3></div>
 </body>
 </html>

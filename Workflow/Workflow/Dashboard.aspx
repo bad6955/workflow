@@ -37,8 +37,7 @@
                 <div id="help"><img src="assets/icons/help.png" /></div>
             </div>
         </div>
-    </form>
-    <div id="content-body">
+        <div id="content-body">
 			<h1>Dashboard</h1>
 			<div id="vc-coach-dashboard-top">
 			<!-- Some kind of graphs? like "how many active projects" -->
@@ -57,6 +56,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+    </form>	
 </body>
 </html>

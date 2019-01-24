@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Firebase.Auth;
+using Workflow.Models;
 
 namespace Workflow
 {
@@ -23,15 +23,38 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //validates that the user is logged in
-            if (Session["FirebaseUser"] != null)
+            if (Session["User"] != null)
             {
-                User fbUser = (User)Session["FirebaseUser"];
+                User fbUser = (User)Session["User"];
             }
             //kicks them out if they arent
             else
             {
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        protected void DashboardBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void WorkflowBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Workflows.aspx");
+        }
+
+        protected void FormBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        protected void LogoutBtn_Click(Object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
+            Response.Redirect("Login.aspx");
         }
     }
 }

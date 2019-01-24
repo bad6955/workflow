@@ -14,7 +14,7 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //checks if the user is logged in and redirects them to their dashboard
-            if (Session["FirebaseUser"] != null)
+            if (Session["User"] != null)
             {
                 Response.Redirect("Dashboard.aspx");
             }
