@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace Workflow
 {
-    public static class Firebase
+    public static class FirebaseUtil
     {
         public static FirebaseAuthProvider GetAuthProvider()
         {
-            String API_KEY = ConfigurationManager.AppSettings.Get("FirebaseAPIKey");
+            string API_KEY = ConfigurationManager.AppSettings.Get("FirebaseAPIKey");
             return new FirebaseAuthProvider(new FirebaseConfig(API_KEY));
         }
 
-        public static User CreateNewUser(String email, String pass, String displayName, bool verificationEmail)
+        public static User CreateNewUser(string email, string pass, string displayName, bool verificationEmail)
         {
-            FirebaseAuthLink auth = FirebaseUtil.AttemptCreateNewUser(email, pass, displayName, verificationEmail);
+            FirebaseAuthLink auth = FirebaseFunctions.AttemptCreateNewUser(email, pass, displayName, verificationEmail);
             if (auth != null)
             {
                 return auth.User;
@@ -23,9 +23,9 @@ namespace Workflow
             return null;
         }
 
-        public static User LoginUser(String email, String pass)
+        public static User LoginUser(string email, string pass)
         {
-            FirebaseAuthLink auth = FirebaseUtil.AttemptLoginUser(email, pass);
+            FirebaseAuthLink auth = FirebaseFunctions.AttemptLoginUser(email, pass);
             if (auth != null)
             {
                 return auth.User;
@@ -33,17 +33,17 @@ namespace Workflow
             return null;
         }
 
-        public static bool ForgotPassword(String email)
+        public static bool ForgotPassword(string email)
         {
-            return FirebaseUtil.ResetPassword(email);
+            return FirebaseFunctions.ResetPassword(email);
         }
     }
 
-    public static class FirebaseUtil
+    public static class FirebaseFunctions
     {
-        public static FirebaseAuthLink AttemptCreateNewUser(String email, String pass, String displayName, bool verificationEmail)
+        public static FirebaseAuthLink AttemptCreateNewUser(string email, string pass, string displayName, bool verificationEmail)
         {
-            var authProvider = Firebase.GetAuthProvider();
+            var authProvider = FirebaseUtil.GetAuthProvider();
             Task<FirebaseAuthLink> task = authProvider.CreateUserWithEmailAndPasswordAsync(email, pass, displayName, verificationEmail);
             try
             {
@@ -61,9 +61,9 @@ namespace Workflow
         }
 
 
-        public static FirebaseAuthLink AttemptLoginUser(String email, String pass)
+        public static FirebaseAuthLink AttemptLoginUser(string email, string pass)
         {
-            var authProvider = Firebase.GetAuthProvider();
+            var authProvider = FirebaseUtil.GetAuthProvider();
             Task<FirebaseAuthLink> task = authProvider.SignInWithEmailAndPasswordAsync(email, pass);
             try
             {
@@ -76,9 +76,9 @@ namespace Workflow
             return null;
         }
 
-        public static bool ResetPassword(String email)
+        public static bool ResetPassword(string email)
         {
-            var authProvider = Firebase.GetAuthProvider();
+            var authProvider = FirebaseUtil.GetAuthProvider();
             Task task = authProvider.SendPasswordResetEmailAsync(email);
             try
             {

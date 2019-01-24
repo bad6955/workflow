@@ -7,5 +7,7 @@ namespace Workflow.Models
 {
     public class Workflow
     {
+        int id;
+        string name;
     }
 }

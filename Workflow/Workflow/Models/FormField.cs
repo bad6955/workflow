@@ -5,10 +5,11 @@ using System.Web;
 
 namespace Workflow.Models
 {
-    public class Form
+    public class FormField
     {
         int id;
-        string name;
-        int statusId;
+        int formId;
+        string fieldTitle;
+        string fieldText;
     }
 }

@@ -25,10 +25,10 @@ namespace Workflow
         //Register a new user in the system
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
-            String email = Email.Text;
-            String pass = Password.Text;
-            String pass2 = PasswordRepeat.Text;
-            String displayName = "";
+            string email = Email.Text;
+            string pass = Password.Text;
+            string pass2 = PasswordRepeat.Text;
+            string displayName = "";
             bool verificationEmail = true;
 
             //Validate that the logged in user has permissions to do this
@@ -38,7 +38,7 @@ namespace Workflow
 
             if (pass.Equals(pass2))
             {
-                User user = Firebase.CreateNewUser(email, pass, displayName, verificationEmail);
+                User user = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
                 if (user != null)
                 {
                     //display user created msg

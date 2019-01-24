@@ -20,7 +20,7 @@ namespace Workflow
         {
             if (Email.Text.Length > 0)
             {
-                if (Firebase.ForgotPassword(Email.Text))
+                if (FirebaseUtil.ForgotPassword(Email.Text))
                 {
                     ErrorLabel.Text = "";
                     SuccessLabel.Text = "Check your email for a password reset link!";

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Models;
-using Firebase.Auth;
 
 namespace Workflow
 {
@@ -25,8 +24,8 @@ namespace Workflow
         //  auto generate a new event with a name similar to the below
         protected void LoginBtn_Click(object sender, EventArgs e)
         {
-            String email = Email.Text;
-            String pass = Password.Text;
+            string email = Email.Text;
+            string pass = Password.Text;
 
             //Check the user's infomation before logging in
             if (ValidateLogin(email, pass))
@@ -42,10 +41,11 @@ namespace Workflow
         }
 
         //Validate the user login
-        protected bool ValidateLogin(String email, String pass)
+        protected bool ValidateLogin(string email, string pass)
         {
             //validates the user's credentials against Firebase
-            User user = Firebase.LoginUser(email, pass);
+            User user = new User();
+            user.firebaseUser = FirebaseUtil.LoginUser(email, pass);
             if (user != null)
             {
                 Session["FirebaseUser"] = user;

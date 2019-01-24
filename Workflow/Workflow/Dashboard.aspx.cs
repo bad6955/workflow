@@ -35,22 +35,22 @@ namespace Workflow
             }
         }
 
-        protected void ProjectBtn_Click(Object sender, EventArgs e)
+        protected void ProjectBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Projects.aspx");
         }
 
-        protected void FormBtn_Click(Object sender, EventArgs e)
+        protected void FormBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Forms.aspx");
         }
 
-        protected void WorkflowBtn_Click(Object sender, EventArgs e)
+        protected void WorkflowBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Workflows.aspx");
         }
 
-        protected void LogoutBtn_Click(Object sender, EventArgs e)
+        protected void LogoutBtn_Click(object sender, EventArgs e)
         {
             Session.Clear();
             Session.Abandon();
