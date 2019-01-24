@@ -10,5 +10,28 @@ namespace Workflow.Models
         int id;
         string name;
         int statusId;
+
+        public Form(string name)
+        {
+            this.name = name;
+        }
+
+        public int FormId
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public int StatusId
+        {
+            get { return statusId; }
+            set { statusId = value; }
+        }
+
+        public string FormName
+        {
+            get { return name; }
+            set { name = value; }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.getEmail();
+                userLbl.Text = user.Email;
             }
             //kicks them out if they arent
             else

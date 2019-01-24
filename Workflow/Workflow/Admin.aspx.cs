@@ -25,13 +25,27 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
+
+                //checks user is an admin
+                if(user.RoleId == 4)
+                {
+                    //DEBUG move selectors from below, here
+                }
+                else
+                {
+                    //kicks them out if they arent
+                    //DEBUG uncomment the below in production
+                    //Response.Redirect("Login.aspx");
+                }
             }
-            //kicks them out if they arent
             else
             {
+                //kicks them out if they arent
+                //DEBUG uncomment the below in production
                 //Response.Redirect("Login.aspx");
             }
 
+            //DEBUG move into the nested if above
             //fills out role selector dropdown
             RoleSelect.DataSource = RoleUtil.GetRoles();
             RoleSelect.DataTextField = "roleName";
@@ -45,6 +59,7 @@ namespace Workflow
             CompanySelect.DataValueField = "companyId";
             CompanySelect.DataBind();
             CompanySelect.SelectedIndex = 0;
+            //DEBUG end move
         }
 
         //Register a new user in the system
@@ -55,8 +70,8 @@ namespace Workflow
             string lastName = LastName.Text;
             string pass = Password.Text;
             string pass2 = PasswordRepeat.Text;
-            int roleId = int.Parse(RoleSelect.SelectedValue);
-            int companyId = int.Parse(CompanySelect.SelectedValue);
+            int roleId = int.Parse(SelectedRole.Value);
+            int companyId = int.Parse(SelectedCompany.Value);
             string displayName = "";
             bool verificationEmail = true;
 
@@ -80,7 +95,7 @@ namespace Workflow
                             if (firstName.Length > 0 && lastName.Length > 0)
                             {
                                 User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
-                                u.setFirebaseUser(fbUser);
+                                u.FirebaseUser = fbUser;
                             }
 
                             //display user created msg

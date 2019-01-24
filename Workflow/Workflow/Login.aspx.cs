@@ -46,9 +46,9 @@ namespace Workflow
         {
             //validates the user's credentials against Firebase
             User user = UserUtil.GetUser(email);
-            user.setFirebaseUser(FirebaseUtil.LoginUser(email, pass));
             if (user != null)
             {
+                user.FirebaseUser = FirebaseUtil.LoginUser(email, pass);
                 Session["User"] = user;
                 return true;
             }

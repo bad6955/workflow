@@ -25,11 +25,17 @@ namespace Workflow
             //validates that the user is logged in
             if (Session["User"] != null)
             {
-                User fbUser = (User)Session["User"];
+                User user = (User)Session["User"];
+
+                //checks user is an admin
+                if (user.RoleId == 4)
+                {
+                    adminDiv.Visible = true;
+                }
             }
-            //kicks them out if they arent
             else
             {
+                //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
         }
@@ -53,7 +59,6 @@ namespace Workflow
         {
             Session.Clear();
             Session.Abandon();
-            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
             Response.Redirect("Login.aspx");
         }
     }

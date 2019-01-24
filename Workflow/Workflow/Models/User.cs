@@ -8,66 +8,72 @@ namespace Workflow.Models
     public class User
     {
         int id;
-        int groupId;
+        int roleId;
         int companyId;
         string email;
         string firstName;
         string lastName;
         Firebase.Auth.User firebaseUser;
 
-        public User(int id, int groupId, int companyId, string email, string firstName, string lastName)
+        public User(int id, int roleId, int companyId, string email, string firstName, string lastName)
         {
             this.id = id;
-            this.groupId = groupId;
+            this.roleId = roleId;
             this.companyId = companyId;
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
         }
 
-        public User(int groupId, int companyId, string email, string firstName, string lastName)
+        public User(int roleId, int companyId, string email, string firstName, string lastName)
         {
-            this.groupId = groupId;
+            this.roleId = roleId;
             this.companyId = companyId;
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
         }
 
-        public void setFirebaseUser(Firebase.Auth.User user)
+        public int UserId
         {
-            this.firebaseUser = user;
+            get { return id; }
+            set { id = value; }
         }
 
-        //GETTERS
-        public int getId()
+        public int RoleId
         {
-            return id;
+            get { return roleId; }
+            set { roleId = value; }
         }
 
-        public int getGroupId()
+        public int CompanyId
         {
-            return groupId;
+            get { return companyId; }
+            set { companyId = value; }
         }
 
-        public string getEmail()
+        public string Email
         {
-            return email;
+            get { return email; }
+            set { email = value; }
         }
 
-        public string getFirstName()
+        public string FirstName
         {
-            return firstName;
+            get { return firstName; }
+            set { firstName = value; }
         }
 
-        public string getLastName()
+        public string LastName
         {
-            return lastName;
+            get { return lastName; }
+            set { lastName = value; }
         }
 
-        public Firebase.Auth.User getFirebaseUser()
+        public Firebase.Auth.User FirebaseUser
         {
-            return firebaseUser;
+            get { return firebaseUser; }
+            set { firebaseUser = value; }
         }
     }
 }

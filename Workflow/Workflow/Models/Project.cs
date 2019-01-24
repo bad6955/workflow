@@ -11,47 +11,53 @@ namespace Workflow.Models
         int workflowId;
         int companyId;
         int statusId;
-        int VCId;
+        int VCID;
         string notes;
 
-        public Project(int id, int workflowId, int companyId, int statusId, int VCId, string notes)
+        public Project(int id, int workflowId, int companyId, int statusId, int VCID, string notes)
         {
             this.id = id;
             this.workflowId = workflowId;
             this.companyId = companyId;
             this.statusId = statusId;
-            this.VCId = VCId;
+            this.VCID = VCID;
             this.notes = notes;
         }
 
-        public int getId()
+        public int ProjectId
         {
-            return id;
+            get { return id; }
+            set { id = value; }
         }
 
-        public int getWorkflowId()
+        public int WorkflowId
         {
-            return workflowId;
+            get { return workflowId; }
+            set { workflowId = value; }
         }
 
-        public int getCompanyId()
+        public int CompanyId
         {
-            return companyId;
+            get { return companyId; }
+            set { companyId = value; }
         }
 
-        public int getStatusId()
+        public int StatusId
         {
-            return statusId;
+            get { return statusId; }
+            set { statusId = value; }
         }
 
-        public int getVCId()
+        public int VCId
         {
-            return VCId;
+            get { return VCID; }
+            set { VCID = value; }
         }
 
-        public string getNotes()
+        public string Notes
         {
-            return notes;
+            get { return notes; }
+            set { notes = value; }
         }
     }
 }

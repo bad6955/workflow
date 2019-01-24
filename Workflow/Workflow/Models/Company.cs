@@ -21,16 +21,16 @@ namespace Workflow.Models
             this.companyName = companyName;
         }
 
-        public string CompanyName
-        {
-            get { return companyName; }
-            set { companyName = value; }
-        }
-
         public int CompanyId
         {
             get { return companyId; }
             set { companyId = value; }
+        }
+
+        public string CompanyName
+        {
+            get { return companyName; }
+            set { companyName = value; }
         }
     }
 }

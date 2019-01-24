@@ -39,7 +39,7 @@
         </div>
         <div id="content-body">
 			<h1>Projects</h1>
-			<div>
+			<div runat="server" id="adminDiv" visible="false">
                 
 			</div>
 		</div>
