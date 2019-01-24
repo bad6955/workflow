@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Firebase.Auth;
 using Workflow.Data;
+using Workflow.Models;
 
 namespace Workflow
 {
@@ -12,9 +12,9 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //validates that the user is logged in
-            if (Session["FirebaseUser"] != null)
+            if (Session["User"] != null)
             {
-                User fbUser = (User)Session["FirebaseUser"];
+                User user = (User)Session["User"];
             }
             //kicks them out if they arent
             else
@@ -46,11 +46,35 @@ namespace Workflow
                 if (fbUser != null)
                 {
                     //creates the user in the DB
-                    if(firstName.Length > 0 && lastName.Length > 0)
+                    if (firstName.Length > 0 && lastName.Length > 0)
                     {
                         UserUtil.CreateUser(email, firstName, lastName);
                     }
 
+                    //display user created msg
+                }
+                else
+                {
+                    //display user failed to be created msg
+                }
+            }
+            else
+            {
+                //throw error, passwords don't match
+            }
+        }
+
+        protected void CompanyBtn_Click(object sender, EventArgs e)
+        {
+            string companyName = Company.Text;
+
+            //Validate that the logged in user has permissions to do this
+
+            if (companyName.Length > 0)
+            {
+                Company company = CompanyUtil.CreateCompany(companyName);
+                if (company != null)
+                {
                     //display user created msg
                 }
                 else
