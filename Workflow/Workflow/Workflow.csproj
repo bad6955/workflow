@@ -164,6 +164,7 @@
     <Compile Include="AccountSettings.aspx.designer.cs">
       <DependentUpon>AccountSettings.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data\CompanyUtil.cs" />
     <Compile Include="DBConn.cs" />
     <Compile Include="FirebaseUtil.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
@@ -183,6 +184,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormField.cs" />
     <Compile Include="Models\Project.cs" />

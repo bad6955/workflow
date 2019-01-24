@@ -44,7 +44,7 @@ namespace Workflow
         protected bool ValidateLogin(string email, string pass)
         {
             //validates the user's credentials against Firebase
-            User user = new User();
+            User user = UserUtil.GetUser(email);
             user.firebaseUser = FirebaseUtil.LoginUser(email, pass);
             if (user != null)
             {

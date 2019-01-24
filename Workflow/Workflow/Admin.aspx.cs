@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Firebase.Auth;
+using Workflow.Data;
+using Workflow.Models;
 
 namespace Workflow
 {
@@ -11,9 +12,9 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //validates that the user is logged in
-            if (Session["FirebaseUser"] != null)
+            if (Session["User"] != null)
             {
-                User fbUser = (User)Session["FirebaseUser"];
+                User user = (User)Session["User"];
             }
             //kicks them out if they arent
             else
@@ -28,6 +29,8 @@ namespace Workflow
             string email = Email.Text;
             string pass = Password.Text;
             string pass2 = PasswordRepeat.Text;
+            string firstName = FirstName.Text;
+            string lastName = LastName.Text;
             string displayName = "";
             bool verificationEmail = true;
 
@@ -38,8 +41,33 @@ namespace Workflow
 
             if (pass.Equals(pass2))
             {
-                User user = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
+                User user = new User(email, firstName, lastName);
+                user.setFirebaseUser(FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail));
                 if (user != null)
+                {
+                    //display user created msg
+                }
+                else
+                {
+                    //display user failed to be created msg
+                }
+            }
+            else
+            {
+                //throw error, passwords don't match
+            }
+        }
+
+        protected void CompanyBtn_Click(object sender, EventArgs e)
+        {
+            string companyName = Company.Text;
+
+            //Validate that the logged in user has permissions to do this
+
+            if (companyName.Length > 0)
+            {
+                Company company = CompanyUtil.CreateCompany(companyName);
+                if (company != null)
                 {
                     //display user created msg
                 }

@@ -15,6 +15,13 @@ namespace Workflow.Models
         string lastName;
         Firebase.Auth.User firebaseUser;
 
+        public User(string email, string firstName, string lastName)
+        {
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
         public User(int id, int groupId, string token, string email, string firstName, string lastName)
         {
             this.id = id;
