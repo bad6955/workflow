@@ -22,11 +22,15 @@ namespace Workflow
             {
                 if (Firebase.ForgotPassword(Email.Text))
                 {
+                    ErrorLabel.Text = "";
                     SuccessLabel.Text = "Check your email for a password reset link!";
+                    Email.Visible = false;
+                    changeBtn.Visible = false;
                 }
                 else
                 {
-                    ErrorLabel.Text = "Error resetting password";
+                    SuccessLabel.Text = "";
+                    ErrorLabel.Text = Email.Text + " is not valid.";         
                 }
             }
             else
