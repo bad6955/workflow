@@ -70,6 +70,11 @@ namespace Workflow.Models
             set { lastName = value; }
         }
 
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
+
         public Firebase.Auth.User FirebaseUser
         {
             get { return firebaseUser; }

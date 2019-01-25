@@ -63,5 +63,22 @@ namespace Workflow.Data
             conn.CloseConnection();
             return u;
         }
+
+        public static List<User> GetCoaches()
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName from Users where RoleID = 2";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            List<User> coachList = new List<User>();
+            while (dr.Read())
+            {
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"]);
+                coachList.Add(u);
+            }
+            conn.CloseConnection();
+            return coachList;
+        }
     }
 }

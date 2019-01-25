@@ -10,12 +10,12 @@ namespace Workflow.Models
         int id;
         int formId;
         int statusId;
-        string fieldTitle;
+        string fieldName;
         string fieldText;
 
-        public FormField(string fieldTitle)
+        public FormField(string fieldName)
         {
-            this.fieldTitle = fieldTitle;
+            this.fieldName = fieldName;
         }
 
         public int FormFieldId
@@ -36,10 +36,10 @@ namespace Workflow.Models
             set { statusId = value; }
         }
 
-        public string FieldTitle
+        public string FieldName
         {
-            get { return fieldTitle; }
-            set { fieldTitle = value; }
+            get { return fieldName; }
+            set { fieldName = value; }
         }
 
         public string FieldText

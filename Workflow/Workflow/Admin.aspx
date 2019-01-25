@@ -12,8 +12,6 @@
         var role = roleEle.options[roleEle.selectedIndex].value;
         var companyEle = document.getElementById("CompanySelect");
         var company = companyEle.options[companyEle.selectedIndex].value;
-        console.log("Role :" + role);
-        console.log("Company : " + company);
         document.getElementById("SelectedRole").value = role;
         document.getElementById("SelectedCompany").value = company;
     }

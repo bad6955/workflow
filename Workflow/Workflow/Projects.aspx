@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
+<script>
+    function saveSelection() {
+        var companyEle = document.getElementById("CompanySelect");
+        var company = companyEle.options[companyEle.selectedIndex].value;
+        var workflowEle = document.getElementById("WorkflowSelect");
+        var workflow = workflowEle.options[workflowEle.selectedIndex].value;
+        var coachEle = document.getElementById("CoachSelect");
+        var coach = coachEle.options[coachEle.selectedIndex].value;
+        document.getElementById("SelectedCompany").value = company;
+        document.getElementById("SelectedWorkflow").value = workflow;
+        document.getElementById("SelectedCoach").value = coach;
+    }
+</script>
 <body>
     <%-- --%>
     <form id="form1" runat="server">
@@ -40,7 +53,16 @@
         <div id="content-body">
 			<h1>Projects</h1>
 			<div runat="server" id="adminDiv" visible="false">
-                
+                <span>Create Project</span><br />
+                <asp:TextBox runat="server" ID="ProjectName" placeholder="Project Name"></asp:TextBox>
+                <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+                <asp:DropDownList runat="server" ID="WorkflowSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+                <asp:DropDownList runat="server" ID="CoachSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+                <asp:TextBox runat="server" ID="ProjectNotes" placeholder="Project Notes (Optional)"></asp:TextBox>
+                <asp:Button runat="server" ID="CreateProjectBtn" Text="Create Project" OnClick="CreateProjectBtn_Click"/>
+                <asp:HiddenField runat="server" ID="SelectedCompany" />
+                <asp:HiddenField runat="server" ID="SelectedWorkflow" />
+                <asp:HiddenField runat="server" ID="SelectedCoach" />
 			</div>
 		</div>
     </form>

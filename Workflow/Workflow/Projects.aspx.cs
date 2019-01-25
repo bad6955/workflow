@@ -30,6 +30,29 @@ namespace Workflow
                 //checks user is an admin
                 if (user.RoleId == 4)
                 {
+                    //sets up admin project creation form
+
+                    //fills out company dropdown
+                    CompanySelect.DataSource = Data.CompanyUtil.GetClientCompanies();
+                    CompanySelect.DataTextField = "companyName";
+                    CompanySelect.DataValueField = "companyId";
+                    CompanySelect.DataBind();
+                    CompanySelect.SelectedIndex = 0;
+
+                    //fills out workflow dropdown
+                    WorkflowSelect.DataSource = Data.WorkflowUtil.GetWorkflows();
+                    WorkflowSelect.DataTextField = "workflowName";
+                    WorkflowSelect.DataValueField = "workflowId";
+                    WorkflowSelect.DataBind();
+                    WorkflowSelect.SelectedIndex = 0;
+
+                    //fills out company dropdown
+                    CoachSelect.DataSource = Data.UserUtil.GetCoaches();
+                    CoachSelect.DataTextField = "fullName";
+                    CoachSelect.DataValueField = "userId";
+                    CoachSelect.DataBind();
+                    CoachSelect.SelectedIndex = 0;
+
                     adminDiv.Visible = true;
                 }
             }
@@ -60,6 +83,11 @@ namespace Workflow
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        protected void CreateProjectBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

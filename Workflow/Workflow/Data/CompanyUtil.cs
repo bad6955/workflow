@@ -36,5 +36,23 @@ namespace Workflow.Data
             conn.CloseConnection();
             return companyList;
         }
+
+        public static List<Company> GetClientCompanies()
+        {
+            string query = "SELECT CompanyID, CompanyName from Company where CompanyID != 1 AND CompanyID != -2";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<Company> companyList = new List<Company>();
+            while (dr.Read())
+            {
+                Company c = new Company((int)dr["CompanyID"], (string)dr["CompanyName"]);
+                companyList.Add(c);
+            }
+            conn.CloseConnection();
+            return companyList;
+        }
     }
 }

@@ -181,6 +181,7 @@
     <Compile Include="Data\CompanyUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
+    <Compile Include="Data\WorkflowUtil.cs" />
     <Compile Include="DBConn.cs" />
     <Compile Include="FirebaseUtil.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
@@ -228,7 +229,7 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Workflow.cs" />
+    <Compile Include="Models\WorkflowModel.cs" />
     <Compile Include="Workflows.aspx.cs">
       <DependentUpon>Workflows.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
