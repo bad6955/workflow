@@ -48,9 +48,11 @@
                     </ul>
                 </div>
                 <div id="help">
-                    <img src="assets/icons/help.png" /></div>
+                    <img src="assets/icons/help.png" />
+                </div>
             </div>
         </div>
+        <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
         <div id="content-body">
             <h1>Dashboard</h1>
             <div id="vc-coach-dashboard-top">
@@ -58,52 +60,51 @@
             </div>
             <div id="vc-coach-dashboard-bottom">
                 <h2>My Projects</h2>
-                <hr>
                 <div class="vc-coach-dashboard-project">
                     <h3>Project Name</h3>
-                    <div>
-                        <div class="completion">
-                            <div id="completion-bar">
-                                <script>$(document).ready(function () {
-                                        s1 = [50];
+                    <div class="completion">
+                        <div id="completion-bar">
+                            <!-- only inline rn becuase I was lazy. Will move out later -->
+                            <script>$(document).ready(function () {
+                                    s1 = [50];
 
-                                        plot4 = $.jqplot('completion-bar', [s1], {
-                                            seriesDefaults: {
-                                                renderer: $.jqplot.MeterGaugeRenderer,
-                                                rendererOptions: {
-                                                    label: 'Completion',
-                                                    labelPosition: 'bottom',
-                                                    intervalOuterRadius: 50,
-                                                    ticks: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                                                    intervals: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                                                }
+                                    plot4 = $.jqplot('completion-bar', [s1], {
+                                        seriesDefaults: {
+                                            renderer: $.jqplot.MeterGaugeRenderer,
+                                            rendererOptions: {
+                                                label: 'Completion',
+                                                labelPosition: 'bottom',
+                                                intervalOuterRadius: 50,
+                                                ticks: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                                                intervals: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                                             }
-                                        });
-                                    });</script>
-                            </div>
-                            <h4>Completion</h4>
+                                        }
+                                    });
+                                });</script>
                         </div>
-                        <h4>Open Project</h4>
                     </div>
                 </div>
-            </div>
-            <div class="ui relaxed divided items">
-                <div class="item">
-                    <div class="ui small image">
-                        <img src="assets/images/wireframe/image.png">
-                    </div>
-                    <div class="content">
-                        <a class="header">Content Header</a>
-                        <div class="meta">
-                            <a>Date</a>
-                            <a>Category</a>
+
+                <div class="ui relaxed divided items">
+                    <div class="item">
+                        <div class="ui small image">
+                            <img src="assets/images/wireframe/image.png">
                         </div>
-                        <div class="description">
-                            A description which may flow for several lines and give context to the content.
-                        </div>
-                        <div class="extra">
-                            <img src="assets/images/wireframe/square-image.png" class="ui circular avatar image">
-                            Username
+                        <div class="content">
+                            <a class="header">Content Header</a>
+                            <div class="meta">
+                                <a>Date</a>
+                                <a>Category</a>
+                            </div>
+                            <div class="description">
+                                A description which may flow for several lines and give context to the content.
+                            </div>
+                            <div class="extra">
+                                <div class="ui right floated primary button">
+                                    View Full
+            <i class="right chevron icon"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
