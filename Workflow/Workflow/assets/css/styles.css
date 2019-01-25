@@ -45,6 +45,7 @@ html, body {
 
 #top-bar {
     width: 100%;
+    position: fixed;
     height: 3em;
     background-color: #dc7a32;
     background-image: url("../icons/rit_logo.png");
@@ -214,10 +215,11 @@ html, body {
 }
 
 #completion-bar {
-    width: 300px;
-    height: 200px;
+    width: 200px;
+    height: 130px;
 	position: relative;
     color: transparent;
+    z-index: -10;
 }
 
 .vc-coach-dashboard-project {

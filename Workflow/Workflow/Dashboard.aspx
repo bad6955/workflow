@@ -6,10 +6,7 @@
 <head runat="server">
     <title>Dashboard</title>
     <script type="text/javascript" src="assets/js/jquery.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.jqplot.js"></script>
-    <script type="text/javascript" src="assets/js/jqplot.meterGaugeRenderer.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.jqplot.css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
@@ -61,50 +58,72 @@
             <div id="vc-coach-dashboard-bottom">
                 <h2>My Projects</h2>
                 <div class="vc-coach-dashboard-project">
-                    <h3>Project Name</h3>
                     <div class="completion">
-                        <div id="completion-bar">
-                            <!-- only inline rn becuase I was lazy. Will move out later -->
-                            <script>$(document).ready(function () {
-                                    s1 = [50];
-
-                                    plot4 = $.jqplot('completion-bar', [s1], {
-                                        seriesDefaults: {
-                                            renderer: $.jqplot.MeterGaugeRenderer,
-                                            rendererOptions: {
-                                                label: 'Completion',
-                                                labelPosition: 'bottom',
-                                                intervalOuterRadius: 50,
-                                                ticks: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                                                intervals: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                                            }
-                                        }
-                                    });
-                                });</script>
-                        </div>
                     </div>
                 </div>
 
-                <div class="ui relaxed divided items">
+                <div class="ui items">
                     <div class="item">
+                        <!-- Progress bar stuff -->
                         <div class="ui small image">
-                            <img src="assets/images/wireframe/image.png">
+                            <div class="ui orange progress">
+                                <div class="bar">
+                                    <div class="progress"></div>
+                                </div>
+                                <div class="label">Completion</div>
+                            </div>
+                                <button class="ui brown basic button">View Full Project</button>
                         </div>
                         <div class="content">
-                            <a class="header">Content Header</a>
-                            <div class="meta">
-                                <a>Date</a>
-                                <a>Category</a>
-                            </div>
+                            <!-- Project Name goes under .content -->
+                            <a class="header">Project Name</a>
+                            <!-- Project Description or current workflow step could go here -->
                             <div class="description">
-                                A description which may flow for several lines and give context to the content.
+                                Project Description or current workflow step could go here?
                             </div>
-                            <div class="extra">
-                                <div class="ui right floated primary button">
-                                    View Full
-            <i class="right chevron icon"></i>
-                                </div>
-                            </div>
+                            <!------------------------------- Table with Workflow steps ------------------------->
+                            <table class="ui celled table">
+                                <thead>
+                                    <tr>
+                                        <th>Workflow Step</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="positive">
+                                        <td>Step 1 - Worklflow Step Title</td>
+                                        <td><i class="icon checkmark"></i>Approved</td>
+                                    </tr>
+                                    <tr class="positive">
+                                        <td>Step 2 - Workflow Step Title</td>
+                                        <td><i class="icon checkmark"></i>Approved</td>
+                                    </tr>
+                                    <tr class="negative">
+                                        <td>Step 3 - Workflow Step Title</td>
+                                        <td>Denied - Needs Modification</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Step 4 - Workflow Step Title</td>
+                                        <td>Unknown</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">
+                                            <div class="ui right floated pagination menu">
+                                                <a class="icon item">
+                                                    <i class="left chevron icon"></i>
+                                                </a>
+                                                <a class="item">1</a>
+                                                <a class="item">2</a>
+                                                <a class="icon item">
+                                                    <i class="right chevron icon"></i>
+                                                </a>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>

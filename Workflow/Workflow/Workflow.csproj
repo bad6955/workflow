@@ -142,9 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\semantic.css" />
-    <Content Include="assets\js\jqplot.meterGaugeRenderer.js" />
-    <Content Include="assets\js\jquery.jqplot.js" />
-    <Content Include="assets\css\jquery.jqplot.css" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
