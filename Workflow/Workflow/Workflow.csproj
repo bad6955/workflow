@@ -142,6 +142,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\semantic.css" />
+    <Content Include="assets\css\themes\default\assets\fonts\brand-icons.eot" />
+    <Content Include="assets\css\themes\default\assets\fonts\brand-icons.ttf" />
+    <Content Include="assets\css\themes\default\assets\fonts\brand-icons.woff" />
+    <Content Include="assets\css\themes\default\assets\fonts\brand-icons.woff2" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.eot" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.otf" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.woff" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="assets\css\themes\default\assets\fonts\outline-icons.eot" />
+    <Content Include="assets\css\themes\default\assets\fonts\outline-icons.ttf" />
+    <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff" />
+    <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff2" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -154,6 +167,9 @@
     <Content Include="AccountSettings.aspx" />
     <Content Include="assets\css\gradient_style.css" />
     <Content Include="assets\css\styles.css" />
+    <Content Include="assets\css\themes\default\assets\fonts\brand-icons.svg" />
+    <Content Include="assets\css\themes\default\assets\fonts\icons.svg" />
+    <Content Include="assets\css\themes\default\assets\fonts\outline-icons.svg" />
     <Content Include="assets\icons\dashboard.png" />
     <Content Include="assets\icons\form.png" />
     <Content Include="assets\icons\help.png" />

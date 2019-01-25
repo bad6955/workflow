@@ -45,7 +45,6 @@ html, body {
 
 #top-bar {
     width: 100%;
-    position: fixed;
     height: 3em;
     background-color: #dc7a32;
     background-image: url("../icons/rit_logo.png");
