@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Workflow.Data;
 using Workflow.Models;
 
 namespace Workflow
@@ -26,6 +27,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
+                userLbl.Text = user.Email;
 
                 //checks user is an admin
                 if (user.RoleId == 4)
@@ -87,7 +89,29 @@ namespace Workflow
 
         protected void CreateProjectBtn_Click(object sender, EventArgs e)
         {
+            int companyId = int.Parse(SelectedCompany.Value);
+            int workflowId = int.Parse(SelectedWorkflow.Value);
+            int coachId = int.Parse(SelectedCoach.Value);
+            string projectName = ProjectName.Text;
+            string projectNotes = ProjectNotes.Text;
 
+            if (projectName.Length > 0)
+            {
+                if(companyId != -1)
+                {
+                    if (workflowId != -1)
+                    {
+                        if (coachId != -1)
+                        {
+                            ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //enter valid name
+            }
         }
     }
 }

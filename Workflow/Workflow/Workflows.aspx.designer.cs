@@ -46,7 +46,7 @@ namespace Workflow {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label dashboard;
+        protected global::System.Web.UI.WebControls.Button dashboard;
         
         /// <summary>
         /// current control.

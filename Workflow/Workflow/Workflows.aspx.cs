@@ -27,6 +27,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
+                userLbl.Text = user.Email;
 
                 //checks user is an admin
                 if (user.RoleId == 4)
@@ -68,6 +69,10 @@ namespace Workflow
             if(WorkflowName.Text.Length > 0)
             {
                 WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+            }
+            else
+            {
+                //enter valid name
             }
         }
     }

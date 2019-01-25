@@ -179,6 +179,7 @@
       <DependentUpon>AccountSettings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Data\CompanyUtil.cs" />
+    <Compile Include="Data\ProjectUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />

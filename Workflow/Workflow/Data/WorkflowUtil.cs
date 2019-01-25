@@ -7,7 +7,7 @@ using Workflow.Models;
 
 namespace Workflow.Data
 {
-    public class WorkflowUtil
+    public static class WorkflowUtil
     {
         public static WorkflowModel CreateWorkflow(string workflowName)
         {
