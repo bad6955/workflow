@@ -194,7 +194,7 @@ html, body {
 
 /****************************** Offset to prevent content going under the nav *******************************/
 #content-body {
-    margin-left: 14em;
+    margin-left: 16em;
 }
 
 /****************************** DASHBOARD PAGE *******************************/
@@ -210,14 +210,14 @@ html, body {
 
 #vc-coach-dashboard-bottom {
 	width: 90%;
-	background-color: gray;
 	margin: 0 auto;
 }
 
 #completion-bar {
-	width: 100px;
-	height: 100px;
+    width: 300px;
+    height: 200px;
 	position: relative;
+    color: transparent;
 }
 
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/

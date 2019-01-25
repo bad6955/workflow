@@ -141,6 +141,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\semantic.css" />
+    <Content Include="assets\js\jqplot.meterGaugeRenderer.js" />
+    <Content Include="assets\js\jquery.jqplot.js" />
+    <Content Include="assets\css\jquery.jqplot.css" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -159,6 +163,8 @@
     <Content Include="assets\icons\home.png" />
     <Content Include="assets\icons\project.png" />
     <Content Include="assets\icons\workflow.png" />
+    <Content Include="assets\js\jquery.js" />
+    <Content Include="assets\js\semantic.js" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />
