@@ -45,6 +45,8 @@ html, body {
 
 #top-bar {
     width: 100%;
+    position: fixed;
+    z-index: 1;
     height: 3em;
     background-color: #dc7a32;
     background-image: url("../icons/rit_logo.png");
@@ -53,10 +55,11 @@ html, body {
     background-repeat: no-repeat;
 }
 #top-bar h1 {
-    font-size: 25px;
+    font-size: 20px;
     line-height: 45px;
     display: inline;
     vertical-align: middle;
+    font-weight: normal;
 }
 
 #top-bar img {
@@ -115,7 +118,7 @@ html, body {
     text-decoration: none;
     font-size: 18px;
     width: inherit;
-    padding: 1em;
+    padding: 0.7em;
     text-align: left;
     font-weight: normal;
     font-family: 'Titillium Web', sans-serif;
@@ -126,12 +129,13 @@ html, body {
 }
 
 #side-bar {
+    top: 3em;
 	margin: 0;
 	padding: 0;
 	position: fixed;
 	height: 100%;
 	overflow: auto;
-    width: 17em;
+    width: 16em;
 	background-color: #616161;
 }
 
@@ -159,12 +163,12 @@ html, body {
   display: block;
   color: #e0e0e0;
   text-decoration: none;
-  font-size: 21px;
+  font-size: 19px;
   padding: 1em;
 }
 
 #side-bar li:hover {
-  background-color: #bdbdbd;
+  background-color: #3a3a3a;
   color: #616161;
   cursor: pointer;
 }
@@ -176,13 +180,13 @@ html, body {
 #current, #dashboard, #workflow, #form, #project {
     border: none;
     color: black;
-    padding-left: 1em;
+    padding-left: 0.7em;
     background: transparent;
     vertical-align: middle;
     cursor: pointer;
     color: #e0e0e0;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 21px;
     display: inline;
 }
 
@@ -194,7 +198,12 @@ html, body {
 
 /****************************** Offset to prevent content going under the nav *******************************/
 #content-body {
-    margin-left: 17em;
+    margin-left: 16em;
+    padding-top: 3em;
+}
+
+#content-body h1 {
+    padding: 0.5em;
 }
 
 /****************************** DASHBOARD PAGE *******************************/
@@ -202,10 +211,8 @@ html, body {
 
 #vc-coach-dashboard-top {
 	width: 90%;
-	margin: 0 auto;
-	margin-bottom: 1em;
-	height: 100px;
-	background-color: gray;
+    height: 270px;
+    margin: 0 auto;
 }
 
 #vc-coach-dashboard-bottom {
