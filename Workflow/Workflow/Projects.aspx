@@ -4,6 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+    <link href="assets/css/styles.css" rel="stylesheet" />
+
     <%-- The script handle events from the buttons --%>
     <script runat="server">
         void Page_Load(Object sender, EventArgs e)
@@ -57,5 +63,6 @@
         </div>
     </form>
     <div id="footer"><h3>This is a footer</h3></div>
+
 </body>
 </html>
