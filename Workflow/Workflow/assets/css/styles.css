@@ -211,13 +211,13 @@ html, body {
 
 #vc-coach-dashboard-top {
 	width: 90%;
-    height: 270px;
     margin: 0 auto;
 }
 
 #vc-coach-dashboard-bottom {
 	width: 90%;
 	margin: 0 auto;
+    margin-top: 5em;
 }
 
 #completion-bar {
@@ -230,6 +230,12 @@ html, body {
 
 .vc-coach-dashboard-project {
     border-top: 1px solid black;
+}
+
+#notifications {
+    height: 12em;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
 /* These two share most (see also: all) of the same design so if you change someone on one, do

@@ -22779,7 +22779,6 @@ ol.ui.horizontal.list,
 .ui.grid > [class*="center aligned"].row > .column,
 .ui.grid > [class*="center aligned"].column.column,
 .ui.grid > .row > [class*="center aligned"].column.column {
-    text-align: center;
     -ms-flex-item-align: inherit;
     align-self: inherit;
 }

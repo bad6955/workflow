@@ -7,6 +7,7 @@
     <title>Dashboard</title>
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
+    <script type="text/javascript" src="assets/js/Chart.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
@@ -58,8 +59,70 @@
                         <div class="ui vertical divider"></div>
                         <div class="middle aligned row">
                             <div class="column">
+                                <h2>Notifications (or Activity Feed?)</h2>
+                                <div class="ui relaxed divided list" id="notifications">
+                                    <div class="item">
+                                        <div class="right floated content">
+                                            <div class="ui button">Dismiss</div>
+                                        </div>
+                                        <i class="bell outline icon"></i>
+                                        <div class="content">
+                                            <a class="header">X Company completed a form</a>
+                                            <div class="description">Updated 10 mins ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+
+                                        <div class="right floated content">
+                                            <div class="ui button">Dismiss</div>
+                                        </div>
+                                        <i class="bell outline icon"></i>
+                                        <div class="content">
+                                            <a class="header">Y Company completed a form</a>
+                                            <div class="description">Updated 22 mins ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+
+                                        <div class="right floated content">
+                                            <div class="ui button">Dismiss</div>
+                                        </div>
+                                        <i class="bell outline icon"></i>
+                                        <div class="content">
+                                            <a class="header">Director approved a form</a>
+                                            <div class="description">Updated 39 mins ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+
+                                        <div class="right floated content">
+                                            <div class="ui button">Dismiss</div>
+                                        </div>
+                                        <i class="bell outline icon"></i>
+                                        <div class="content">
+                                            <a class="header">New project assigned to you</a>
+                                            <div class="description">Updated 52 mins ago</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="column">
+                                <h2>Projects Overview</h2>
+                                <!-- All open projects, my projects waiting on another, my projects 2 weeks without activity, my projects awaiting approval -->
+                                <canvas id="pie-chart" width="800" height="250"></canvas>
+                                <script>
+                                    new Chart(document.getElementById("pie-chart"), {
+                                        type: 'pie',
+                                        data: {
+                                            labels: ["All Open Projects", "My Waiting on Company", "2 Weeks Without Activity", "My Pending Approval"],
+                                            datasets: [{
+                                                label: "Total",
+                                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                                data: [12, 3, 1, 2]
+                                            }]
+                                        }
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
