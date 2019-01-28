@@ -34,7 +34,7 @@
             <div id="side-bar">
                 <div id="side-bar-top-content">
                     <ul>
-                        <li>
+                        <li id="current-page">
                             <img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="current" Text="Dashboard"></asp:Button></li>
                         <li>
                             <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>

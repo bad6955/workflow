@@ -35,6 +35,7 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
+    background-color: #f9f9f9;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -190,6 +191,10 @@ html, body {
     display: inline;
 }
 
+#current-page {
+    background-color: #828282;
+}
+
 /* not a cry for help (yet) just the help button id */
 #help {
     margin: 0 auto;
@@ -317,4 +322,20 @@ html, body {
 
 .success{
     color:green;
+}
+
+/***************************************ACCOUNT SETTINGS*****************************************/
+#button {
+    width: 72px;
+    margin: 0 auto;
+}
+.field a {
+    color: #D95E00;
+}
+.field a:hover {
+    color: #ff9242;
+}
+#account-settings-password {
+    height: 40px;
+    margin: 0em 0em 1em;
 }

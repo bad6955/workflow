@@ -10,6 +10,7 @@ namespace Workflow
 {
     public partial class AccountSettings : System.Web.UI.Page
     {
+
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -25,13 +26,43 @@ namespace Workflow
             //validates that the user is logged in
             if (Session["User"] != null)
             {
-                User fbUser = (User)Session["User"];
+                User user = (User)Session["User"];
+                userLbl.Text = user.Email;
+                //email.Text = user.Email;
             }
             //kicks them out if they arent
             else
             {
                 Response.Redirect("Login.aspx");
             }
-        }   
+        }
+
+        protected void DashboardBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void ProjectBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx");
+        }
+
+        protected void FormBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        protected void WorkflowBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Workflows.aspx");
+        }
+
+        protected void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
+            Response.Redirect("Login.aspx");
+        }
     }
 }

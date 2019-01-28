@@ -568,7 +568,6 @@ body {
     padding: 0px;
     overflow-x: hidden;
     min-width: 320px;
-    background: #FFFFFF;
     font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-size: 14px;
     line-height: 1.4285em;
@@ -20299,7 +20298,7 @@ ol.ui.horizontal.list,
     .ui.form select {
         display: block;
         height: auto;
-        width: 100%;
+        width: 50%;
         background: #FFFFFF;
         border: 1px solid rgba(34, 36, 38, 0.15);
         border-radius: 0.28571429rem;

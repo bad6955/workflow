@@ -182,7 +182,6 @@
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="gradient_style.css" />
     <Content Include="Projects.aspx" />
     <Content Include="Web.config" />
     <Content Include="Login.aspx" />
