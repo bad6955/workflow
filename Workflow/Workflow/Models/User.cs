@@ -15,16 +15,6 @@ namespace Workflow.Models
         string lastName;
         Firebase.Auth.User firebaseUser;
 
-        public User(int id, int roleId, int companyId, string email, string firstName, string lastName)
-        {
-            this.id = id;
-            this.roleId = roleId;
-            this.companyId = companyId;
-            this.email = email;
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
         public User(int roleId, int companyId, string email, string firstName, string lastName)
         {
             this.roleId = roleId;
