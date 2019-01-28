@@ -17,35 +17,23 @@
                     <div id="account-dropdown">
                         <img src="assets/icons/person.png" />
                         <h1>
-                            <asp:Label runat="server" ID="user">Error here</asp:Label></h1>
+                            <asp:Label runat="server" ID="userLbl">Username</asp:Label></h1>
                         <!-- not passing argument ID=user -->
                         <div id="dropdown-content">
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>
-                            <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="logoutBtn_Click" />
+                            <asp:Button runat="server" ID="logout" Text="Log Out" OnClick="LogoutBtn_Click" />
                         </div>
                     </div>
                 </div>
             </div>
             <div id="side-bar">
                 <ul>
-                    <li>
-                        <img src="assets/icons/dashboard.png" />
-
-                        <asp:Button runat="server" ID="dashboard" Text="Dashboard" OnClick="dashboardBtn_Click" />
-
-
-                    </li>
-                    <li>
-                        <img src="assets/icons/workflow.png" />
-                        <asp:Label runat="server" ID="current">Workflows</asp:Label>
-                    </li>
-                    <li>
-                        <img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" Text="Project" OnClick="projectBtn_Click" /></li>
-                    <li>
-                        <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" Text="Form" OnClick="formBtn_Click" /></li>
-
+                    <li><img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="current" OnClick="DashboardBtn_Click" Text="Dashboard"></asp:Button></li>
+                    <li><img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" Text="Workflows" /></li>
+                    <li><img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
+                    <li><img src="assets/icons/form.png" /><asp:Button runat="server" ID ="form"  OnClick="FormBtn_Click" Text="Forms"/></li>
                 </ul>
                 <div id="help">
                     <img src="assets/icons/help.png" />
