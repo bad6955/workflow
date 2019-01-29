@@ -18,6 +18,14 @@ namespace Workflow.Models
             this.fieldName = fieldName;
         }
 
+        public FormField(int formFieldId, int formId, string fieldName, string fieldText)
+        {
+            this.id = formFieldId;
+            this.formId = formId;
+            this.fieldName = fieldName;
+            this.fieldText = fieldText;
+        }
+
         public int FormFieldId
         {
             get { return id; }
