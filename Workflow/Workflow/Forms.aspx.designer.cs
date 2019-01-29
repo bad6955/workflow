@@ -94,6 +94,42 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox FormName;
         
         /// <summary>
+        /// formFieldset control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formFieldset;
+        
+        /// <summary>
+        /// fieldDiv0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fieldDiv0;
+        
+        /// <summary>
+        /// FormField0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FormField0;
+        
+        /// <summary>
+        /// CreateFieldBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateFieldBtn;
+        
+        /// <summary>
         /// CreateFormBtn control.
         /// </summary>
         /// <remarks>
