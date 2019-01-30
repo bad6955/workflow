@@ -291,12 +291,12 @@ html, body {
     border-bottom: 1px solid black;
 }
 
-    #login #Email, #forgot-password #Email {
-        background-image: url('../icons/email.png');
-        background-size: 35px 35px;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-    }
+#login #Email, #forgot-password #Email {
+    background-image: url('../icons/email.png');
+    background-size: 35px 35px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
 
 #login #Password {
     background-image: url('../icons/password.png');
@@ -330,6 +330,14 @@ html, body {
 
 .success {
     color: green;
+}
+
+/* Stops Chrome autofill from being evil yellow lemons */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #fffcf7 inset !important;
 }
 
 /***************************************ACCOUNT SETTINGS*****************************************/

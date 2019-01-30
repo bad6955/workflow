@@ -92,6 +92,10 @@
                         Sort Filter
                     </div>
                     <div class="scrolling menu">
+                            <div class="item">
+                                <div class="ui orange empty circular label"></div>
+                            All
+                        </div>
                         <div class="item">
                             <div class="ui red empty circular label"></div>
                             Open
@@ -109,7 +113,7 @@
                             A-Z Company Name
                         </div>
                         <div class="item">
-                            <div class="ui orange empty circular label"></div>
+                            <div class="ui yellow empty circular label"></div>
                             Z-A Company Name
                         </div>
                     </div>
