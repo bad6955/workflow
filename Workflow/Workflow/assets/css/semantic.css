@@ -635,6 +635,7 @@ h5 {
 p {
     margin: 0em 0em 1em;
     line-height: 1.4285em;
+    display: inline-block;
 }
 
     p:first-child {
@@ -1728,6 +1729,7 @@ body .ui.inverted::-webkit-scrollbar-thumb {
     position: relative;
     padding-left: 4.07142857em !important;
     padding-right: 1.5em !important;
+    display: inline-block;
 }
 
     /* Left Labeled */

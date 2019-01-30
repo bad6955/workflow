@@ -28,7 +28,6 @@
 <body>
     <%-- --%>
     <form id="form1" runat="server">
-        <%-- this will be the nav for now --%>
         <div id="navigation">
             <div id="top-bar">
                 <div id="right">
@@ -78,55 +77,58 @@
                 <asp:HiddenField runat="server" ID="SelectedWorkflow" />
                 <asp:HiddenField runat="server" ID="SelectedCoach" />
             </div>
-            <div class="ui floating dropdown labeled icon button">
-                <i class="filter icon"></i>
-                <span class="text">Sort Filter</span>
-                <div class="menu">
-                    <div class="ui icon search input">
-                        <i class="search icon"></i>
-                        <input type="text" placeholder="Search..." />
-                    </div>
-                    <div class="divider"></div>
-                    <div class="header">
-                        <i class="tags icon"></i>
-                        Sort Filter
-                    </div>
-                    <div class="scrolling menu">
+            <div class="ui secondary segment">
+                <div class="ui floating dropdown labeled icon button">
+                    <i class="filter icon"></i>
+                    <span class="text">Sort Filter</span>
+                    <div class="menu">
+                        <div class="ui icon search input">
+                            <i class="search icon"></i>
+                            <input type="text" placeholder="Search..." />
+                        </div>
+                        <div class="divider"></div>
+                        <div class="header">
+                            <i class="tags icon"></i>
+                            Sort Filter
+                        </div>
+                        <div class="scrolling menu">
                             <div class="item">
                                 <div class="ui orange empty circular label"></div>
-                            All
-                        </div>
-                        <div class="item">
-                            <div class="ui red empty circular label"></div>
-                            Open
-                        </div>
-                        <div class="item">
-                            <div class="ui blue empty circular label"></div>
-                            Closed
-                        </div>
-                        <div class="item">
-                            <div class="ui black empty circular label"></div>
-                            Assigned to Me
-                        </div>
-                        <div class="item">
-                            <div class="ui purple empty circular label"></div>
-                            A-Z Company Name
-                        </div>
-                        <div class="item">
-                            <div class="ui yellow empty circular label"></div>
-                            Z-A Company Name
+                                All
+                            </div>
+                            <div class="item">
+                                <div class="ui red empty circular label"></div>
+                                Open
+                            </div>
+                            <div class="item">
+                                <div class="ui blue empty circular label"></div>
+                                Closed
+                            </div>
+                            <div class="item">
+                                <div class="ui black empty circular label"></div>
+                                Assigned to Me
+                            </div>
+                            <div class="item">
+                                <div class="ui purple empty circular label"></div>
+                                A-Z Company Name
+                            </div>
+                            <div class="item">
+                                <div class="ui yellow empty circular label"></div>
+                                Z-A Company Name
+                            </div>
                         </div>
                     </div>
                 </div>
+                <p>Showing 1 - 10 of X Results</p>
+                <script>
+                    $('.ui.dropdown')
+                        .dropdown();
+                </script>
             </div>
-            <script>
-                $('.ui.dropdown')
-                    .dropdown();
-            </script>
             <div class="ui items">
                 <div class="item">
                     <div class="ui small image">
-                        <img src="/images/wireframe/image.png" />
+                        <img src="assets/icons/project.png" />
                     </div>
                     <div class="content">
                         <!-- Project Name goes under .content -->
@@ -137,6 +139,9 @@
                         <!-- Project Description or current workflow step could go here -->
                         <div class="description">
                             Project Description or current workflow step could go here?
+                        </div>
+                        <div class="extra">
+                            Workflow Name
                         </div>
                     </div>
                 </div>
