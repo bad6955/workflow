@@ -56,17 +56,17 @@ html, body {
     background-repeat: no-repeat;
 }
 
-#top-bar h1 {
-    font-size: 20px;
-    line-height: 45px;
-    display: inline;
-    vertical-align: middle;
-    font-weight: normal;
-}
+    #top-bar h1 {
+        font-size: 20px;
+        line-height: 45px;
+        display: inline;
+        vertical-align: middle;
+        font-weight: normal;
+    }
 
-#top-bar img {
-    vertical-align: middle;
-}
+    #top-bar img {
+        vertical-align: middle;
+    }
 
 #right {
     position: absolute;
@@ -90,13 +90,13 @@ html, body {
     width: 100%;
 }
 
-#dropdown-content a {
-    color: black;
-    width: inherit;
-    text-decoration: none;
-    background-color: #bcbcbc;
-    display: block;
-}
+    #dropdown-content a {
+        color: black;
+        width: inherit;
+        text-decoration: none;
+        background-color: #bcbcbc;
+        display: block;
+    }
 
 #right h2 {
     font-size: 18px;
@@ -143,39 +143,39 @@ html, body {
     background-color: #616161;
 }
 
-#side-bar img {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    display: inline;
-}
-
-#side-bar hr {
-    width: 50%;
-    margin: 0 auto;
-    border: 0.5px solid #3f3f3f;
-}
-
-#side-bar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-#side-bar li {
-    display: block;
-    color: #e0e0e0;
-    text-decoration: none;
-    font-size: 19px;
-    padding: 1em;
-}
-
-    #side-bar li:hover {
-        background-color: #3a3a3a;
-        color: #616161;
-        cursor: pointer;
+    #side-bar img {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        display: inline;
     }
+
+    #side-bar hr {
+        width: 50%;
+        margin: 0 auto;
+        border: 0.5px solid #3f3f3f;
+    }
+
+    #side-bar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    #side-bar li {
+        display: block;
+        color: #e0e0e0;
+        text-decoration: none;
+        font-size: 19px;
+        padding: 1em;
+    }
+
+        #side-bar li:hover {
+            background-color: #3a3a3a;
+            color: #616161;
+            cursor: pointer;
+        }
 
 #side-bar-top-content {
     position: relative;
@@ -210,9 +210,9 @@ html, body {
     padding-top: 3em;
 }
 
-#content-body h1 {
-    padding: 0.5em;
-}
+    #content-body h1 {
+        padding: 0.5em;
+    }
 
 /****************************** DASHBOARD PAGE *******************************/
 
@@ -281,23 +281,23 @@ html, body {
     font-family: 'Titillium Web', sans-serif;
 }
 
-#login input[type=text], #login input[type=password], #forgot-password input[type=text] {
-    padding: 1.5em 4em;
-    margin: 1.5em;
-    border-radius: 6px;
-    box-sizing: border-box;
-    color: black;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid black;
-}
+    #login input[type=text], #login input[type=password], #forgot-password input[type=text] {
+        padding: 1.5em 4em;
+        margin: 1.5em;
+        border-radius: 6px;
+        box-sizing: border-box;
+        color: black;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid black;
+    }
 
-#login #Email, #forgot-password #Email {
-    background-image: url('../icons/email.png');
-    background-size: 35px 35px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-}
+    #login #Email, #forgot-password #Email {
+        background-image: url('../icons/email.png');
+        background-size: 35px 35px;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+    }
 
 #login #Password {
     background-image: url('../icons/password.png');
@@ -351,9 +351,9 @@ input:-webkit-autofill:active {
     color: #D95E00;
 }
 
-.field a:hover {
-    color: #ff9242;
-}
+    .field a:hover {
+        color: #ff9242;
+    }
 
 #account-settings-password {
     height: 40px;
@@ -366,54 +366,30 @@ input:-webkit-autofill:active {
 }
 
 
-.multi-item-carousel {
-    .carousel-inner
 
-{
-    > .item
 
-{
-    transition: 500ms ease-in-out left;
+
+/** Workflow page - form carousel **/
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
 }
 
-.active {
-    &.left
-
-{
-    left: -33%;
+.carousel-inner .carousel-item-right.active,
+.carousel-inner .carousel-item-next {
+    transform: translateX(25%);
 }
 
-&.right {
-    left: 33%;
+.carousel-inner .carousel-item-left.active,
+.carousel-inner .carousel-item-prev {
+    transform: translateX(-25%);
 }
 
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left {
+    transform: translateX(0);
 }
-
-.next {
-    left: 33%;
-}
-
-.prev {
-    left: -33%;
-}
-
-@media all and (transform-3d), (-webkit-transform-3d) {
-    > .item {
-        // use your favourite prefixer here transition: 500ms ease-in-out left;
-        transition: 500ms ease-in-out all;
-        backface-visibility: visible;
-        transform: none !important;
-    }
-}
-
-}
-
-.carouse-control {
-    &.left, &.right
-
-{
-    background-image: none;
-}
-
-}
+.img-fluid{
+    display:flex;
 }
