@@ -100,7 +100,8 @@ html, body {
 
 #right h2 {
     font-size: 18px;
-    padding: 1em;
+    font-family: 'Titillium Web', sans-serif;
+    padding: 0.7em;
     margin: 0;
     font-weight: normal;
 }
