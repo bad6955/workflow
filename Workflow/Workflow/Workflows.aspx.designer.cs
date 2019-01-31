@@ -40,6 +40,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button logout;
         
         /// <summary>
+        /// dashboard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button dashboard;
+        
+        /// <summary>
         /// current control.
         /// </summary>
         /// <remarks>
@@ -47,15 +56,6 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button current;
-        
-        /// <summary>
-        /// workflow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button workflow;
         
         /// <summary>
         /// project control.

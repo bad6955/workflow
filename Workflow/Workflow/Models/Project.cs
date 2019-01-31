@@ -11,27 +11,27 @@ namespace Workflow.Models
         int workflowId;
         int companyId;
         int statusId;
-        int VCID;
+        int coachId;
         string notes;
         string name;
 
-        public Project(int workflowId, int companyId, int statusId, int VCID, string name, string notes)
+        public Project(int workflowId, int companyId, int statusId, int coachId, string name, string notes)
         {
             this.workflowId = workflowId;
             this.companyId = companyId;
             this.statusId = statusId;
-            this.VCID = VCID;
+            this.coachId = coachId;
             this.name = name;
             this.notes = notes;
         }
 
-        public Project(int id, int workflowId, int companyId, int statusId, int VCID, string name, string notes)
+        public Project(int id, int workflowId, int companyId, int statusId, int coachId, string name, string notes)
         {
             this.id = id;
             this.workflowId = workflowId;
             this.companyId = companyId;
             this.statusId = statusId;
-            this.VCID = VCID;
+            this.coachId = coachId;
             this.name = name;
             this.notes = notes;
         }
@@ -60,10 +60,10 @@ namespace Workflow.Models
             set { statusId = value; }
         }
 
-        public int VCId
+        public int CoachId
         {
-            get { return VCID; }
-            set { VCID = value; }
+            get { return coachId; }
+            set { coachId = value; }
         }
 
         public string Name

@@ -141,14 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\bootstrap\css\bootstrap.css.map" />
-    <Content Include="assets\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="assets\bootstrap\js\bootstrap.bundle.js.map" />
-    <Content Include="assets\bootstrap\js\bootstrap.bundle.min.js.map" />
-    <Content Include="assets\bootstrap\js\bootstrap.js.map" />
-    <Content Include="assets\bootstrap\js\bootstrap.min.js.map" />
-    <Content Include="assets\jquery\jquery.min.map" />
-    <Content Include="assets\jquery\jquery.slim.min.map" />
     <Content Include="assets\css\semantic.css" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.eot" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.ttf" />
@@ -173,16 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountSettings.aspx" />
-    <Content Include="assets\bootstrap\css\bootstrap-grid.css" />
-    <Content Include="assets\bootstrap\css\bootstrap-grid.min.css" />
-    <Content Include="assets\bootstrap\css\bootstrap-reboot.css" />
-    <Content Include="assets\bootstrap\css\bootstrap-reboot.min.css" />
-    <Content Include="assets\bootstrap\css\bootstrap.css" />
-    <Content Include="assets\bootstrap\css\bootstrap.min.css" />
-    <Content Include="assets\bootstrap\js\bootstrap.bundle.js" />
-    <Content Include="assets\bootstrap\js\bootstrap.bundle.min.js" />
-    <Content Include="assets\bootstrap\js\bootstrap.js" />
-    <Content Include="assets\bootstrap\js\bootstrap.min.js" />
     <Content Include="assets\css\gradient_style.css" />
     <Content Include="assets\css\styles.css" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.svg" />
@@ -196,11 +178,7 @@
     <Content Include="assets\icons\workflow.png" />
     <Content Include="assets\js\Chart.js" />
     <Content Include="assets\js\semantic.js" />
-    <Content Include="assets\jquery\jquery.js" />
-    <Content Include="assets\jquery\jquery.min.js" />
-    <Content Include="assets\jquery\jquery.slim.js" />
-    <Content Include="assets\jquery\jquery.slim.min.js" />
-    <Content Include="assets\jquery\myquery.js" />
+    <Content Include="assets\js\jquery.js" />
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />

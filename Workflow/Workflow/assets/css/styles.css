@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿ /*
     * RIT TEAM LONDON SENIOR DEVELOPMENT PROJECT - VENTURE CREATIONS WORKFLOW SYSTEM.
     * SPONSOR: Venture Creations
     * DEVELOPMENT TEAM: Kevin Reynolds, Brie McIntosh, Ryan Plazony, Matt Mallette, Becca Dingman, Shawn Bishop, Adi Cengic
@@ -35,16 +35,19 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
+    background-color: #f9f9f9;
     font-family: 'Titillium Web', sans-serif;
 }
 
 /****************************** NAVIGATION CSS *******************************/
 #navigation {
-	font-family: 'Titillium Web', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 #top-bar {
     width: 100%;
+    position: fixed;
+    z-index: 1;
     height: 3em;
     background-color: #dc7a32;
     background-image: url("../icons/rit_logo.png");
@@ -52,16 +55,18 @@ html, body {
     background-position: 2em 3px;
     background-repeat: no-repeat;
 }
-#top-bar h1 {
-    font-size: 25px;
-    line-height: 45px;
-    display: inline;
-    vertical-align: middle;
-}
 
-#top-bar img {
-    vertical-align: middle;
-}
+    #top-bar h1 {
+        font-size: 20px;
+        line-height: 45px;
+        display: inline;
+        vertical-align: middle;
+        font-weight: normal;
+    }
+
+    #top-bar img {
+        vertical-align: middle;
+    }
 
 #right {
     position: absolute;
@@ -84,13 +89,14 @@ html, body {
     width: 100%;
 }
 
-#dropdown-content a {
-    color: black;
-    width: inherit;
-    text-decoration: none;
-    background-color: #bcbcbc;
-    display: block;
-}
+    #dropdown-content a {
+        color: black;
+        width: inherit;
+        text-decoration: none;
+        background-color: #bcbcbc;
+        display: block;
+    }
+
 #right h2 {
     font-size: 18px;
     padding: 1em;
@@ -115,66 +121,80 @@ html, body {
     text-decoration: none;
     font-size: 18px;
     width: inherit;
-    padding: 1em;
+    padding: 0.7em;
     text-align: left;
     font-weight: normal;
     font-family: 'Titillium Web', sans-serif;
 }
 
 #dashboard-body {
-	position: relative;
+    position: relative;
 }
 
 #side-bar {
-	margin: 0;
-	padding: 0;
-	position: fixed;
-	height: 100%;
-	width: 14em;
-	overflow: auto;
-	background-color: #616161;
+    top: 3em;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    width: 16em;
+    background-color: #616161;
 }
 
-#side-bar img {
-	width: 30px;
-	height: 30px;
+    #side-bar img {
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        display: inline;
+    }
+
+    #side-bar hr {
+        width: 50%;
+        margin: 0 auto;
+        border: 0.5px solid #3f3f3f;
+    }
+
+    #side-bar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    #side-bar li {
+        display: block;
+        color: #e0e0e0;
+        text-decoration: none;
+        font-size: 19px;
+        padding: 1em;
+    }
+
+        #side-bar li:hover {
+            background-color: #3a3a3a;
+            color: #616161;
+            cursor: pointer;
+        }
+
+#side-bar-top-content {
+    position: relative;
 }
 
-#side-bar hr {
-	width: 50%;
-	margin: 0 auto;
-	border: 0.5px solid #3f3f3f;
-}
-
-#side-bar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-#side-bar li {
-  display: block;
-  color: #e0e0e0;
-  padding: 1.3em 1.7em;
-  text-decoration: none;
-  font-size: 21px;
-}
-
-#side-bar #current {
-  background-color: #bdbdbd;
-  color: #616161;
-}
-
-#current, #workflow, #form, #project {
+#current, #dashboard, #workflow, #form, #project {
     border: none;
     color: black;
+    padding-left: 0.7em;
     background: transparent;
+    vertical-align: middle;
     cursor: pointer;
-    display: block;
     color: #e0e0e0;
     text-decoration: none;
     font-size: 21px;
+    display: inline;
+}
+
+#current-page {
+    background-color: #828282;
 }
 
 /* not a cry for help (yet) just the help button id */
@@ -185,32 +205,45 @@ html, body {
 
 /****************************** Offset to prevent content going under the nav *******************************/
 #content-body {
-    margin-left: 14em;
+    margin-left: 16em;
+    padding-top: 3em;
 }
+
+    #content-body h1 {
+        padding: 0.5em;
+    }
 
 /****************************** DASHBOARD PAGE *******************************/
 
 
 #vc-coach-dashboard-top {
-	width: 90%;
-	margin: 0 auto;
-	margin-bottom: 1em;
-	height: 100px;
-	background-color: gray;
+    width: 90%;
+    margin: 0 auto;
 }
 
 #vc-coach-dashboard-bottom {
-	width: 90%;
-	background-color: gray;
-	margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 5em;
 }
 
 #completion-bar {
-	width: 100px;
-	height: 100px;
-	position: relative;
+    width: 200px;
+    height: 130px;
+    position: relative;
+    color: transparent;
+    z-index: -10;
 }
 
+.vc-coach-dashboard-project {
+    border-top: 1px solid black;
+}
+
+#notifications {
+    height: 12em;
+    overflow-y: auto;
+    overflow-x: auto;
+}
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
 /* These two share most (see also: all) of the same design so if you change someone on one, do
     so with the knowledge that you're 100% changing something on another page as well.
@@ -220,11 +253,13 @@ html, body {
     font-size: 40px;
     margin: 0;
 }
+
 #login img, #forgot-password img {
     width: 120px;
     height: 120px;
     padding-bottom: 2em;
 }
+
 #login, #forgot-password {
     width: 400px;
     height: 600px;
@@ -244,29 +279,33 @@ html, body {
     text-align: center;
     font-family: 'Titillium Web', sans-serif;
 }
-#login input[type=text], #login input[type=password], #forgot-password input[type=text] {
-    padding: 1.5em 4em;
-    margin: 1.5em;
-    border-radius: 6px;
-    box-sizing: border-box;
-    color: black;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid black;
-}
-#login #Email, #forgot-password #Email {
-    background-image: url('../icons/email.png');
-    background-size: 35px 35px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-}
+
+    #login input[type=text], #login input[type=password], #forgot-password input[type=text] {
+        padding: 1.5em 4em;
+        margin: 1.5em;
+        border-radius: 6px;
+        box-sizing: border-box;
+        color: black;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid black;
+    }
+
+    #login #Email, #forgot-password #Email {
+        background-image: url('../icons/email.png');
+        background-size: 35px 35px;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+    }
+
 #login #Password {
     background-image: url('../icons/password.png');
     background-size: 35px 35px;
     background-position: 10px 10px;
     background-repeat: no-repeat;
 }
-#login #LoginBtn, #login #ForgotBtn, #forgot-password #changeBtn {
+
+#login #LoginBtn, #ForgotBtn, #forgot-password #changeBtn, #returnBtn {
     border: none;
     color: black;
     background: transparent;
@@ -285,66 +324,29 @@ html, body {
     color: white;
 }
 
-.error{
-    color:red;
+.error {
+    color: red;
 }
 
-.success{
-    color:green;
+.success {
+    color: green;
 }
 
-
-
-.multi-item-carousel {
-    .carousel-inner
-
-{
-    > .item
-
-{
-    transition: 500ms ease-in-out left;
+/***************************************ACCOUNT SETTINGS*****************************************/
+#button {
+    width: 72px;
+    margin: 0 auto;
 }
 
-.active {
-    &.left
-
-{
-    left: -33%;
+.field a {
+    color: #D95E00;
 }
 
-&.right {
-    left: 33%;
-}
-
-}
-
-.next {
-    left: 33%;
-}
-
-.prev {
-    left: -33%;
-}
-
-@media all and (transform-3d), (-webkit-transform-3d) {
-    > .item {
-        // use your favourite prefixer here transition: 500ms ease-in-out left;
-        transition: 500ms ease-in-out all;
-        backface-visibility: visible;
-        transform: none !important;
+    .field a:hover {
+        color: #ff9242;
     }
+
+#account-settings-password {
+    height: 40px;
+    margin: 0em 0em 1em;
 }
-
-}
-
-.carouse-control {
-    &.left, &.right
-
-{
-    background-image: none;
-}
-
-}
-}
-
-
