@@ -117,7 +117,7 @@
                                             labels: ["All Open Projects", "My Waiting on Company", "2 Weeks Without Activity", "My Pending Approval"],
                                             datasets: [{
                                                 label: "Total",
-                                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                                backgroundColor: ["#dc7a32", "#04828F", "#5C3315", "#32CBDC"],
                                                 data: [12, 3, 1, 2]
                                             }]
                                         }
