@@ -49,7 +49,7 @@ namespace Workflow.Data
 
         public static User GetUser(string email)
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName from Users where Email = @email";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where Email = @email";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@email", email);
@@ -58,15 +58,71 @@ namespace Workflow.Data
             User u = null;
             while (dr.Read())
             {
-                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"]);
+                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
             }
             conn.CloseConnection();
             return u;
         }
 
+        public static User GetUser(int userId)
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = @userId";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            User u = null;
+            while (dr.Read())
+            {
+                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+            }
+            conn.CloseConnection();
+            return u;
+        }
+
+        public static List<User> GetLockedUsers()
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where InvalidLoginCt >= 5";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            List<User> lockedUsers = new List<User>();
+            while (dr.Read())
+            {
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                lockedUsers.Add(u);
+            }
+            conn.CloseConnection();
+            return lockedUsers;
+        }
+
+        public static void InvalidLogin(User user)
+        {
+            user.InvalidLoginCt++;
+            string invalidQuery = "UPDATE Users SET InvalidLoginCt = @invalidLoginCt where Email = @email";
+
+            MySqlCommand cmd = new MySqlCommand(invalidQuery);
+            cmd.Parameters.AddWithValue("@invalidLoginCt", user.InvalidLoginCt);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+        }
+
+        public static void ValidLogin(User user)
+        {
+            string validQuery = "UPDATE Users SET InvalidLoginCt = 0 where Email = @email";
+
+            MySqlCommand cmd = new MySqlCommand(validQuery);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+        }
+
         public static List<User> GetCoaches()
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName from Users where RoleID = 2";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where RoleID = 2";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             DBConn conn = new DBConn();
@@ -74,7 +130,7 @@ namespace Workflow.Data
             List<User> coachList = new List<User>();
             while (dr.Read())
             {
-                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"]);
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
                 coachList.Add(u);
             }
             conn.CloseConnection();

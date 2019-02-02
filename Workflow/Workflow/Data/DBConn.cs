@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Web;
 
-namespace Workflow
+namespace Workflow.Data
 {
     public class DBConn
     {

@@ -10,10 +10,16 @@
     function saveSelection() {
         var roleEle = document.getElementById("RoleSelect");
         var role = roleEle.options[roleEle.selectedIndex].value;
+
         var companyEle = document.getElementById("CompanySelect");
         var company = companyEle.options[companyEle.selectedIndex].value;
+
+        var accountEle = document.getElementById("LockedAccountSelect");
+        var account = accountEle.options[accountEle.selectedIndex].value;
+
         document.getElementById("SelectedRole").value = role;
         document.getElementById("SelectedCompany").value = company;
+        document.getElementById("SelectedAccount").value = account;
     }
 </script>
 <body>
@@ -36,6 +42,13 @@
             <span>Create Company</span><br />
             <asp:TextBox runat="server" ID="Company" placeholder="Company Name"></asp:TextBox>
             <asp:Button runat="server" ID="CompanyBtn" Text="Create Company" OnClick="CompanyBtn_Click" />
+        </div>
+        <hr />
+        <div>
+            <span>Unlock Accounts</span><br />
+            <asp:DropDownList runat="server" ID="LockedAccountSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+            <asp:Button runat="server" ID="UnlockAccountBtn" Text="Unlock Account" OnClick="UnlockAccountBtn_Click"/>
+            <asp:HiddenField runat="server" ID="SelectedAccount" />
         </div>
     </form>
 </body>

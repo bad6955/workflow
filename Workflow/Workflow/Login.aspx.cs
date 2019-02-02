@@ -48,25 +48,29 @@ namespace Workflow
             User user = UserUtil.GetUser(email);
             if (user != null)
             {
-                user.FirebaseUser = FirebaseUtil.LoginUser(email, pass);
-                Session["User"] = user;
-                return true;
-            }
-            return false;
-
-            //The following code will be use to determine if the user is
-            // putting in the correct email and password. After 
-            // 5 attempt, will lock out from any more attempt and forced to 
-            // change their password.
-            /*if(Email.Text == validatedUser)
-            {
-                if(Email.Text == validatedPass)
+                if (user.InvalidLoginCt < 5)
                 {
-                    return true;
+                    user.FirebaseUser = FirebaseUtil.LoginUser(email, pass);
+                    if (user.FirebaseUser != null)
+                    {
+                        UserUtil.ValidLogin(user);
+                        Session["User"] = user;
+                        return true;
+                    }
+                    else
+                    {
+                        UserUtil.InvalidLogin(user);
+                        ErrorLabel2.Text = (5-user.InvalidLoginCt+1) + " attempt(s) remaining until account is locked";
+                    }
+                }
+                else
+                {
+                    //FirebaseUtil.ForgotPassword(user.Email);
+                    //ErrorLabel2.Text = "Account locked, check your email for a password reset link";
+                    ErrorLabel2.Text = "Account locked, contact a Venture Creations admin";
                 }
             }
-            return false;*/
-            //Delete this when testing security
+            return false;
         }
 
         //If user forgot password, run the following code

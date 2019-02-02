@@ -3,7 +3,7 @@ using System;
 using System.Configuration;
 using System.Threading.Tasks;
 
-namespace Workflow
+namespace Workflow.Data
 {
     public static class FirebaseUtil
     {

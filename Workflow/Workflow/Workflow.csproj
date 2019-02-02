@@ -202,8 +202,8 @@
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
-    <Compile Include="DBConn.cs" />
-    <Compile Include="FirebaseUtil.cs" />
+    <Compile Include="Data\DBConn.cs" />
+    <Compile Include="Data\FirebaseUtil.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

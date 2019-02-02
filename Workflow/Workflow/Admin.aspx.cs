@@ -59,6 +59,12 @@ namespace Workflow
             CompanySelect.DataValueField = "companyId";
             CompanySelect.DataBind();
             CompanySelect.SelectedIndex = 0;
+
+            LockedAccountSelect.DataSource = UserUtil.GetLockedUsers();
+            LockedAccountSelect.DataTextField = "Identity";
+            LockedAccountSelect.DataValueField = "UserId";
+            LockedAccountSelect.DataBind();
+            LockedAccountSelect.SelectedIndex = 0;
             //DEBUG end move
         }
 
@@ -142,6 +148,17 @@ namespace Workflow
             else
             {
                 //throw error, passwords don't match
+            }
+        }
+
+        protected void UnlockAccountBtn_Click(object sender, EventArgs e)
+        {
+            int userId = int.Parse(SelectedAccount.Value);
+            if(userId > 0)
+            {
+                User lockedUser = UserUtil.GetUser(userId);
+                FirebaseUtil.ForgotPassword(lockedUser.Email);
+                UserUtil.ValidLogin(lockedUser);
             }
         }
     }

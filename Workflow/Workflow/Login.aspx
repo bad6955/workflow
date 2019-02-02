@@ -17,6 +17,7 @@
                 <h1>LOG IN</h1>
                 <form id="form1" runat="server">
                     <div>
+                        <asp:Label runat="server" ID="ErrorLabel2" CssClass="error"></asp:Label><br />
                         <asp:Label runat="server" ID="ErrorLabel" CssClass="error"></asp:Label>
                         <div class="email-control">
                         <div class="login-email-icon"></div>

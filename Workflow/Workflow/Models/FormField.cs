@@ -10,6 +10,7 @@ namespace Workflow.Models
         int id;
         int formId;
         int statusId;
+        int roleId;
         string fieldValue;
         string fieldText;
 
@@ -33,6 +34,12 @@ namespace Workflow.Models
         {
             get { return statusId; }
             set { statusId = value; }
+        }
+
+        public int RoleId
+        {
+            get { return roleId; }
+            set { roleId = value; }
         }
 
         public string FieldValue

@@ -13,7 +13,19 @@ namespace Workflow.Models
         string email;
         string firstName;
         string lastName;
+        int invalidLoginCt;
         Firebase.Auth.User firebaseUser;
+
+        public User(int id, int roleId, int companyId, string email, string firstName, string lastName, int invalidLoginCt)
+        {
+            this.id = id;
+            this.roleId = roleId;
+            this.companyId = companyId;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.invalidLoginCt = invalidLoginCt;
+        }
 
         public User(int id, int roleId, int companyId, string email, string firstName, string lastName)
         {
@@ -73,6 +85,17 @@ namespace Workflow.Models
         public string FullName
         {
             get { return FirstName + " " + LastName; }
+        }
+
+        public string Identity
+        {
+            get { return FirstName + " " + LastName + " - " + Email; }
+        }
+
+        public int InvalidLoginCt
+        {
+            get { return invalidLoginCt; }
+            set { invalidLoginCt = value; }
         }
 
         public Firebase.Auth.User FirebaseUser
