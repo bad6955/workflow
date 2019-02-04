@@ -94,22 +94,22 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox FormName;
         
         /// <summary>
-        /// formFieldset control.
+        /// FormFieldset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formFieldset;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormFieldset;
         
         /// <summary>
-        /// fieldDiv0 control.
+        /// FormDiv0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fieldDiv0;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormDiv0;
         
         /// <summary>
         /// FormField0 control.
@@ -121,13 +121,40 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox FormField0;
         
         /// <summary>
-        /// CreateFieldBtn control.
+        /// FormDiv1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateFieldBtn;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormDiv1;
+        
+        /// <summary>
+        /// FormField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox FormField1;
+        
+        /// <summary>
+        /// CreateTextFieldBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateTextFieldBtn;
+        
+        /// <summary>
+        /// CreateApprovalPopupBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateApprovalPopupBtn;
         
         /// <summary>
         /// CreateFormBtn control.
@@ -137,5 +164,131 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateFormBtn;
+        
+        /// <summary>
+        /// ApprovalDialog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ApprovalDialog;
+        
+        /// <summary>
+        /// ApprovalCt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ApprovalCt;
+        
+        /// <summary>
+        /// ApprovalRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ApprovalRoles;
+        
+        /// <summary>
+        /// ApprovalRole1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ApprovalRole1;
+        
+        /// <summary>
+        /// ApprovalRole2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ApprovalRole2;
+        
+        /// <summary>
+        /// ApprovalRole3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ApprovalRole3;
+        
+        /// <summary>
+        /// ApprovalRole4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ApprovalRole4;
+        
+        /// <summary>
+        /// CreateApprovalBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateApprovalBtn;
+        
+        /// <summary>
+        /// ApprovalDialogStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ApprovalDialogStatus;
+        
+        /// <summary>
+        /// SelectedApprovalCt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedApprovalCt;
+        
+        /// <summary>
+        /// SelectedApprovalRole1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedApprovalRole1;
+        
+        /// <summary>
+        /// SelectedApprovalRole2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedApprovalRole2;
+        
+        /// <summary>
+        /// SelectedApprovalRole3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedApprovalRole3;
+        
+        /// <summary>
+        /// SelectedApprovalRole4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedApprovalRole4;
     }
 }
