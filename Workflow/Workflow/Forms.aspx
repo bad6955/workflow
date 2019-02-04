@@ -44,8 +44,16 @@
         <div id="content-body">
 			<h1>Forms</h1>
 			<div runat="server" id="adminDiv" visible="false">
-                <span>Create Forms</span><br />
+                <span>Form Editor Alpha</span><br />
                 <asp:TextBox runat="server" ID="FormName" placeholder="Form Name"></asp:TextBox>
+                <div class="form-editor" runat="server">
+                    <fieldset runat="server" ID="formFieldset">
+                        <div runat="server" ID="fieldDiv0" class="form-editor-field">
+                            <asp:TextBox runat="server" ID="FormField0" placeholder="Form Field Text"></asp:TextBox>
+                        </div>
+                    </fieldset>
+                    <asp:Button runat="server" ID="CreateFieldBtn" Text="Add Field to Form" OnClick="CreateFieldBtn_Click"/>
+                </div>
                 <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click"/>
 			</div>
 		</div>
