@@ -81,6 +81,16 @@ namespace Workflow.Data
             return u;
         }
 
+        public static bool DoesUserExist(string email)
+        {
+            User u = GetUser(email);
+            if (u != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static List<User> GetLockedUsers()
         {
             string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where InvalidLoginCt >= 5";

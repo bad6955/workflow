@@ -40,7 +40,7 @@ namespace Workflow.Data
 
         public static List<FormField> GetFormFields(int formId)
         {
-            string query = "SELECT FormFieldID, FieldName, FieldText from FormFields where FormID = @formId";
+            string query = "SELECT FormFieldID, FieldValue, FieldText from FormFields where FormID = @formId";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@formId", formId);
@@ -50,7 +50,7 @@ namespace Workflow.Data
             List<FormField> formFieldList = new List<FormField>();
             while (dr.Read())
             {
-                FormField ff = new FormField((int)dr["FormFieldID"], formId, (string)dr["FieldName"], (string)dr["FieldText"]);
+                FormField ff = new FormField((int)dr["FormFieldID"], formId, (string)dr["FieldValue"], (string)dr["FieldText"]);
                 formFieldList.Add(ff);
             }
             conn.CloseConnection();
