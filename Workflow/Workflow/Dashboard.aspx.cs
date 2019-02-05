@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using Workflow.Models;
-using System.Windows.Forms;
+using HtmlAgilityPack;
 
 namespace Workflow
 {
@@ -30,7 +30,9 @@ namespace Workflow
             {
                 Response.Redirect("Login.aspx");
             }
-            var doc = HtmlDocument.GetElementById("test").AppendChild("<h1>Hi</h1>");
+
+            HtmlNode html = HtmlNode.CreateNode("<h1>HI</h1>");
+            test.Controls.Add(html);
         }
 
         protected void ProjectBtn_Click(object sender, EventArgs e)
