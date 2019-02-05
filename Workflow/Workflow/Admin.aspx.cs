@@ -68,6 +68,16 @@ namespace Workflow
             //DEBUG end move
         }
 
+        private void ClearFields()
+        {
+            Email.Text = "";
+            FirstName.Text = "";
+            LastName.Text = "";
+            Password.Text = "";
+            PasswordRepeat.Text = "";
+            Company.Text = "";
+        }
+
         //makes sure password meets min requirements
         //returns a result code for missing reqs (and 0 for valid)
         private int ValidatePasswordSecurity(string pass)
@@ -241,6 +251,8 @@ namespace Workflow
                 EmailError.Visible = true;
                 EmailError.Text = "Email already in use";
             }
+
+            ClearFields();
         }
 
         protected void CompanyBtn_Click(object sender, EventArgs e)
@@ -267,6 +279,8 @@ namespace Workflow
                 CompanyError.Visible = true;
                 CompanyError.Text = "Please enter a company name";
             }
+
+            ClearFields();
         }
 
         protected void UnlockAccountBtn_Click(object sender, EventArgs e)
@@ -288,6 +302,8 @@ namespace Workflow
                 UnlockError.Visible = true;
                 UnlockError.Text = "Please select an account to unlock";
             }
+
+            ClearFields();
         }
     }
 }
