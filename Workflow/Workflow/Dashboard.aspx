@@ -12,15 +12,11 @@
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
-    <script>
-        var test = document.getElementById("test");
-        var test2 = test.options[test.selectedIndex].value;
 
-    </script>
 <body>
     <form id="form1" runat="server">
         <!-- this will be the nav for now -->
-        <!-- <div id="navigation">
+        <div id="navigation">
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
@@ -58,7 +54,7 @@
         <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
         <div id="content-body">
             <div><asp:Panel runat="server" ID="test"></asp:Panel></div>
-            <!--<h1>Dashboard</h1>
+            <h1>Dashboard</h1>
             <div id="vc-coach-dashboard-top">
                 <div class="ui placeholder segment">
                     <div class="ui two column stackable center aligned grid">
@@ -115,7 +111,7 @@
                             <div class="column">
                                 <h2>Projects Overview</h2>
                                 <!-- All open projects, my projects waiting on another, my projects 2 weeks without activity, my projects awaiting approval -->
-                                <!--<canvas id="pie-chart" width="800" height="250"></canvas>
+                                <canvas id="pie-chart" width="800" height="250"></canvas>
                                 <script>
                                     new Chart(document.getElementById("pie-chart"), {
                                         type: 'pie',
@@ -142,7 +138,7 @@
                 <div class="ui items">
                     <div class="item">
                         <!-- Progress bar stuff -->
-                        <!--<div class="ui small image">
+                        <div class="ui small image">
                             <div class="ui orange progress">
                                 <div class="bar">
                                     <div class="progress"></div>
@@ -152,13 +148,13 @@
                             <button class="ui brown basic button">View Full Project</button>
                         </div>
                         <div class="content">
-                            <!-- Project Name goes under .content --
+                            <!-- Project Name goes under .content -->
                             <a class="header">Project Name</a>
-                            <!-- Project Description or current workflow step could go here --
+                            <!-- Project Description or current workflow step could go here -->
                             <div class="description">
                                 Project Description or current workflow step could go here?
                             </div>
-                            <!------------------------------- Table with Workflow steps -------------------------
+                            <!------------------------------- Table with Workflow steps ------------------------->
                             <table class="ui celled table">
                                 <thead>
                                     <tr>
@@ -207,7 +203,7 @@
                     <div class="vc-coach-dashboard-project">
                     </div>
                     <div class="item">
-                        <!-- Progress bar stuff --
+                        <!-- Progress bar stuff -->
                         <div class="ui small image">
                             <div class="ui orange progress">
                                 <div class="bar">
@@ -218,13 +214,13 @@
                             <button class="ui brown basic button">View Full Project</button>
                         </div>
                         <div class="content">
-                            <!-- Project Name goes under .content --
+                            <!-- Project Name goes under .content -->
                             <a class="header">Project Name</a>
                             <!-- Project Description or current workflow step could go here -->
                             <div class="description">
                                 Project Description or current workflow step could go here?
                             </div>
-                            <!------------------------------- Table with Workflow steps -------------------------
+                            <!------------------------------- Table with Workflow steps ------------------------->
                             <table class="ui celled table">
                                 <thead>
                                     <tr>
@@ -270,7 +266,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
         </div>
     </form>
 </body>
