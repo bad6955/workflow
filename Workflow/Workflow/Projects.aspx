@@ -64,8 +64,8 @@
         </div>
         <div id="content-body">
             <h1>Projects</h1>
-            <!-- just hidden for now while I fiddle with the page appearance -->
-            <div runat="server" id="adminDiv" visible="false" style="display: none">
+            <!-- just hidden for now while I fiddle with the page appearance == DEBUG kevin note - REMOVE style="DISPLAY: NONE" TO SHOW-->
+            <div runat="server" id="adminDiv" visible="false" style="display: block">
                 <span>Create Project</span><br />
                 <asp:TextBox runat="server" ID="ProjectName" placeholder="Project Name"></asp:TextBox>
                 <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
