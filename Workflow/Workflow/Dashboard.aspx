@@ -125,137 +125,14 @@
                 <div class="vc-coach-dashboard-project">
                 </div>
 
-                <div class="ui items">
-                    <div class="item">
-                        <!-- Progress bar stuff -->
-                        <div class="ui small image">
-                            <div class="ui orange progress">
-                                <div class="bar">
-                                    <div class="progress"></div>
-                                </div>
-                                <div class="label">Completion</div>
-                            </div>
-                            <button class="ui brown basic button">View Full Project</button>
-                        </div>
-                        <div class="content">
-                            <!-- Project Name goes under .content -->
-                            <a class="header">Project Name</a>
-                            <!-- Project Description or current workflow step could go here -->
-                            <div class="description">
-                                Project Description or current workflow step could go here?
-                            </div>
-                            <!------------------------------- Table with Workflow steps ------------------------->
-                            <table class="ui celled table">
-                                <thead>
-                                    <tr>
-                                        <th>Workflow Step</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="positive">
-                                        <td>Step 1 - Worklflow Step Title</td>
-                                        <td><i class="icon checkmark"></i>Approved</td>
-                                    </tr>
-                                    <tr class="positive">
-                                        <td>Step 2 - Workflow Step Title</td>
-                                        <td><i class="icon checkmark"></i>Approved</td>
-                                    </tr>
-                                    <tr class="negative">
-                                        <td>Step 3 - Workflow Step Title</td>
-                                        <td>Denied - Needs Modification</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Step 4 - Workflow Step Title</td>
-                                        <td>Unknown</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="3">
-                                            <div class="ui right floated pagination menu">
-                                                <a class="icon item">
-                                                    <i class="left chevron icon"></i>
-                                                </a>
-                                                <a class="item">1</a>
-                                                <a class="item">2</a>
-                                                <a class="icon item">
-                                                    <i class="right chevron icon"></i>
-                                                </a>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="vc-coach-dashboard-project">
-                    </div>
-                    <div class="item">
-                        <!-- Progress bar stuff -->
-                        <div class="ui small image">
-                            <div class="ui orange progress">
-                                <div class="bar">
-                                    <div class="progress"></div>
-                                </div>
-                                <div class="label">Completion</div>
-                            </div>
-                            <button class="ui brown basic button">View Full Project</button>
-                        </div>
-                        <div class="content">
-                            <!-- Project Name goes under .content -->
-                            <a class="header">Project Name</a>
-                            <!-- Project Description or current workflow step could go here -->
-                            <div class="description">
-                                Project Description or current workflow step could go here?
-                            </div>
-                            <!------------------------------- Table with Workflow steps ------------------------->
-                            <table class="ui celled table">
-                                <thead>
-                                    <tr>
-                                        <th>Workflow Step</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="positive">
-                                        <td>Step 1 - Worklflow Step Title</td>
-                                        <td><i class="icon checkmark"></i>Approved</td>
-                                    </tr>
-                                    <tr class="positive">
-                                        <td>Step 2 - Workflow Step Title</td>
-                                        <td><i class="icon checkmark"></i>Approved</td>
-                                    </tr>
-                                    <tr class="negative">
-                                        <td>Step 3 - Workflow Step Title</td>
-                                        <td>Denied - Needs Modification</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Step 4 - Workflow Step Title</td>
-                                        <td>Unknown</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="3">
-                                            <div class="ui right floated pagination menu">
-                                                <a class="icon item">
-                                                    <i class="left chevron icon"></i>
-                                                </a>
-                                                <a class="item">1</a>
-                                                <a class="item">2</a>
-                                                <a class="icon item">
-                                                    <i class="right chevron icon"></i>
-                                                </a>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                <div runat="server" class="ui items" id="projectParent">
                 </div>
+                <script>
+                    $('#project-1').progress();
+                    $('#project-2').progress();
+                    $('#project-3').progress();
+                    $('#project-4').progress();
+                </script>
             </div>
         </div>
     </form>
