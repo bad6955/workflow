@@ -68,9 +68,73 @@ namespace Workflow
             //DEBUG end move
         }
 
+        private void ClearFields()
+        {
+            Email.Text = "";
+            FirstName.Text = "";
+            LastName.Text = "";
+            Password.Text = "";
+            PasswordRepeat.Text = "";
+            Company.Text = "";
+        }
+
+        //makes sure password meets min requirements
+        //returns a result code for missing reqs (and 0 for valid)
+        private int ValidatePasswordSecurity(string pass)
+        {
+            bool containsUppercase = false;
+            bool containsLowercase = false;
+            bool containsNumber = false;
+
+            foreach (char c in pass)
+            {
+                if (Char.IsDigit(c) || Char.IsSymbol(c))
+                {
+                    containsNumber = true;
+                    continue;
+                }
+
+                if (Char.IsUpper(c))
+                {
+                    containsUppercase = true;
+                    continue;
+                }
+
+                if (Char.IsLower(c))
+                {
+                    containsLowercase = true;
+                    continue;
+                }
+            }
+
+            if (containsNumber && containsLowercase && containsUppercase)
+            {
+                return 0;
+            }
+            else if (!containsUppercase)
+            {
+                return 1;
+            }
+            else if (!containsLowercase)
+            {
+                return 2;
+            }
+            else if (!containsNumber)
+            {
+                return 3;
+            }
+            return 4;
+        }
+
         //Register a new user in the system
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
+            UserCreateResult.Visible = false;
+            EmailError.Visible = false;
+            NameError.Visible = false;
+            PasswordError.Visible = false;
+            RoleCompanyError.Visible = false;
+
             string email = Email.Text;
             string firstName = FirstName.Text;
             string lastName = LastName.Text;
@@ -87,48 +151,115 @@ namespace Workflow
             //Send an email to the new user
 
             //checks that a role was selected for the user
-            if(roleId != -1)
-            {
-                if (companyId != -1)
-                {
-                    if (pass.Equals(pass2))
-                    {
-                        //creates the user in firebase
-                        Firebase.Auth.User fbUser = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
-                        if (fbUser != null)
-                        {
-                            //creates the user in the DB
-                            if (firstName.Length > 0 && lastName.Length > 0)
-                            {
-                                User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
-                                u.FirebaseUser = fbUser;
-                            }
 
-                            //display user created msg
+            if (!UserUtil.DoesUserExist(email))
+            {
+                if (firstName.Length > 0 && lastName.Length > 0)
+                {
+                    if (roleId != -1)
+                    {
+                        if (companyId != -1)
+                        {
+                            if (pass.Equals(pass2))
+                            {
+                                if (pass.Length > 7)
+                                {
+                                    int validPass = ValidatePasswordSecurity(pass);
+                                    if (validPass == 0)
+                                    {
+                                        //creates the user in firebase
+                                        Firebase.Auth.User fbUser = FirebaseUtil.CreateNewUser(email, pass, displayName, verificationEmail);
+
+                                        //if the user already exists in firebase, try to log them in
+                                        if (fbUser == null)
+                                        {
+                                            fbUser = FirebaseUtil.LoginUser(email, pass);
+                                        }
+
+                                        if (fbUser != null)
+                                        {
+                                            User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
+                                            u.FirebaseUser = fbUser;
+                                            //display user created msg
+                                            UserCreateResult.Visible = true;
+                                            UserCreateResult.Text = "Successfully created user " + u.Identity;
+                                        }
+                                        else
+                                        {
+                                            UserCreateResult.CssClass = "error";
+                                            UserCreateResult.Visible = true;
+                                            UserCreateResult.Text = "Error creating user in Firebase";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        PasswordError.Visible = true;
+                                        if (validPass == 1)
+                                        {
+                                            PasswordError.Text = "Password must contain at least 1 uppercase";
+                                        }
+                                        else if (validPass == 2)
+                                        {
+                                            PasswordError.Text = "Password must contain at least 1 lowercase";
+                                        }
+                                        else if (validPass == 3)
+                                        {
+                                            PasswordError.Text = "Password must contain at least 1 number";
+                                        }
+                                        else
+                                        {
+                                            PasswordError.Text = "Unknown password error";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    //display user failed to be created msg
+                                    PasswordError.Visible = true;
+                                    PasswordError.Text = "Password must be at least 8 chars";
+                                }
+                            }
+                            else
+                            {
+                                //throw error, passwords don't match
+                                PasswordError.Visible = true;
+                                PasswordError.Text = "Passwords don't match";
+                            }
                         }
                         else
                         {
-                            //display user failed to be created msg
+                            //throw error, please select company for user
+                            RoleCompanyError.Visible = true;
+                            RoleCompanyError.Text = "Please select a company";
                         }
                     }
                     else
                     {
-                        //throw error, passwords don't match
+                        //throw error, please select role for new user
+                        RoleCompanyError.Visible = true;
+                        RoleCompanyError.Text = "Please select a role";
                     }
                 }
                 else
                 {
-                    //throw error, please select company for user
+                    NameError.Visible = true;
+                    NameError.Text = "Please enter a first and last name";
                 }
             }
             else
             {
-                //throw error, please select role for new user
+                EmailError.Visible = true;
+                EmailError.Text = "Email already in use";
             }
+
+            ClearFields();
         }
 
         protected void CompanyBtn_Click(object sender, EventArgs e)
         {
+            CompanyResult.Visible = false;
+            CompanyError.Visible = false;
+
             string companyName = Company.Text;
 
             //Validate that the logged in user has permissions to do this
@@ -139,27 +270,40 @@ namespace Workflow
                 if (company != null)
                 {
                     //display user created msg
-                }
-                else
-                {
-                    //display user failed to be created msg
+                    CompanyResult.Visible = true;
+                    CompanyResult.Text = "Created company " + companyName;
                 }
             }
             else
             {
-                //throw error, passwords don't match
+                CompanyError.Visible = true;
+                CompanyError.Text = "Please enter a company name";
             }
+
+            ClearFields();
         }
 
         protected void UnlockAccountBtn_Click(object sender, EventArgs e)
         {
+            UnlockResult.Visible = false;
+            UnlockError.Visible = false;
+
             int userId = int.Parse(SelectedAccount.Value);
             if(userId > 0)
             {
                 User lockedUser = UserUtil.GetUser(userId);
                 FirebaseUtil.ForgotPassword(lockedUser.Email);
                 UserUtil.ValidLogin(lockedUser);
+                UnlockResult.Visible = true;
+                UnlockResult.Text = "Unlocked account " + lockedUser.Identity;
             }
+            else
+            {
+                UnlockError.Visible = true;
+                UnlockError.Text = "Please select an account to unlock";
+            }
+
+            ClearFields();
         }
     }
 }

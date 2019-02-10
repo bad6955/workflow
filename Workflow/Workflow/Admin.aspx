@@ -8,9 +8,13 @@
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
-    <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
-    <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
 </head>
 <script>
     function saveSelection() {
@@ -30,50 +34,40 @@
 </script>
 <body>
     <form id="form1" runat="server">
-        <div id="navigation">
-            <div id="top-bar">
-                <div id="right">
-                </div>
-            </div>
+        <div>
+            <asp:Label runat="server" ID="UserCreateResult" CssClass="success" Visible="false"></asp:Label><br />
+            <span>Create User</span><br />
+            <asp:Label runat="server" ID="EmailError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox><br />
+            <asp:Label runat="server" ID="NameError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:TextBox runat="server" ID="FirstName" placeholder="First Name"></asp:TextBox>
+            <asp:TextBox runat="server" ID="LastName" placeholder="Last Name"></asp:TextBox><br />
+            <asp:Label runat="server" ID="PasswordError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:TextBox runat="server" ID="Password" TextMode="Password" placeholder="Password"></asp:TextBox>
+            <asp:TextBox runat="server" ID="PasswordRepeat" TextMode="Password" placeholder="Repeat Password"></asp:TextBox><br />
+            <asp:Label runat="server" ID="RoleCompanyError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:DropDownList runat="server" ID="RoleSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+            <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+            <asp:Button runat="server" ID="RegisterBtn" Text="Register User" OnClick="RegisterBtn_Click" />
+            <asp:HiddenField runat="server" ID="SelectedRole" />
+            <asp:HiddenField runat="server" ID="SelectedCompany" />
         </div>
-        <div id="admin-panel" style="padding-top: 4em">
-            <div class="ui secondary menu">
-                <a class="item active" data-tab="first">User</a>
-                <a class="item" data-tab="second">Company</a>
-                <a class="item" data-tab="third">Password Reset</a>
-            </div>
-            <div class="ui tab segment active" data-tab="first">
-                <span>Create User</span><br />
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="FirstName" placeholder="First Name"></asp:TextBox></div>
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="LastName" placeholder="Last Name"></asp:TextBox></div>
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox></div>
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="Password" placeholder="Password"></asp:TextBox></div>
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="PasswordRepeat" placeholder="Repeat Password"></asp:TextBox></div>
-                <asp:DropDownList runat="server" ID="RoleSelect" CssClass="ui dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:DropDownList runat="server" ID="CompanySelect" CssClass="ui dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:Button runat="server" ID="RegisterBtn" CssClass="ui secondary button" Text="Register" OnClick="RegisterBtn_Click" />
-                <asp:HiddenField runat="server" ID="SelectedRole" />
-                <asp:HiddenField runat="server" ID="SelectedCompany" />
-            </div>
-            <hr />
-            <div class="ui tab segment" data-tab="second">
-                <span>Create Company</span><br />
-                <div class="ui input">
-                    <asp:TextBox runat="server" ID="Company" placeholder="Company Name"></asp:TextBox></div>
-                <asp:Button runat="server" ID="CompanyBtn" CssClass="ui secondary button" Text="Create Company" OnClick="CompanyBtn_Click" />
-            </div>
-            <hr />
-            <div class="ui tab segment" data-tab="third">
-                <span>Unlock Accounts</span><br />
-                <asp:DropDownList runat="server" ID="LockedAccountSelect" CssClass="ui dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:Button runat="server" ID="UnlockAccountBtn" CssClass="ui secondary button" Text="Unlock Account" OnClick="UnlockAccountBtn_Click" />
-                <asp:HiddenField runat="server" ID="SelectedAccount" />
-            </div>
+        <hr />
+        <div>
+            <asp:Label runat="server" ID="CompanyResult" CssClass="success" Visible="false"></asp:Label><br />
+            <span>Create Company</span><br />
+            <asp:Label runat="server" ID="CompanyError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:TextBox runat="server" ID="Company" placeholder="Company Name"></asp:TextBox>
+            <asp:Button runat="server" ID="CompanyBtn" Text="Create Company" OnClick="CompanyBtn_Click" />
+        </div>
+        <hr />
+        <div>
+            <asp:Label runat="server" ID="UnlockResult" CssClass="success" Visible="false"></asp:Label><br />
+            <span>Unlock Accounts</span><br />
+            <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />
+            <asp:DropDownList runat="server" ID="LockedAccountSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+            <asp:Button runat="server" ID="UnlockAccountBtn" Text="Unlock Account" OnClick="UnlockAccountBtn_Click"/>
+            <asp:HiddenField runat="server" ID="SelectedAccount" />
         </div>
     </form>
     <script>

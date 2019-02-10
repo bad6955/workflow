@@ -5,33 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Workflow</title>
-
-
-
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
-
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
-
     <!-- Bootstrap CSS -->
     <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
-    
-
-
-
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
-
-
 </head>
 <body>
     <form id="form1" runat="server">
-        <!-- this will be the nav for now -->
         <div id="navigation">
             <div id="top-bar">
                 <div id="right">

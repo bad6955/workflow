@@ -61,18 +61,8 @@
                         <div class="ui vertical divider"></div>
                         <div class="middle aligned row">
                             <div class="column">
-                                <h2>Notifications (or Activity Feed?)</h2>
-                                <div class="ui relaxed divided list" id="notifications">
-                                    <div class="item">
-                                        <div class="right floated content">
-                                            <div class="ui button">Dismiss</div>
-                                        </div>
-                                        <i class="bell outline icon"></i>
-                                        <div class="content">
-                                            <a class="header">X Company completed a form</a>
-                                            <div class="description">Updated 10 mins ago</div>
-                                        </div>
-                                    </div>
+                                <h2>Activity Feed</h2>
+                                <div runat="server" class="ui relaxed divided list" id="activityFeed">
                                     <div class="item">
 
                                         <div class="right floated content">
