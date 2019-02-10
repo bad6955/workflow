@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Models;
+using Workflow.Data;
 
 namespace Workflow
 {
@@ -23,6 +24,7 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             AddFeedItem(1, "You were added as a coach on company's project: project name", new DateTime());
+            AddFeedItem(2, "You were added as a coach on company's project: project name", new DateTime());
             //validates that the user is logged in
             if (Session["User"] != null)
             {
@@ -39,7 +41,7 @@ namespace Workflow
         private void AddFeedItem(int id, string text, DateTime time)
         {
             DateTime current = DateTime.Now;
-            var currentFeed = activityFeed.InnerHtml;
+            var currentFeed = notifications.InnerHtml;
             var newItem = "<Asp:Panel runat=\"server\" class=\"item\" ID=\"FeedItem"+id+"\">";
                 newItem += "<div class=\right floated content\">";
                 newItem += "<Asp:Button runat=\"server\" ID=\"DismissBtn"+text+"\" OnClick=\"DismissBtn_Click\" CssClass=\"ui button\" Text=\"Dismiss\"></Asp:Button>";
@@ -47,11 +49,11 @@ namespace Workflow
                 newItem += "<i class=\"bell outline icon\"></i>";
                 newItem += "<div class=\"content\">";
                 newItem += "<a class=\"header\">"+text+"</a>";
-                newItem += "<div class=\"description\">Updated"+"TIME"+"ago</div>";
+                newItem += "<div class=\"description\">Updated "+(current-time)+" ago</div>";
                 newItem += "</div>";
                 newItem += "</Asp:Panel>";
 
-            activityFeed.InnerHtml = newItem + currentFeed;
+            notifications.InnerHtml = newItem + currentFeed;
 
             /*
             <Asp:Panel runat="server" class="item">

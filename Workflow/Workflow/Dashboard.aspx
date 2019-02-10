@@ -60,7 +60,9 @@
                         <div class="middle aligned row">
                             <div class="column">
                                 <h2>Activity Feed</h2>
-                                <div runat="server" class="ui relaxed divided list" id="activityFeed">
+                                <div runat="server" class="ui relaxed divided list" id="notifications">
+                                </div>
+                                <div class="ui relaxed divided list">
                                     <div class="item">
 
                                         <div class="right floated content">
