@@ -10,6 +10,7 @@ namespace Workflow.Data
 {
     public class PDFGen
     {
+        //need to have admin privs on the machine to create PDF
         public Document CreatePDF()
         {
             Document pdf = new Document();

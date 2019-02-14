@@ -20,6 +20,19 @@ namespace Workflow.Data
             return f;
         }
 
+        //field value and role id should be able to be null
+        public static FormField CreateFormField(int formId, string fieldText, string fieldValue)
+        {
+            FormField ff = new FormField(formId, fieldText, fieldValue);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO FormFields (FormID, FieldText, FieldValue) VALUES (@formId, @fieldText, @fieldValue)");
+            cmd.Parameters.AddWithValue("@formId", formId);
+            cmd.Parameters.AddWithValue("@fieldText", fieldText);
+            cmd.Parameters.AddWithValue("@fieldValue", fieldValue);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            return ff;
+        }
+
         public static List<Form> GetForms()
         {
             string query = "SELECT FormID, FormName from Forms";

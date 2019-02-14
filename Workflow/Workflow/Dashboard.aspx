@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Workflow.Dashboard" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -60,43 +59,7 @@
                         <div class="middle aligned row">
                             <div class="column">
                                 <h2>Activity Feed</h2>
-                                <div runat="server" class="ui relaxed divided list" id="notifications">
-                                </div>
-                                <div class="ui relaxed divided list">
-                                    <div class="item">
-
-                                        <div class="right floated content">
-                                            <div class="ui button">Dismiss</div>
-                                        </div>
-                                        <i class="bell outline icon"></i>
-                                        <div class="content">
-                                            <a class="header">Y Company completed a form</a>
-                                            <div class="description">Updated 22 mins ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-
-                                        <div class="right floated content">
-                                            <div class="ui button">Dismiss</div>
-                                        </div>
-                                        <i class="bell outline icon"></i>
-                                        <div class="content">
-                                            <a class="header">Director approved a form</a>
-                                            <div class="description">Updated 39 mins ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-
-                                        <div class="right floated content">
-                                            <div class="ui button">Dismiss</div>
-                                        </div>
-                                        <i class="bell outline icon"></i>
-                                        <div class="content">
-                                            <a class="header">New project assigned to you</a>
-                                            <div class="description">Updated 52 mins ago</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div runat="server" class="ui relaxed divided list" id="notifications"></div>
                             </div>
                             <div class="column">
                                 <h2>Projects Overview</h2>

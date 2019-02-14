@@ -36,5 +36,23 @@ namespace Workflow.Data
             conn.CloseConnection();
             return workflowList;
         }
+
+        public static List<Form> GetWorkflowForms(int workflowId)
+        {
+            string query = "SELECT FormID, FormName, ApprovalRequiredID, ApprovalStatusID from Workflows where WorkflowID = @workflowId";
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@workflowId", workflowId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<Form> formList = new List<Form>();
+            while (dr.Read())
+            {
+                Form f = new Form((int)dr["FormID"], workflowId, (string)dr["FormName"], (int)dr["ApprovalRequiredID"], (int)dr["ApprovalStatusID"]);
+                formList.Add(f);
+            }
+            conn.CloseConnection();
+            return formList;
+        }
     }
 }
