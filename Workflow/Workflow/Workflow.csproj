@@ -159,6 +159,7 @@
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.ttf" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff2" />
+    <Content Include="assets\js\form-builder.min.js" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
