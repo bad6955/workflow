@@ -11,21 +11,35 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 
-namespace Workflow
+namespace Workflow.Models
 {
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:FeedItem runat=server></{0}:FeedItem>")]
     public class FeedItem : WebControl
     {
         int id;
+        int projectId;
         string text;
         DateTime time;
+        string html;
 
-        public FeedItem(int id, string text, DateTime time)
+        public FeedItem(string text)
+        {
+            this.text = text;
+        }
+
+        public FeedItem(string text, int projectId)
+        {
+            this.text = text;
+            this.projectId = projectId;
+        }
+
+        public FeedItem(int id, string text, DateTime time, int projectId)
         {
             this.id = id;
             this.text = text;
             this.time = time;
+            this.projectId = projectId;
         }
 
         /*
@@ -48,8 +62,10 @@ namespace Workflow
         }
         */
 
-        private string BuildFeedItem()
+        protected override void CreateChildControls()
         {
+            Controls.Clear();
+
             TimeSpan feedTime = (DateTime.Now - time);
             string timeStr = "Updated " + TimeDifference(feedTime) + " ago";
 
@@ -57,6 +73,7 @@ namespace Workflow
             dismissBtn.ID = "DismissBtn" + id;
             dismissBtn.Text = "Dismiss";
             dismissBtn.CssClass = "ui button";
+            //dismissBtn.Click += DismissBtn_Click;
             dismissBtn.Click += new EventHandler(DismissBtn_Click);
 
             HtmlGenericControl itemDiv = new HtmlGenericControl("div");
@@ -94,7 +111,9 @@ namespace Workflow
             //itemDiv.Controls.Add(closeDiv);
 
             string html = RenderControl(itemDiv);
-            return html;
+            this.html = html;
+
+            this.Controls.Add(itemDiv);
             /*
             html += "<div class=\"right floated content\">";
             html += "<asp:Button runat=\"server\" ID=\"DismissBtn" + id + "\" OnClick=\"DismissBtn_Click\" class=\"ui button\" Text=\"Dismiss\"></asp:Button>";
@@ -155,11 +174,12 @@ namespace Workflow
 
         protected override void Render(HtmlTextWriter output)
         {
-            output.Write(BuildFeedItem());
+            output.Write(html);
         }
 
         public void DismissBtn_Click(object sender, EventArgs e)
         {
+            FeedUtil.DismissItem(this.id);
             EnsureChildControls();
             this.Visible = false;
         }

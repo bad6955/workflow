@@ -6,7 +6,7 @@ using System.Web;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace Workflow.Data
+namespace Workflow.Utility
 {
     public class PDFGen
     {

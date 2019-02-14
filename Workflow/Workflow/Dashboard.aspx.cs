@@ -23,13 +23,12 @@ namespace Workflow
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            AddFeedItem(1, "Added as a couch on company's project", DateTime.Now);
-            AddFeedItem(2, "Added as a coach on company's project", DateTime.Now);
             //validates that the user is logged in
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
+                LoadActivityFeed(user.UserId);
             }
             //kicks them out if they arent
             else
@@ -38,10 +37,13 @@ namespace Workflow
             }
         }
 
-        private void AddFeedItem(int id, string text, DateTime time)
+        private void LoadActivityFeed(int userId)
         {
-            var feedItem = new FeedItem(id, text, time);
-            notifications.Controls.AddAt(0, feedItem);
+            List<FeedItem> feedList = FeedUtil.GetFeed(0);
+            foreach(FeedItem item in feedList)
+            {
+                notifications.Controls.AddAt(0, item);
+            }
         }
 
         protected void ProjectBtn_Click(object sender, EventArgs e)
@@ -69,7 +71,7 @@ namespace Workflow
 
         protected void DismissBtn_Click(object sender, EventArgs e)
         {
-            
+            FeedUtil.DismissItem(1);
         }
     }
 }

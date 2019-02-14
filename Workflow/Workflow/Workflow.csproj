@@ -198,14 +198,15 @@
       <DependentUpon>AccountSettings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Data\CompanyUtil.cs" />
+    <Compile Include="Data\FeedUtil.cs" />
     <Compile Include="Data\FormUtil.cs" />
     <Compile Include="Data\ProjectUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
-    <Compile Include="Data\DBConn.cs" />
+    <Compile Include="Utility\DBConn.cs" />
     <Compile Include="Data\FirebaseUtil.cs" />
-    <Compile Include="FeedItem.cs" />
+    <Compile Include="Models\FeedItem.cs" />
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -229,7 +230,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Data\PDFGen.cs" />
+    <Compile Include="Utility\PDFGen.cs" />
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
