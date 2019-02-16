@@ -12,11 +12,12 @@ namespace Workflow.Models
         string componenttitle;
         string componenttext;
 
-        public WorkflowComponent(int workflowId, string componenttitle, string componenttext)
+        public WorkflowComponent(int wfcomponentid, int workflowId, string componenttitle, string componenttext)
         {
             this.workflowid = workflowId;
             this.componenttext = componenttext;
             this.componenttitle = componenttitle;
+            this.wfcomponentid = wfcomponentid;
         }
 
         public int WorkflowId
@@ -35,6 +36,12 @@ namespace Workflow.Models
         {
             get { return componenttext;  }
             set { componenttext = value; }
+        }
+
+        public int WFComponentID
+        {
+            get { return wfcomponentid; }
+            set { wfcomponentid = value;  }
         }
 
     }

@@ -36,5 +36,18 @@ namespace Workflow.Data
             conn.CloseConnection();
             return workflowList;
         }
+
+        public static WorkflowModel GetSingleWorkflow(int id)
+        {
+            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = (@id)";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@id", id);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            WorkflowModel workflow = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
+
+            return workflow;
+        }
     }
 }

@@ -31,11 +31,8 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
                 //List<Project> projects = ProjectUtil.GetCoachProjects(user.UserId);
-                allProjects = ProjectUtil.GetProjects();
-                foreach(Project item in allProjects)
-                {
-                    CreateProjectPanel(item);
-                }
+                allProjects = ProjectUtil.GetCoachProjects(user.UserId);
+                CreateProjectPanel(allProjects);
             }
             //kicks them out if they arent
             else
@@ -75,45 +72,42 @@ namespace Workflow
             */
         }
        
-        private void CreateProjectPanel(Project project)
+        private void CreateProjectPanel(List<Project> proj)
         {
-            var completionPercent = 30;
-            var projectNode = "";
-            projectNode += "<div class=\"item\"><div class=\"ui small image\">";
-            projectNode += "<div class=\"ui orange progress\" data-percent=\"" + completionPercent + "\" id=\"project" + project.ProjectId + "\">";
-            projectNode += "<div class=\"bar\"><div class=\"progress\"></div></div><div class=\"label\">Completion</div></div>";
-            /*id for opening project?*/
-            projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
-            projectNode += "<div class=\"content\"><a class=\"header\">" + project.Name + "</a>";
-            projectNode += "<div class=\"description\">" + project.Notes + "</div>";
-            projectNode += "<table class=\"ui celled table\"><thead><tr><th> Workflow Step</th><th>Status</th></tr></thead><tbody>";
-            /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
-            // completed
-            /*for ()
-            /{
-                if (stepCompleted)
+            foreach (Project project in proj)
+            {
+                var projectNode = "";
+                List<WorkflowComponent> steps = WorkflowComponentUtil.GetWorkflowComponents(project.WorkflowId);
+                List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
+                int totalSteps = steps.Count;
+                int stepsCompleted = completionitems.Count;
+                double completionPercent = (stepsCompleted/totalSteps)*100;
+                projectNode += "<div class=\"item\"><div class=\"ui small image\">";
+                projectNode += "<div class=\"ui orange progress\" data-percent=\"" + completionPercent + "\" id=\"project" + project.ProjectId + "\">";
+                projectNode += "<div class=\"bar\"><div class=\"progress\"></div></div><div class=\"label\">Completion</div></div>";
+                /*id for opening project?*/
+                projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
+                projectNode += "<div class=\"content\"><a class=\"header\">" + project.Name + "</a>";
+                projectNode += "<div class=\"description\">" + project.Notes + "</div>";
+                projectNode += "<table class=\"ui celled table\"><thead><tr><th> Workflow Step</th><th>Status</th></tr></thead><tbody>";
+                /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
+                // completed
+                foreach (WorkflowComponent step in steps)
                 {
-                    projectNode += "";
-                }
-                // needs modification
-                else if (stepCompleted)
-                {
-                    projectNode += "";
-                }
-                // unknown or not yet completed
-                else
-                {
-                    projectNode += "";
-                }
-            }*/
-            /* TODO: managing the table pages */
-            projectNode += "<tr class=\"positive\"><td>Step 1 - Worklflow Step Title</td ><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                    ComponentCompletion compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
+                    var stat = compstatus.CompletionID;
+                    if (stat == 3)
+                        projectNode += "<tr class=\"positive\"><td>"+ step.ComponentTitle + ": " + step.ComponentText +"</td ><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                    else
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td ><td><i class=\"icon checkmark\"></i>Not Approved</td></tr>";
 
+                }
 
-            projectNode += "</tbody><tfoot><tr><th colspan=\"3\"><div class=\"ui right floated pagination menu\">";
-            projectNode += "<a class=\"icon item\"><i class=\"left chevron icon\"></i></a><a class=\"item\">1</a>";
-            projectNode += "<a class=\"icon item\"><i class=\"right chevron icon\"></i></a></div></th></tr></tfoot></table></div></div>";
-            projectParent.InnerHtml += projectNode;
+                projectNode += "</tbody><tfoot><tr><th colspan=\"3\"><div class=\"ui right floated pagination menu\">";
+                projectNode += "<a class=\"icon item\"><i class=\"left chevron icon\"></i></a><a class=\"item\">1</a>";
+                projectNode += "<a class=\"icon item\"><i class=\"right chevron icon\"></i></a></div></th></tr></tfoot></table></div></div>";
+                projectParent.InnerHtml += projectNode;
+            }
         }
 
         protected void ProjectBtn_Click(object sender, EventArgs e)

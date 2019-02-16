@@ -97,6 +97,7 @@
         </div>
         <div id="content-body">
             <h1>Forms</h1>
+            <div id="build-wrap"></div>
             <div runat="server" id="adminDiv" visible="false">
                 <span>Form Editor Alpha</span><br />
                 <asp:TextBox runat="server" ID="FormName" placeholder="Form Name"></asp:TextBox>
@@ -142,9 +143,8 @@
                 <asp:HiddenField runat="server" ID="SelectedApprovalRole4" />
             </div>
         </asp:Panel>
-        <div id="build-wrap"></div>
         <script>
-            //$('#build-wrap').formBuilder();
+            $('#build-wrap').formBuilder();
         </script>
     </form>
 </body>
