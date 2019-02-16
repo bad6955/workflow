@@ -52,7 +52,7 @@ namespace Workflow
             newItem += "<i class=\"bell outline icon\"></i>";
             newItem += "<div class=\"content\">";
             newItem += "<a class=\"header\">" + text + "</a>";
-            newItem += "<div class=\"description\">Updated" + "TIME" + "ago</div>";
+            newItem += "<div class=\"description\">Updated" + "TIME " + "ago</div>";
             newItem += "</div>";
             newItem += "</Asp:Panel>";
 
@@ -76,36 +76,48 @@ namespace Workflow
         {
             foreach (Project project in proj)
             {
+                // init String for adding HTML tags and info
                 var projectNode = "";
+                
+                //Preparing Lists of the project's workflow components and their completion status
                 List<WorkflowComponent> steps = WorkflowComponentUtil.GetWorkflowComponents(project.WorkflowId);
                 List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
-                int totalSteps = steps.Count;
-                int stepsCompleted = completionitems.Count;
+                
+                // Calculate percentage of steps completed using total steps and number completed 
+                double totalSteps = steps.Count;
+                double stepsCompleted = completionitems.Count;
                 double completionPercent = (stepsCompleted/totalSteps)*100;
                 projectNode += "<div class=\"item\"><div class=\"ui small image\">";
                 projectNode += "<div class=\"ui orange progress\" data-percent=\"" + completionPercent + "\" id=\"project" + project.ProjectId + "\">";
                 projectNode += "<div class=\"bar\"><div class=\"progress\"></div></div><div class=\"label\">Completion</div></div>";
+                
                 /*id for opening project?*/
                 projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
                 projectNode += "<div class=\"content\"><a class=\"header\">" + project.Name + "</a>";
                 projectNode += "<div class=\"description\">" + project.Notes + "</div>";
-                projectNode += "<table class=\"ui celled table\"><thead><tr><th> Workflow Step</th><th>Status</th></tr></thead><tbody>";
+                projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
+
                 /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
-                // completed
                 foreach (WorkflowComponent step in steps)
                 {
                     ComponentCompletion compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
                     var stat = compstatus.CompletionID;
+                    if (stat == 0)
+                        projectNode += "<tr class=\"\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Created</td></tr>";
+                    if (stat == 1)
+                        projectNode += "<tr class=\"active\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
+                    if (stat == 2)
+                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Pending Approval</td></tr>";
                     if (stat == 3)
-                        projectNode += "<tr class=\"positive\"><td>"+ step.ComponentTitle + ": " + step.ComponentText +"</td ><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
-                    else
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td ><td><i class=\"icon checkmark\"></i>Not Approved</td></tr>";
-
+                        projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                    if (stat == 4)
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>On Hold</td></tr>";
                 }
 
-                projectNode += "</tbody><tfoot><tr><th colspan=\"3\"><div class=\"ui right floated pagination menu\">";
-                projectNode += "<a class=\"icon item\"><i class=\"left chevron icon\"></i></a><a class=\"item\">1</a>";
-                projectNode += "<a class=\"icon item\"><i class=\"right chevron icon\"></i></a></div></th></tr></tfoot></table></div></div>";
+                // Complete table, add tab pages numbers
+                projectNode += "</tbody></table></div></div></div><hr>";
+
+                // Add to page
                 projectParent.InnerHtml += projectNode;
             }
         }
