@@ -30,9 +30,11 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
-                //List<Project> projects = ProjectUtil.GetCoachProjects(user.UserId);
-                allProjects = ProjectUtil.GetCoachProjects(user.UserId);
-                CreateProjectPanel(allProjects);
+                if (user.RoleId == 2)
+                {
+                    allProjects = ProjectUtil.GetCoachProjects(user.UserId);
+                    CreateProjectPanel(allProjects);
+                }
             }
             //kicks them out if they arent
             else
