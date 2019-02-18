@@ -35,6 +35,11 @@ namespace Workflow
                     allProjects = ProjectUtil.GetCoachProjects(user.UserId);
                     CreateProjectPanel(allProjects);
                 }
+                if (user.RoleId == 3 || user.RoleId == 4)
+                {
+                    allProjects = ProjectUtil.GetProjects();
+                    CreateProjectPanel(allProjects);
+                }
             }
             //kicks them out if they arent
             else
@@ -105,7 +110,7 @@ namespace Workflow
                     ComponentCompletion compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
                     var stat = compstatus.CompletionID;
                     if (stat == 0)
-                        projectNode += "<tr class=\"\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Not Started</td></tr>";
+                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Not Started</td></tr>";
                     if (stat == 1)
                         projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
                     if (stat == 2)
