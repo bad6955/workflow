@@ -704,3 +704,49 @@ tbody tr {
         padding-right: 15px;
     }
 }
+
+/** Admin page *****/
+
+.omb_login .omb_loginForm .input-group.i {
+    width: 2em;
+  
+}
+.form-control{
+    margin-bottom:10px;
+}
+div.input-group {
+    margin-bottom:10px;
+}
+.row omb_row-sm-offset-3{
+    text-align:center;
+}
+
+.omb_login .omb_loginForm .help-block {
+    color: red;
+}
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+        margin-top: 10px;
+    }
+
+    .first-time {
+        border-bottom: 0;
+    }
+
+    .tips {
+        border-left: 1px solid #ccc;
+    }
+
+    .first-time h2, .first-time p {
+        text-align: center;
+    }
+
+    .tips h2, .tips p {
+        text-align: center;
+    }
+
+    .tips h2 {
+        margin-top: 0;
+    }
+}
