@@ -39,7 +39,7 @@ namespace Workflow
 
         private void LoadActivityFeed(int userId)
         {
-            List<FeedItem> feedList = FeedUtil.GetFeed(0);
+            List<FeedItem> feedList = FeedUtil.GetFeed(userId);
             foreach(FeedItem item in feedList)
             {
                 notifications.Controls.AddAt(0, item);

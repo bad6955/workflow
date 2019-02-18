@@ -21,7 +21,36 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@notes", notes);
             DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
+            int id = conn.ExecuteInsertCommand(cmd);
+
+            /*
+            cmd = new MySqlCommand("SELECT LAST_INSERT_ID();");
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            while (dr.Read())
+            {
+                int projId = (int)dr["ProjectID"];
+                FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, projId);
+            }
+            */
+            FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, id);
+            return p;
+        }
+
+        public static Project GetProject(int projectId)
+        {
+            string query = "SELECT ProjectID, WorkflowID, CompanyID, StatusID, CoachID, ProjectName, ProjectNotes from Project where ProjectID = @projectId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            Project p = null;
+            while (dr.Read())
+            {
+                p = new Project((int)dr["ProjectID"], (int)dr["WorkflowID"], (int)dr["CompanyID"], (int)dr["StatusID"], (int)dr["CoachID"], (string)dr["ProjectName"], (string)dr["ProjectNotes"]);
+            }
+            conn.CloseConnection();
             return p;
         }
 

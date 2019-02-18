@@ -24,13 +24,31 @@ namespace Workflow.Utility
             conn.Close();
         }
 
-        public void ExecuteInsertCommand(MySqlCommand cmd)
+        public int ExecuteInsertCommand(MySqlCommand cmd)
         {
+            int insertedId = -1;
+
             OpenConnection();
             //executes the insert statement provided in the CMD
             cmd.Connection = conn;
-            cmd.ExecuteNonQuery();
-            cmd.Prepare();
+
+            if (cmd.CommandText.Contains("INSERT"))
+            {
+                cmd.CommandText += "; SELECT LAST_INSERT_ID();";
+                //executes the insert statement provided in the CMD
+                cmd.Connection = conn;
+                cmd.Prepare();
+                insertedId = (int)cmd.ExecuteScalar();
+            }
+            else
+            {
+                cmd.Connection = conn;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+
+            return insertedId;
+
             //gets the ID of the inserted ^
             //cmd.CommandText = "SELECT LAST_INSERT_ID()";
             //int id = (int)cmd.ExecuteScalar();
@@ -46,5 +64,15 @@ namespace Workflow.Utility
             MySqlDataReader dr = cmd.ExecuteReader();
             return dr;
         }
+        /*
+        public int GetLastInsertID()
+        {
+            MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID();");
+            cmd.Connection = conn;
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+            return (int)cmd.LastInsertedId;
+        }
+        */
     }
 }

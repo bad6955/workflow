@@ -94,6 +94,11 @@ namespace Workflow.Models
             icon.Attributes["class"] = "bell outline icon";
             contentDiv.Attributes["class"] = "content";
             aText.Attributes["class"] = "header";
+
+            if(this.projectId != -1)
+            {
+                aText.Attributes["href"] = "Projects.aspx/"+this.projectId;
+            }
             descDiv.Attributes["class"] = "description";
 
             aText.Controls.Add(textControl);
