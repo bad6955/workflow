@@ -29,6 +29,8 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
 
+                CreateProjectList();
+
                 //checks user is an admin
                 if (user.RoleId == 4)
                 {
@@ -63,6 +65,27 @@ namespace Workflow
                 //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private void CreateProjectList()
+        {
+            var projectNode = "";
+            List<Project> projects = ProjectUtil.GetProjects();
+            var count = 0;
+            for (int i = 0; i < 5 && i < projects.Count; i++)
+            {
+                User coach = UserUtil.GetProjectCoach(projects[i].CoachId);
+                WorkflowModel workflow = WorkflowUtil.GetSingleWorkflow(projects[i].WorkflowId);
+                projectNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
+                projectNode += "<div class=\"content\"><a class=\"header\">" + projects[i].Name + "</a><div class=\"meta\">";
+                projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
+                projectNode += projects[i].Notes + "</div></div></div>";
+                projectList.InnerHtml += projectNode;
+                count++;
+
+            }
+            var showing = "Showing 1 - "+ count +" of " + projects.Count + " Results";
+            numberShowing.InnerHtml += showing;
         }
 
         protected void DashboardBtn_Click(Object sender, EventArgs e)

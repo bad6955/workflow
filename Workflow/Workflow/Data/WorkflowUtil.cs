@@ -45,8 +45,11 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@id", id);
             DBConn conn = new DBConn();
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-            WorkflowModel workflow = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
-
+            WorkflowModel workflow = null;
+            while (dr.Read())
+            {
+                workflow = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
+            }
             return workflow;
         }
     }

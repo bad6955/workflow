@@ -119,32 +119,13 @@
                         </div>
                     </div>
                 </div>
-                <p>Showing 1 - 10 of X Results</p>
+                <p runat="server" id="numberShowing"></p>
                 <script>
                     $('.ui.dropdown')
                         .dropdown();
                 </script>
             </div>
-            <div class="ui items">
-                <div class="item">
-                    <div class="ui small image">
-                        <img src="assets/icons/project.png" />
-                    </div>
-                    <div class="content">
-                        <!-- Project Name goes under .content -->
-                        <a class="header">Project Name</a>
-                        <div class="meta">
-                            <span class="stay">VC Coach</span>
-                        </div>
-                        <!-- Project Description or current workflow step could go here -->
-                        <div class="description">
-                            Project Description or current workflow step could go here?
-                        </div>
-                        <div class="extra">
-                            Workflow Name
-                        </div>
-                    </div>
-                </div>
+            <div runat="server" class="ui items" id="projectList">
             </div>
             <button class="fluid ui button">Show 10 More...</button>
         </div>

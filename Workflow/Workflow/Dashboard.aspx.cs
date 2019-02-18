@@ -105,15 +105,15 @@ namespace Workflow
                     ComponentCompletion compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
                     var stat = compstatus.CompletionID;
                     if (stat == 0)
-                        projectNode += "<tr class=\"\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Created</td></tr>";
+                        projectNode += "<tr class=\"\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Not Started</td></tr>";
                     if (stat == 1)
-                        projectNode += "<tr class=\"active\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
+                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
                     if (stat == 2)
-                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Pending Approval</td></tr>";
-                    if (stat == 3)
                         projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                    if (stat == 3)
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Needs Modification</td></tr>";
                     if (stat == 4)
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>On Hold</td></tr>";
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Denied</td></tr>";
                 }
 
                 // Complete table, add tab pages numbers
