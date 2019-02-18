@@ -29,6 +29,11 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
+
+                //loads activity feeds
+                LoadActivityFeed(user.UserId);
+
+                //loads role specific items
                 if (user.RoleId == 2)
                 {
                     allProjects = ProjectUtil.GetCoachProjects(user.UserId);
@@ -39,8 +44,6 @@ namespace Workflow
                     allProjects = ProjectUtil.GetProjects();
                     CreateProjectPanel(allProjects);
                 }
-            }
-                LoadActivityFeed(user.UserId);
             }
             //kicks them out if they arent
             else
@@ -54,7 +57,7 @@ namespace Workflow
             List<FeedItem> feedList = FeedUtil.GetFeed(userId);
             foreach(FeedItem item in feedList)
             {
-                notifications.Controls.AddAt(0, item);
+                activityFeed.Controls.AddAt(0, item);
             }
         }
        
