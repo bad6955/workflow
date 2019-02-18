@@ -38,7 +38,8 @@ namespace Workflow.Utility
                 //executes the insert statement provided in the CMD
                 cmd.Connection = conn;
                 cmd.Prepare();
-                insertedId = (int)cmd.ExecuteScalar();
+                var id = cmd.ExecuteScalar();
+                int.TryParse(id.ToString(), out insertedId);
             }
             else
             {

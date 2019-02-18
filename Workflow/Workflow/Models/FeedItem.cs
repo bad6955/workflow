@@ -97,7 +97,7 @@ namespace Workflow.Models
 
             if(this.projectId != -1)
             {
-                aText.Attributes["href"] = "Projects.aspx/"+this.projectId;
+                aText.Attributes["href"] = "Projects.aspx?pid="+this.projectId;
             }
             descDiv.Attributes["class"] = "description";
 
