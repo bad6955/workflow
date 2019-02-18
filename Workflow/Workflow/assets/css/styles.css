@@ -47,7 +47,7 @@ html, body {
 #top-bar {
     width: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
     height: 3em;
     background-color: #dc7a32;
     background-image: url("../icons/rit_logo.png");
@@ -56,17 +56,17 @@ html, body {
     background-repeat: no-repeat;
 }
 
-    #top-bar h1 {
-        font-size: 20px;
-        line-height: 45px;
-        display: inline;
-        vertical-align: middle;
-        font-weight: normal;
-    }
+#top-bar h1 {
+    font-size: 20px;
+    line-height: 45px;
+    display: inline;
+    vertical-align: middle;
+    font-weight: normal;
+}
 
-    #top-bar img {
-        vertical-align: middle;
-    }
+#top-bar img {
+    vertical-align: middle;
+}
 
 #right {
     position: absolute;
@@ -90,13 +90,13 @@ html, body {
     width: 100%;
 }
 
-    #dropdown-content a {
-        color: black;
-        width: inherit;
-        text-decoration: none;
-        background-color: #bcbcbc;
-        display: block;
-    }
+#dropdown-content a {
+    color: black;
+    width: inherit;
+    text-decoration: none;
+    background-color: #bcbcbc;
+    display: block;
+}
 
 #right h2 {
     font-size: 18px;
@@ -144,39 +144,39 @@ html, body {
     background-color: #616161;
 }
 
-    #side-bar img {
-        width: 30px;
-        height: 30px;
-        vertical-align: middle;
-        display: inline;
-    }
+#side-bar img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline;
+}
 
-    #side-bar hr {
-        width: 50%;
-        margin: 0 auto;
-        border: 0.5px solid #3f3f3f;
-    }
+#side-bar hr {
+    width: 50%;
+    margin: 0 auto;
+    border: 0.5px solid #3f3f3f;
+}
 
-    #side-bar ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
+#side-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
 
-    #side-bar li {
-        display: block;
-        color: #e0e0e0;
-        text-decoration: none;
-        font-size: 19px;
-        padding: 1em;
-    }
+#side-bar li {
+    display: block;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 19px;
+    padding: 1em;
+}
 
-        #side-bar li:hover {
-            background-color: #3a3a3a;
-            color: #616161;
-            cursor: pointer;
-        }
+#side-bar li:hover {
+    background-color: #3a3a3a;
+    color: #616161;
+    cursor: pointer;
+}
 
 #side-bar-top-content {
     position: relative;
@@ -211,9 +211,9 @@ html, body {
     padding-top: 3em;
 }
 
-    #content-body h1 {
-        padding: 0.5em;
-    }
+#content-body h1 {
+    padding: 0.5em;
+}
 
 /****************************** DASHBOARD PAGE *******************************/
 
@@ -245,6 +245,12 @@ html, body {
     height: 12em;
     overflow-y: auto;
     overflow-x: auto;
+}
+
+.table {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 300px;
 }
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
 /* These two share most (see also: all) of the same design so if you change someone on one, do
@@ -282,23 +288,23 @@ html, body {
     font-family: 'Titillium Web', sans-serif;
 }
 
-    #login input[type=text], #login input[type=password], #forgot-password input[type=text] {
-        padding: 1.5em 4em;
-        margin: 1.5em;
-        border-radius: 6px;
-        box-sizing: border-box;
-        color: black;
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid black;
-    }
+#login input[type=text], #login input[type=password], #forgot-password input[type=text] {
+    padding: 1.5em 4em;
+    margin: 1.5em;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: black;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+}
 
-    #login #Email, #forgot-password #Email {
-        background-image: url('../icons/email.png');
-        background-size: 35px 35px;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-    }
+#login #Email, #forgot-password #Email {
+    background-image: url('../icons/email.png');
+    background-size: 35px 35px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
 
 #login #Password {
     background-image: url('../icons/password.png');
@@ -696,5 +702,51 @@ tbody tr {
     .container-table100 {
         padding-left: 15px;
         padding-right: 15px;
+    }
+}
+
+/** Admin page *****/
+
+.omb_login .omb_loginForm .input-group.i {
+    width: 2em;
+  
+}
+.form-control{
+    margin-bottom:10px;
+}
+div.input-group {
+    margin-bottom:10px;
+}
+.row omb_row-sm-offset-3{
+    text-align:center;
+}
+
+.omb_login .omb_loginForm .help-block {
+    color: red;
+}
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+        margin-top: 10px;
+    }
+
+    .first-time {
+        border-bottom: 0;
+    }
+
+    .tips {
+        border-left: 1px solid #ccc;
+    }
+
+    .first-time h2, .first-time p {
+        text-align: center;
+    }
+
+    .tips h2, .tips p {
+        text-align: center;
+    }
+
+    .tips h2 {
+        margin-top: 0;
     }
 }

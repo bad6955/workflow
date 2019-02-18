@@ -48,6 +48,9 @@
     <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
@@ -55,6 +58,7 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.Web.BrowserLink.12.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
@@ -155,6 +159,7 @@
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.ttf" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff2" />
+    <Content Include="assets\js\form-builder.min.js" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -199,10 +204,12 @@
     </Compile>
     <Compile Include="Data\CompanyUtil.cs" />
     <Compile Include="Data\FeedUtil.cs" />
+    <Compile Include="Data\ComponentCompletionUtil.cs" />
     <Compile Include="Data\FormUtil.cs" />
     <Compile Include="Data\ProjectUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
+    <Compile Include="Data\WorkflowComponentUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
     <Compile Include="Utility\DBConn.cs" />
     <Compile Include="Data\FirebaseUtil.cs" />
@@ -225,12 +232,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\ComponentCompletion.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormField.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Utility\PDFGen.cs" />
+    <Compile Include="Models\WorkflowComponent.cs" />
     <Compile Include="Projects.aspx.cs">
       <DependentUpon>Projects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -76,12 +76,30 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button form;
         
         /// <summary>
-        /// notifications control.
+        /// test control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl notifications;
+        protected global::System.Web.UI.WebControls.Panel test;
+        
+        /// <summary>
+        /// activityFeed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl activityFeed;
+        
+        /// <summary>
+        /// projectParent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectParent;
     }
 }

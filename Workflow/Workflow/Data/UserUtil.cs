@@ -147,5 +147,22 @@ namespace Workflow.Data
             conn.CloseConnection();
             return coachList;
         }
+
+        public static User GetProjectCoach(int coachID)
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = (@coachID)";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@coachID", coachID);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            User coach = null;
+            while (dr.Read())
+            {
+                coach = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+            }
+            conn.CloseConnection();
+            return coach;
+        }
     }
 }
