@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using EO.Pdf;
 
 namespace Workflow.Utility
 {
-    public class PDFGen
+    public static class PDFGen
     {
+        public static string CreateHTMLPDF(string html, string fileName)
+        {
+            string path = "";
+            string fullPath = path + fileName + ".pdf";
+            HtmlToPdf.ConvertHtml(html, fullPath);
+            return fullPath;
+        }
+
+        /*
         //need to have admin privs on the machine to create PDF
-        public Document CreatePDF()
+        public static Document CreatePDF()
         {
             Document pdf = new Document();
             PdfWriter.GetInstance(pdf, new FileStream("C:\\TEST.PDF", FileMode.Create));
@@ -21,6 +29,7 @@ namespace Workflow.Utility
 
             return pdf;
         }
+        */
     }
 }
 

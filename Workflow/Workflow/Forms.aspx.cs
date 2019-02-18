@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 using Workflow.Models;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -39,11 +40,13 @@ namespace Workflow
                     adminDiv.Visible = true;
                 }
 
+                /*
                 GenerateApprovalDropdowns();
                 if (ApprovalDialogStatus.Value == "1")
                 {
                     Page.ClientScript.RegisterStartupScript(GetType(), "ApprovalPopup", "approvalDialog();", true);
                 }
+                */
             }
             else
             {
@@ -52,6 +55,7 @@ namespace Workflow
             }
         }
 
+        /*
         private void GenerateApprovalDropdowns()
         {
             try
@@ -99,7 +103,7 @@ namespace Workflow
             ApprovalRole4.DataValueField = "roleId";
             ApprovalRole4.DataBind();
             ApprovalRole4.SelectedIndex = 0;
-        }
+        }*/
 
         protected void DashboardBtn_Click(Object sender, EventArgs e)
         {
@@ -125,9 +129,12 @@ namespace Workflow
 
         protected void CreateFormBtn_Click(object sender, EventArgs e)
         {
-
+            string formJson = formBuilderData.Value.ToString();
+            string formHtml = JSONtoHTML.ConvertToHTML(formJson);
+            PDFGen.CreateHTMLPDF(formHtml, "tests");
         }
 
+        /*
         protected void CreateTextFieldBtn_Click(object sender, EventArgs e)
         {
             FormFieldset.InnerHtml += "<div runat=\"server\" ID=\"FormDiv"+ fieldCt + "\" class=\"form-editor-field\">";
@@ -153,5 +160,6 @@ namespace Workflow
         {
             ApprovalDialogStatus.Value = "0";
         }
+        */
     }
 }

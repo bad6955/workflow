@@ -42,6 +42,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EO.Base, Version=19.0.56.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.19.0.56\lib\EO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.Pdf, Version=19.0.56.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.19.0.56\lib\EO.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebBrowser, Version=19.0.56.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.19.0.56\lib\EO.WebBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebEngine, Version=19.0.56.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.19.0.56\lib\EO.WebEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.Auth, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FirebaseAuthentication.net.3.2.0\lib\netstandard1.1\Firebase.Auth.dll</HintPath>
     </Reference>
@@ -238,6 +250,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Utility\JSONtoHTML.cs" />
     <Compile Include="Utility\PDFGen.cs" />
     <Compile Include="Models\WorkflowComponent.cs" />
     <Compile Include="Projects.aspx.cs">
