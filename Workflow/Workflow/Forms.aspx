@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" validateRequest="false" %>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
     <script type="text/javascript" src="assets/js/Chart.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="assets/js/form-builder.min.js"></script>
-    <script type="text/javascript" src="assets/js/formToHtml.js"></script>
+    <script type="text/javascript" src="assets/js/form-render.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
@@ -55,8 +55,9 @@
         <div id="content-body">
             <h1>Forms</h1>
             <div runat="server" id="buildWrap"></div>
-            <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClientClick="SaveForm()" />
+            <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveForm()" />
             <asp:HiddenField runat="server" ID="formBuilderData" />
+            <div runat="server" id="renderWrap"></div>
             <!--
             <div runat="server" id="adminDiv" visible="false">
             </div>
@@ -72,17 +73,18 @@
             var formBuilder = $('#buildWrap').formBuilder(options);
 
             function SaveForm() {
-                jQuery{
+                jQuery(function() {
+                    formRenderOpts = {
+                        dataType: 'json',
+                        formData: formBuilder.formData
+                    };
+  
+                    var renderedForm = $('<div>');
+                    renderedForm.formRender(formRenderOpts);
 
-                }
-                //console.log(e("#buildWrap").formRender("html"))
-                /*
-                const data = formBuilder.formData;
-                const markup = $("<div/>");
-                markup.formRender({ data });
-                document.getElementById("formBuilderData").value = markup.formRender("html")
-                //document.getElementById("formBuilderData").value = formBuilder.formData;
-                */
+                    console.log(renderedForm.html());
+                    document.getElementById("formBuilderData").value = renderedForm.html();
+                });
             }
         </script>
     </form>

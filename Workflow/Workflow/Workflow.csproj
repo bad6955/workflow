@@ -171,6 +171,7 @@
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.ttf" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff2" />
+    <Content Include="assets\js\form-render.min.js" />
     <Content Include="assets\js\form-builder.min.js" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -194,7 +195,6 @@
     <Content Include="assets\icons\project.png" />
     <Content Include="assets\icons\workflow.png" />
     <Content Include="assets\js\Chart.js" />
-    <Content Include="assets\js\formToHtml.js" />
     <Content Include="assets\js\semantic.js" />
     <Content Include="assets\js\jquery.js" />
     <Content Include="ForgotPassword.aspx" />
@@ -251,7 +251,6 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Utility\JSONtoHTML.cs" />
     <Compile Include="Utility\PDFGen.cs" />
     <Compile Include="Models\WorkflowComponent.cs" />
     <Compile Include="Projects.aspx.cs">

@@ -130,8 +130,6 @@ namespace Workflow
         protected void CreateFormBtn_Click(object sender, EventArgs e)
         {
             string formHtml = formBuilderData.Value.ToString();
-            //string formJson = formBuilderData.Value.ToString();
-            //string formHtml = JSONtoHTML.ConvertToHTML(formJson);
             PDFGen.CreateHTMLPDF(formHtml, "tests");
         }
 
