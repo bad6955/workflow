@@ -17,6 +17,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@companyName", companyName);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
             return c;
         }
 

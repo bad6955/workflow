@@ -17,6 +17,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@formName", formName);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
             return f;
         }
 
@@ -30,6 +31,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@fieldValue", fieldValue);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
             return ff;
         }
 

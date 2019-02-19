@@ -33,6 +33,7 @@ namespace Workflow.Data
             }
             */
             FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, id);
+            conn.CloseConnection();
             return p;
         }
 

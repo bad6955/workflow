@@ -17,6 +17,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@workflowName", workflowName);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
             return w;
         }
 
@@ -69,6 +70,7 @@ namespace Workflow.Data
             {
                 workflow = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
             }
+            conn.CloseConnection();
             return workflow;
         }
     }

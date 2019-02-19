@@ -17,6 +17,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@userId", userId);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
 
         public static void CreateProjectFeedItem(string feedText, int userId, int projectId)
@@ -27,6 +28,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@projectId", projectId);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
 
         public static List<FeedItem> GetFeed(int userId)
@@ -55,6 +57,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@feedItemId", feedItemId);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
     }
 }

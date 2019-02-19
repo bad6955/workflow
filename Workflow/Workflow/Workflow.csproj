@@ -194,6 +194,7 @@
     <Content Include="assets\icons\project.png" />
     <Content Include="assets\icons\workflow.png" />
     <Content Include="assets\js\Chart.js" />
+    <Content Include="assets\js\formToHtml.js" />
     <Content Include="assets\js\semantic.js" />
     <Content Include="assets\js\jquery.js" />
     <Content Include="ForgotPassword.aspx" />

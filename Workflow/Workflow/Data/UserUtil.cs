@@ -119,6 +119,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@email", user.Email);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
 
         public static void ValidLogin(User user)
@@ -129,6 +130,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@email", user.Email);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
 
         public static List<User> GetCoaches()

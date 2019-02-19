@@ -20,6 +20,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@componenttext", componenttext);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
             return w;
         }
         public static List<WorkflowComponent> GetWorkflowComponents(int workflowID)
