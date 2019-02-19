@@ -54,7 +54,7 @@
         <div id="content-body">
             <h1>Forms</h1>
             <div runat="server" id="buildWrap"></div>
-            <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" />
+            <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveForm()" />
             <asp:HiddenField runat="server" ID="formBuilderData" />
             <!--
             <div runat="server" id="adminDiv" visible="false">
@@ -64,10 +64,15 @@
         <script>
             var options = {
                 onSave: function (formData) {
-                  document.getElementById("formBuilderData").value = JSON.stringify(formData);
+                    //document.getElementById("formBuilderData").value = JSON.stringify(formData);
+                    document.getElementById("formBuilderData").value = formBuilder.formData;
                 },
             };
-            $('#buildWrap').formBuilder(options);
+            var formBuilder = $('#buildWrap').formBuilder(options);
+
+            function SaveForm() {
+                document.getElementById("formBuilderData").value = formBuilder.formData;
+            }
         </script>
     </form>
 </body>

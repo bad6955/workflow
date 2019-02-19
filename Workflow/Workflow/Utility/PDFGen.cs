@@ -11,7 +11,12 @@ namespace Workflow.Utility
     {
         public static string CreateHTMLPDF(string html, string fileName)
         {
-            string path = "";
+            string path = "./PDFGen/";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             string fullPath = path + fileName + ".pdf";
             HtmlToPdf.ConvertHtml(html, fullPath);
             return fullPath;

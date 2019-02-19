@@ -75,7 +75,7 @@ namespace Workflow
             for (int i = 0; i < 5 && i < projects.Count; i++)
             {
                 User coach = UserUtil.GetProjectCoach(projects[i].CoachId);
-                WorkflowModel workflow = WorkflowUtil.GetSingleWorkflow(projects[i].WorkflowId);
+                WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
                 projectNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
                 projectNode += "<div class=\"content\"><a class=\"header\">" + projects[i].Name + "</a><div class=\"meta\">";
                 projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";

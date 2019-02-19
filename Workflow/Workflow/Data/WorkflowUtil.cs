@@ -56,12 +56,12 @@ namespace Workflow.Data
             return formList;
         }
 
-        public static WorkflowModel GetSingleWorkflow(int id)
+        public static WorkflowModel GetWorkflow(int workflowId)
         {
-            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = (@id)";
+            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = (@workflowId)";
 
             MySqlCommand cmd = new MySqlCommand(query);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@workflowId", workflowId);
             DBConn conn = new DBConn();
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
             WorkflowModel workflow = null;
