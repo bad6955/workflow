@@ -58,7 +58,7 @@ namespace Workflow.Data
 
         public static WorkflowModel GetWorkflow(int workflowId)
         {
-            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = (@workflowId)";
+            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = @workflowId";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@workflowId", workflowId);

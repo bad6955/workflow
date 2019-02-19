@@ -12,7 +12,7 @@ namespace Workflow.Data
     {
         public static ComponentCompletion GetProCompletionStatus(int wfid, int projid)
         {
-            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE WFComponentID = (@wfid) AND ProjectID = (@projid)";
+            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE WFComponentID = @wfid AND ProjectID = @projid";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@wfid", wfid);
@@ -30,7 +30,7 @@ namespace Workflow.Data
         }
         public static List<ComponentCompletion> GetAllProCompletionStatus(int projid)
         {
-            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE ProjectID = (@projid)";
+            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE ProjectID = @projid";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@projid", projid);
@@ -48,7 +48,7 @@ namespace Workflow.Data
         }
         public static List<ComponentCompletion> GetCompletedProCompletionStatus(int projid)
         {
-            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE ProjectID = (@projid) AND CompletionID = 2";
+            string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE ProjectID = @projid AND CompletionID = 2";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@projid", projid);

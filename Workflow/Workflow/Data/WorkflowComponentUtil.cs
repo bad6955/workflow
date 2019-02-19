@@ -24,7 +24,7 @@ namespace Workflow.Data
         }
         public static List<WorkflowComponent> GetWorkflowComponents(int workflowID)
         {
-            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, ComponentText FROM WorkflowComponents WHERE WorkflowID = (@workflowID)";
+            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, ComponentText FROM WorkflowComponents WHERE WorkflowID = @workflowID";
             
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@workflowID", workflowID);
