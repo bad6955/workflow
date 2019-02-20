@@ -45,7 +45,7 @@
                         <li>
                             <img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
                         <li>
-                            <img src="assets/icons/form.png" /><asp:Button runat="server" ID="current" Text="Forms" /></li>
+                            <img src="assets/icons/form.png" /><asp:Button runat="server" ID="current" OnClick="FormBtn_Click" Text="Forms" /></li>
                     </ul>
                 </div>
                 <div id="help">
@@ -56,6 +56,7 @@
             <h1>Forms</h1>
 
             <div runat="server" id="formListing">
+                <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Form" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
                 <div class="ui secondary segment">
                     <div class="ui floating dropdown labeled icon button">
                         <i class="filter icon"></i>
@@ -104,8 +105,19 @@
                     <asp:TextBox runat="server" ID="FormName"></asp:TextBox>
                 </div>
                 <div id="buildWrap"></div>
-                <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveForm()" />
+                <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveFormEditor()" />
                 <asp:HiddenField runat="server" ID="formBuilderData" />
+                <script>
+                    var builderOptions = {
+                        dataType: 'json',
+                        formData: document.getElementById("formBuilderData").value
+                    };
+                    var formBuilder = $('#buildWrap').formBuilder(builderOptions);
+
+                    function SaveFormEditor() {
+                        document.getElementById("formBuilderData").value = formBuilder.formData;
+                    }
+                </script>
             </div>
 
             <div runat="server" id="formViewer" visible="false">
@@ -114,43 +126,37 @@
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
                 <div id="renderWrap"></div>
-                <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveForm()" />
+                <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
                 <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
                 <asp:HiddenField runat="server" ID="formViewerData" />
+                <script>
+                    var viewerOptions = {
+                        dataType: 'json',
+                        formData: document.getElementById("formViewerData").value
+                    };
+                    var formViewer = $('#renderWrap').formRender(viewerOptions);
+
+                    function SaveFormViewer() {
+                        document.getElementById("formViewerData").value = formBuilder.formData;
+                    }
+
+                    function SubmitForm() {
+                        jQuery(function() {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formBuilder.formData
+                            };
+  
+                            var renderedForm = $('<div>');
+                            renderedForm.formRender(formRenderOpts);
+
+                            console.log(renderedForm.html());
+                            document.getElementById("formBuilderData").value = renderedForm.html();
+                        });
+                    }
+                </script>
             </div>
         </div>
-        <script>
-            var builderOptions = {
-                dataType: 'json',
-                formData: document.getElementById("formBuilderData").value
-            };
-            var formBuilder = $('#buildWrap').formBuilder(builderOptions);
-
-            var viewerOptions = {
-                dataType: 'json',
-                formData: document.getElementById("formViewerData").value
-            };
-            var formViewer = $('#renderWrap').formRender(viewerOptions);
-
-            function SaveForm() {
-                document.getElementById("formBuilderData").value = formBuilder.formData;
-            }
-
-            function SubmitForm() {
-                jQuery(function() {
-                    formRenderOpts = {
-                        dataType: 'json',
-                        formData: formBuilder.formData
-                    };
-  
-                    var renderedForm = $('<div>');
-                    renderedForm.formRender(formRenderOpts);
-
-                    console.log(renderedForm.html());
-                    document.getElementById("formBuilderData").value = renderedForm.html();
-                });
-            }
-        </script>
     </form>
 </body>
 </html>

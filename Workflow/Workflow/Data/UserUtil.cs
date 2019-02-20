@@ -150,7 +150,7 @@ namespace Workflow.Data
             return coachList;
         }
 
-        public static User GetProjectCoach(int coachID)
+        public static User GetCoach(int coachID)
         {
             string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = (@coachID)";
 
@@ -165,6 +165,11 @@ namespace Workflow.Data
             }
             conn.CloseConnection();
             return coach;
+        }
+
+        public static string GetCoachName(int coachId)
+        {
+            return GetCoach(coachId).FullName;
         }
     }
 }

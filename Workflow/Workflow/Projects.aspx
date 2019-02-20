@@ -52,7 +52,7 @@
                         <li>
                             <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
                         <li id="current-page">
-                            <img src="assets/icons/project.png" /><asp:Button runat="server" ID="current" Text="Projects" /></li>
+                            <img src="assets/icons/project.png" /><asp:Button runat="server" ID="current" OnClick="ProjectBtn_Click" Text="Projects" /></li>
                         <li>
                             <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" OnClick="FormBtn_Click" Text="Forms" /></li>
                     </ul>
@@ -64,70 +64,82 @@
         </div>
         <div id="content-body">
             <h1>Projects</h1>
-            <!-- just hidden for now while I fiddle with the page appearance == DEBUG kevin note - REMOVE style="DISPLAY: NONE" TO SHOW-->
-            <div runat="server" id="adminDiv" visible="false" style="display: block">
-                <span>Create Project</span><br />
-                <asp:TextBox runat="server" ID="ProjectName" placeholder="Project Name"></asp:TextBox>
-                <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:DropDownList runat="server" ID="WorkflowSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:DropDownList runat="server" ID="CoachSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                <asp:TextBox runat="server" ID="ProjectNotes" placeholder="Project Notes (Optional)"></asp:TextBox>
+
+            <div runat="server" id="projectListing">
+                <asp:Button runat="server" ID="CreateNewProjectBtn" Text="Create New Project" OnClick="CreateNewProjectBtn_Click" CssClass="fluid ui button" />
+                <div class="ui secondary segment">
+                    <div class="ui floating dropdown labeled icon button">
+                        <i class="filter icon"></i>
+                        <span class="text">Sort Filter</span>
+                        <div class="menu">
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input type="text" placeholder="Search..." />
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="tags icon"></i>
+                                Sort Filter
+                            </div>
+                            <div class="scrolling menu">
+                                <div class="item">
+                                    <div class="ui orange empty circular label"></div>
+                                    All
+                                </div>
+                                <div class="item">
+                                    <div class="ui red empty circular label"></div>
+                                    Open
+                                </div>
+                                <div class="item">
+                                    <div class="ui blue empty circular label"></div>
+                                    Closed
+                                </div>
+                                <div class="item">
+                                    <div class="ui black empty circular label"></div>
+                                    Assigned to Me
+                                </div>
+                                <div class="item">
+                                    <div class="ui purple empty circular label"></div>
+                                    A-Z Company Name
+                                </div>
+                                <div class="item">
+                                    <div class="ui yellow empty circular label"></div>
+                                    Z-A Company Name
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p runat="server" id="numberShowing"></p>
+                    <script>
+                        $('.ui.dropdown')
+                            .dropdown();
+                    </script>
+                </div>
+                <div runat="server" class="ui items" id="projectList">
+                </div>
+                <button class="fluid ui button">Show 10 More...</button>
+            </div>
+
+            <div runat="server" id="projectBuilder" visible="false">
+                <h3>Create Project</h3><br />
+                <asp:TextBox runat="server" ID="ProjectName" placeholder="Project Name"></asp:TextBox><br />
+                <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:DropDownList runat="server" ID="WorkflowSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:DropDownList runat="server" ID="CoachSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:TextBox runat="server" ID="ProjectNotes" placeholder="Project Notes (Optional)" TextMode="MultiLine"></asp:TextBox><br />
                 <asp:Button runat="server" ID="CreateProjectBtn" Text="Create Project" OnClick="CreateProjectBtn_Click" />
                 <asp:HiddenField runat="server" ID="SelectedCompany" />
                 <asp:HiddenField runat="server" ID="SelectedWorkflow" />
                 <asp:HiddenField runat="server" ID="SelectedCoach" />
             </div>
-            <div class="ui secondary segment">
-                <div class="ui floating dropdown labeled icon button">
-                    <i class="filter icon"></i>
-                    <span class="text">Sort Filter</span>
-                    <div class="menu">
-                        <div class="ui icon search input">
-                            <i class="search icon"></i>
-                            <input type="text" placeholder="Search..." />
-                        </div>
-                        <div class="divider"></div>
-                        <div class="header">
-                            <i class="tags icon"></i>
-                            Sort Filter
-                        </div>
-                        <div class="scrolling menu">
-                            <div class="item">
-                                <div class="ui orange empty circular label"></div>
-                                All
-                            </div>
-                            <div class="item">
-                                <div class="ui red empty circular label"></div>
-                                Open
-                            </div>
-                            <div class="item">
-                                <div class="ui blue empty circular label"></div>
-                                Closed
-                            </div>
-                            <div class="item">
-                                <div class="ui black empty circular label"></div>
-                                Assigned to Me
-                            </div>
-                            <div class="item">
-                                <div class="ui purple empty circular label"></div>
-                                A-Z Company Name
-                            </div>
-                            <div class="item">
-                                <div class="ui yellow empty circular label"></div>
-                                Z-A Company Name
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <p runat="server" id="numberShowing"></p>
-                <script>
-                    $('.ui.dropdown')
-                        .dropdown();
-                </script>
+
+            <div runat="server" id="projectViewer" visible="false">
+                <h3><asp:Label runat="server" ID="ProjectViewerName"></asp:Label></h3><br /><br />
+                Company: <asp:Label runat="server" ID="CompanyName"></asp:Label><br />
+                Workflow: <asp:Label runat="server" ID="WorkflowName"></asp:Label><br />
+                Coach: <asp:Label runat="server" ID="CoachName"></asp:Label><br />
+                Notes: <asp:Label runat="server" ID="ProjectViewerNotes"></asp:Label><br />
             </div>
-            <div runat="server" class="ui items" id="projectList">
-            </div>
-            <button class="fluid ui button">Show 10 More...</button>
         </div>
     </form>
 </body>

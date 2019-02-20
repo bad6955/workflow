@@ -16,7 +16,7 @@ namespace Workflow.Data
             MySqlCommand cmd = new MySqlCommand("INSERT INTO Forms (FormName) VALUES (@formName)");
             cmd.Parameters.AddWithValue("@formName", formName);
             DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
+            f.FormId = conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
             return f;
         }
@@ -28,7 +28,7 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@formName", formName);
             cmd.Parameters.AddWithValue("@formData", formData);
             DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
+            f.FormId = conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
             return f;
         }
@@ -45,6 +45,19 @@ namespace Workflow.Data
             {
                 f = new Form((int)dr["FormTemplateID"], (string)dr["FormName"], (string)dr["FormData"]);
             }
+            conn.CloseConnection();
+            return f;
+        }
+
+        public static Form UpdateFormTemplate(int formId, string formName, string formData)
+        {
+            Form f = new Form(formId, formName, formData);
+            MySqlCommand cmd = new MySqlCommand("UPDATE FormTemplates SET FormName=@formName, FormData=@formData WHERE FormTemplateID=@formId");
+            cmd.Parameters.AddWithValue("@formName", formName);
+            cmd.Parameters.AddWithValue("@formData", formData);
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
             return f;
         }

@@ -76,13 +76,49 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button form;
         
         /// <summary>
-        /// adminDiv control.
+        /// projectListing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectListing;
+        
+        /// <summary>
+        /// CreateNewProjectBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateNewProjectBtn;
+        
+        /// <summary>
+        /// numberShowing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl numberShowing;
+        
+        /// <summary>
+        /// projectList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectList;
+        
+        /// <summary>
+        /// projectBuilder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectBuilder;
         
         /// <summary>
         /// ProjectName control.
@@ -166,21 +202,57 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.HiddenField SelectedCoach;
         
         /// <summary>
-        /// numberShowing control.
+        /// projectViewer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl numberShowing;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectViewer;
         
         /// <summary>
-        /// projectList control.
+        /// ProjectViewerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectList;
+        protected global::System.Web.UI.WebControls.Label ProjectViewerName;
+        
+        /// <summary>
+        /// CompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CompanyName;
+        
+        /// <summary>
+        /// WorkflowName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label WorkflowName;
+        
+        /// <summary>
+        /// CoachName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CoachName;
+        
+        /// <summary>
+        /// ProjectViewerNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ProjectViewerNotes;
     }
 }

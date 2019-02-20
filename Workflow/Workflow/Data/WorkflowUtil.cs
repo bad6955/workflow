@@ -73,5 +73,10 @@ namespace Workflow.Data
             conn.CloseConnection();
             return workflow;
         }
+
+        public static string GetWorklowName(int workflowId)
+        {
+            return GetWorkflow(workflowId).WorkflowName;
+        }
     }
 }

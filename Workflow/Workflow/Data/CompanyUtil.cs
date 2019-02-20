@@ -21,6 +21,29 @@ namespace Workflow.Data
             return c;
         }
 
+        public static Company GetCompany(int companyId)
+        {
+            string query = "SELECT CompanyID, CompanyName from Company WHERE CompanyID=@companyId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@companyId", companyId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            Company c = null;
+            while (dr.Read())
+            {
+                c = new Company((int)dr["CompanyID"], (string)dr["CompanyName"]);
+            }
+            conn.CloseConnection();
+            return c;
+        }
+
+        public static string GetCompanyName(int companyId)
+        {
+            return GetCompany(companyId).CompanyName;
+        }
+
         public static List<Company> GetCompanies()
         {
             string query = "SELECT CompanyID, CompanyName from Company";

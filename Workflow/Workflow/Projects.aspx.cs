@@ -31,40 +31,84 @@ namespace Workflow
 
                 CreateProjectList();
 
+                //loads the selected form if there is one
+                if (Request.QueryString["pid"] != null)
+                {
+                    projectListing.Visible = false;
+                    int projId = int.Parse(Request.QueryString["pid"]);
+                    Project p = ProjectUtil.GetProject(projId);
+
+
+                    //if they are trying to edit and they are admin, show project builder
+                    if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                    {
+                        projectBuilder.Visible = true;
+                        CreateProjectBtn.Text = "Update Project";
+                        ProjectName.Text = p.Name;
+                        CompanySelect.SelectedValue = p.CompanyId.ToString();
+                        CoachSelect.SelectedValue = p.CoachId.ToString();
+                        WorkflowSelect.SelectedValue = p.WorkflowId.ToString();
+                        ProjectNotes.Text = p.Notes;
+                    }
+                    //otherwise just show the project viewer
+                    else
+                    {
+                        projectViewer.Visible = true;
+                        ProjectViewerName.Text = p.Name;
+                        CompanyName.Text = CompanyUtil.GetCompanyName(p.CompanyId);
+                        CoachName.Text = UserUtil.GetCoachName(p.CoachId);
+                        WorkflowName.Text = WorkflowUtil.GetWorklowName(p.WorkflowId);
+                        ProjectViewerNotes.Text = p.Notes;
+                    }
+                }
+                //if theyre an admin and trying to make a new project
+                else if (Request.QueryString["edit"] != null && Request.QueryString["pid"] == null && user.RoleId == 4)
+                {
+                    projectListing.Visible = false;
+                    projectBuilder.Visible = true;
+                    GenerateProjectDropdowns();
+                }
+
+
+                /*
                 //checks user is an admin
                 if (user.RoleId == 4)
                 {
                     //sets up admin project creation form
-
-                    //fills out company dropdown
-                    CompanySelect.DataSource = Data.CompanyUtil.GetClientCompanies();
-                    CompanySelect.DataTextField = "companyName";
-                    CompanySelect.DataValueField = "companyId";
-                    CompanySelect.DataBind();
-                    CompanySelect.SelectedIndex = 0;
-
-                    //fills out workflow dropdown
-                    WorkflowSelect.DataSource = Data.WorkflowUtil.GetWorkflows();
-                    WorkflowSelect.DataTextField = "workflowName";
-                    WorkflowSelect.DataValueField = "workflowId";
-                    WorkflowSelect.DataBind();
-                    WorkflowSelect.SelectedIndex = 0;
-
-                    //fills out company dropdown
-                    CoachSelect.DataSource = Data.UserUtil.GetCoaches();
-                    CoachSelect.DataTextField = "fullName";
-                    CoachSelect.DataValueField = "userId";
-                    CoachSelect.DataBind();
-                    CoachSelect.SelectedIndex = 0;
-
-                    adminDiv.Visible = true;
+                    GenerateProjectDropdowns();
+                    projectBuilder.Visible = true;
                 }
+                */
             }
             else
             {
                 //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private void GenerateProjectDropdowns()
+        {
+            //fills out company dropdown
+            CompanySelect.DataSource = Data.CompanyUtil.GetClientCompanies();
+            CompanySelect.DataTextField = "companyName";
+            CompanySelect.DataValueField = "companyId";
+            CompanySelect.DataBind();
+            CompanySelect.SelectedIndex = 0;
+
+            //fills out workflow dropdown
+            WorkflowSelect.DataSource = Data.WorkflowUtil.GetWorkflows();
+            WorkflowSelect.DataTextField = "workflowName";
+            WorkflowSelect.DataValueField = "workflowId";
+            WorkflowSelect.DataBind();
+            WorkflowSelect.SelectedIndex = 0;
+
+            //fills out company dropdown
+            CoachSelect.DataSource = Data.UserUtil.GetCoaches();
+            CoachSelect.DataTextField = "fullName";
+            CoachSelect.DataValueField = "userId";
+            CoachSelect.DataBind();
+            CoachSelect.SelectedIndex = 0;
         }
 
         private void CreateProjectList()
@@ -74,10 +118,10 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < projects.Count; i++)
             {
-                User coach = UserUtil.GetProjectCoach(projects[i].CoachId);
+                User coach = UserUtil.GetCoach(projects[i].CoachId);
                 WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
                 projectNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
-                projectNode += "<div class=\"content\"><a class=\"header\">" + projects[i].Name + "</a><div class=\"meta\">";
+                projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid="+projects[i].ProjectId+"'>" + projects[i].Name + "</a><div class=\"meta\">";
                 projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
                 projectNode += projects[i].Notes + "</div></div></div>";
                 projectList.InnerHtml += projectNode;
@@ -101,6 +145,11 @@ namespace Workflow
         protected void FormBtn_Click(Object sender, EventArgs e)
         {
             Response.Redirect("Forms.aspx");
+        }
+
+        protected void ProjectBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx");
         }
 
         protected void LogoutBtn_Click(Object sender, EventArgs e)
@@ -135,6 +184,11 @@ namespace Workflow
             {
                 //enter valid name
             }
+        }
+
+        protected void CreateNewProjectBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx?edit=1");
         }
     }
 }

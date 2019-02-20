@@ -34,7 +34,14 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
 
-                CreateFormList();
+                if(user.RoleId == 4)
+                {
+                    CreateAdminFormList();
+                }
+                else
+                {
+                    CreateFormList();
+                }
 
                 //loads the selected form if there is one
                 if (Request.QueryString["fid"] != null)
@@ -48,13 +55,22 @@ namespace Workflow
                     {
                         formBuilder.Visible = true;
                         formBuilderData.Value = f.FormData;
+                        FormName.Text = f.FormName;
+                        CreateFormBtn.Text = "Update Form";
                     }
                     //otherwise just show the form viewer
                     else
                     {
                         formViewer.Visible = true;
                         formViewerData.Value = f.FormData;
+                        FormNameLbl.Text = f.FormName;
                     }
+                }
+                //if theyre an admin and trying to make a new form
+                else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId == 4)
+                {
+                    formListing.Visible = false;
+                    formBuilder.Visible = true;
                 }
             }
             else
@@ -79,11 +95,34 @@ namespace Workflow
             Response.Redirect("Workflows.aspx");
         }
 
+        protected void FormBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
         protected void LogoutBtn_Click(Object sender, EventArgs e)
         {
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        private void CreateAdminFormList()
+        {
+            var formNode = "";
+            List<Form> forms = FormUtil.GetFormTemplates();
+            var count = 0;
+            for (int i = 0; i < 5 && i < forms.Count; i++)
+            {
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid="+forms[i].FormId+"&edit=1'>Edit Form</a>" + " | " + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formList.InnerHtml += formNode;
+                count++;
+
+            }
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
         }
 
         private void CreateFormList()
@@ -95,7 +134,7 @@ namespace Workflow
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
                 formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid="+forms[i].FormId+"&edit=1'>Edit Form</a>" + " | " + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
 
@@ -114,9 +153,22 @@ namespace Workflow
 
                 if(formJson.Length > 0)
                 {
-                    FormUtil.CreateFormTemplate(FormName.Text, formJson);
-                    FormResult.CssClass = "success";
-                    FormResult.Text = "Created form " + FormName.Text;
+                    //updating a form not, creating it
+                    if (Request.QueryString["fid"] != null)
+                    {
+                        int formId = int.Parse(Request.QueryString["fid"]);
+                        FormUtil.UpdateFormTemplate(formId, FormName.Text, formJson);
+                        FormResult.CssClass = "success";
+                        FormResult.Text = "Updated form " + FormName.Text;
+                        Response.Redirect("Forms.aspx?fid="+ formId);
+                    }
+                    else
+                    {
+                        Form f = FormUtil.CreateFormTemplate(FormName.Text, formJson);
+                        FormResult.CssClass = "success";
+                        FormResult.Text = "Created form " + FormName.Text;
+                        Response.Redirect("Forms.aspx?fid=" + f.FormId);
+                    }
                 }
                 else
                 {
@@ -141,6 +193,11 @@ namespace Workflow
         {
             string formHtml = formBuilderData.Value.ToString();
             PDFGen.CreateHTMLPDF(formHtml, "tests");
+        }
+
+        protected void CreateNewFormBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx?edit=1");
         }
     }
 }
