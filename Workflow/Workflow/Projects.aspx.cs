@@ -43,6 +43,7 @@ namespace Workflow
                     if (Request.QueryString["edit"] != null && user.RoleId == 4)
                     {
                         projectBuilder.Visible = true;
+                        GenerateProjectDropdowns();
                         CreateProjectBtn.Text = "Update Project";
                         ProjectName.Text = p.Name;
                         CompanySelect.SelectedValue = p.CompanyId.ToString();
