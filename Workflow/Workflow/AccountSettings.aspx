@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Workflow.Dashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AccountSettings.aspx.cs" Inherits="Workflow.AccountSettings" %>
 
 <!DOCTYPE html>
 
@@ -36,7 +36,7 @@
                     <ul>
                         <li>
                             <!-- TODO: gotta link this in the .cs -->
-                            <img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="dashboard" Text="Dashboard"></asp:Button></li>
+                            <img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="dashboard" OnClick="DashboardBtn_Click" Text="Dashboard"></asp:Button></li>
                         <li>
                             <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
                         <li>
@@ -56,7 +56,7 @@
     <div id="content-body">
         <h1>Account Settings</h1>
         <div class="ui raised very padded text container segment">
-            <form class="ui form">
+            <div class="ui form">
                 <div class="two fields">
                     <div class="field">
                         Email:
@@ -90,7 +90,7 @@
                 <div id="button">
                     <button class="ui button" type="submit">Save</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </body>

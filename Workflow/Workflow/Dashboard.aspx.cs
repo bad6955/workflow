@@ -23,7 +23,6 @@ namespace Workflow
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<Project> allProjects;
             //validates that the user is logged in
             if (Session["User"] != null)
             {
@@ -33,6 +32,7 @@ namespace Workflow
                 //loads activity feeds
                 LoadActivityFeed(user.UserId);
 
+                List<Project> allProjects;
                 //loads role specific items
                 if (user.RoleId == 2)
                 {
@@ -65,9 +65,8 @@ namespace Workflow
         {
             foreach (Project project in proj)
             {
-                // init String for adding HTML tags and info
                 var projectNode = "";
-                
+
                 //Preparing Lists of the project's workflow components and their completion status
                 List<WorkflowComponent> steps = WorkflowComponentUtil.GetWorkflowComponents(project.WorkflowId);
                 List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
@@ -105,7 +104,6 @@ namespace Workflow
 
                 // Complete table, add tab pages numbers
                 projectNode += "</tbody></table></div></div></div><hr>";
-
                 // Add to page
                 projectParent.InnerHtml += projectNode;
             }

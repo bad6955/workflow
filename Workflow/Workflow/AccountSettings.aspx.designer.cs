@@ -13,6 +13,15 @@ namespace Workflow {
     public partial class AccountSettings {
         
         /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        /// <summary>
         /// userLbl control.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,13 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button logout;
         
         /// <summary>
-        /// current control.
+        /// dashboard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button current;
+        protected global::System.Web.UI.WebControls.Button dashboard;
         
         /// <summary>
         /// workflow control.
