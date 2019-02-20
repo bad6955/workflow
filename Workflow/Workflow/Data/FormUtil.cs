@@ -21,6 +21,34 @@ namespace Workflow.Data
             return f;
         }
 
+        public static Form CreateFormTemplate(string formName, string formData)
+        {
+            Form f = new Form(formName);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO FormTemplates (FormName, FormData) VALUES (@formName, @formData)");
+            cmd.Parameters.AddWithValue("@formName", formName);
+            cmd.Parameters.AddWithValue("@formData", formData);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return f;
+        }
+
+        public static Form GetFormTemplate(int formId)
+        {
+            MySqlCommand cmd = new MySqlCommand("SELECT FormTemplateID, FormName, FormData FROM FormTemplates WHERE FormTemplateID = @formId");
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            Form f = null;
+            while (dr.Read())
+            {
+                f = new Form((int)dr["FormTemplateID"], (string)dr["FormName"], (string)dr["FormData"]);
+            }
+            conn.CloseConnection();
+            return f;
+        }
+
         //field value and role id should be able to be null
         public static FormField CreateFormField(int formId, string fieldText, string fieldValue)
         {
@@ -47,6 +75,24 @@ namespace Workflow.Data
             while (dr.Read())
             {
                 Form f = new Form((int)dr["FormID"], (string)dr["FormName"]);
+                formList.Add(f);
+            }
+            conn.CloseConnection();
+            return formList;
+        }
+
+        public static List<Form> GetFormTemplates()
+        {
+            string query = "SELECT FormTemplateID, FormName, FormData from FormTemplates";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<Form> formList = new List<Form>();
+            while (dr.Read())
+            {
+                Form f = new Form((int)dr["FormTemplateID"], (string)dr["FormName"], (string)dr["FormData"]);
                 formList.Add(f);
             }
             conn.CloseConnection();

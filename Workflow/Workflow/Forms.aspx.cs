@@ -34,19 +34,28 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.Email;
 
-                //checks user is an admin
-                if (user.RoleId == 4)
-                {
-                    adminDiv.Visible = true;
-                }
+                CreateFormList();
 
-                /*
-                GenerateApprovalDropdowns();
-                if (ApprovalDialogStatus.Value == "1")
+                //loads the selected form if there is one
+                if (Request.QueryString["fid"] != null)
                 {
-                    Page.ClientScript.RegisterStartupScript(GetType(), "ApprovalPopup", "approvalDialog();", true);
+                    formListing.Visible = false;
+                    int formId = int.Parse(Request.QueryString["fid"]);
+                    Form f = FormUtil.GetFormTemplate(formId);
+
+                    //if they are trying to edit and they are admin, show form builder
+                    if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                    {
+                        formBuilder.Visible = true;
+                        formBuilderData.Value = f.FormData;
+                    }
+                    //otherwise just show the form viewer
+                    else
+                    {
+                        formViewer.Visible = true;
+                        formViewerData.Value = f.FormData;
+                    }
                 }
-                */
             }
             else
             {
@@ -54,56 +63,6 @@ namespace Workflow
                 Response.Redirect("Login.aspx");
             }
         }
-
-        /*
-        private void GenerateApprovalDropdowns()
-        {
-            try
-            {
-                approvalCt = int.Parse(SelectedApprovalCt.Value);
-            }
-            catch(Exception e)
-            {
-
-            }
-            if(approvalCt > 1)
-            {
-                ApprovalRole2.Visible = true;
-            }
-            if (approvalCt > 2)
-            {
-                ApprovalRole3.Visible = true;
-            }
-            if (approvalCt > 3)
-            {
-                ApprovalRole4.Visible = true;
-            }
-
-            List<Role> roles = RoleUtil.GetRoles();
-            ApprovalRole1.DataSource = roles;
-            ApprovalRole1.DataTextField = "roleName";
-            ApprovalRole1.DataValueField = "roleId";
-            ApprovalRole1.DataBind();
-            ApprovalRole1.SelectedIndex = 0;
-
-            ApprovalRole2.DataSource = roles;
-            ApprovalRole2.DataTextField = "roleName";
-            ApprovalRole2.DataValueField = "roleId";
-            ApprovalRole2.DataBind();
-            ApprovalRole2.SelectedIndex = 0;
-
-            ApprovalRole3.DataSource = roles;
-            ApprovalRole3.DataTextField = "roleName";
-            ApprovalRole3.DataValueField = "roleId";
-            ApprovalRole3.DataBind();
-            ApprovalRole3.SelectedIndex = 0;
-
-            ApprovalRole4.DataSource = roles;
-            ApprovalRole4.DataTextField = "roleName";
-            ApprovalRole4.DataValueField = "roleId";
-            ApprovalRole4.DataBind();
-            ApprovalRole4.SelectedIndex = 0;
-        }*/
 
         protected void DashboardBtn_Click(Object sender, EventArgs e)
         {
@@ -127,38 +86,61 @@ namespace Workflow
             Response.Redirect("Login.aspx");
         }
 
+        private void CreateFormList()
+        {
+            var formNode = "";
+            List<Form> forms = FormUtil.GetFormTemplates();
+            var count = 0;
+            for (int i = 0; i < 5 && i < forms.Count; i++)
+            {
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid="+forms[i].FormId+"&edit=1'>Edit Form</a>" + " | " + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formList.InnerHtml += formNode;
+                count++;
+
+            }
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
         protected void CreateFormBtn_Click(object sender, EventArgs e)
+        {
+            FormResult.Visible = false;
+
+            if(FormName.Text.Length > 0)
+            {
+                string formJson = formBuilderData.Value.ToString();
+
+                if(formJson.Length > 0)
+                {
+                    FormUtil.CreateFormTemplate(FormName.Text, formJson);
+                    FormResult.CssClass = "success";
+                    FormResult.Text = "Created form " + FormName.Text;
+                }
+                else
+                {
+                    FormResult.CssClass = "error";
+                    FormResult.Text = "Please add elements to the form";
+                }
+            }
+            else
+            {
+                FormResult.CssClass = "error";
+                FormResult.Text = "Please enter a form name";
+            }
+            FormResult.Visible = true;
+        }
+
+        protected void SaveFormBtn_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void SubmitFormBtn_Click(object sender, EventArgs e)
         {
             string formHtml = formBuilderData.Value.ToString();
             PDFGen.CreateHTMLPDF(formHtml, "tests");
         }
-
-        /*
-        protected void CreateTextFieldBtn_Click(object sender, EventArgs e)
-        {
-            FormFieldset.InnerHtml += "<div runat=\"server\" ID=\"FormDiv"+ fieldCt + "\" class=\"form-editor-field\">";
-            FormFieldset.InnerHtml += "<asp:TextBox runat=\"server\" ID=\"FormField" + fieldCt + "\" placeholder=\"Form Field Text\" TextMode=\"MultiLine\"></asp:TextBox>";
-            FormFieldset.InnerHtml += "</div>";
-            fieldCt++;
-        }
-
-        protected void CreateApprovalPopupBtn_Click(object sender, EventArgs e)
-        {
-            ApprovalDialog.Visible = true;
-            ApprovalDialogStatus.Value = "1";
-            Page.ClientScript.RegisterStartupScript(GetType(), "ApprovalPopup", "approvalDialog();", true);
-        }
-
-        protected void ApprovalCt_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            approvalCt = int.Parse(SelectedApprovalCt.Value);
-            ApprovalDialogStatus.Value = "1";
-        }
-
-        protected void CreateApprovalBtn_Click(object sender, EventArgs e)
-        {
-            ApprovalDialogStatus.Value = "0";
-        }
-        */
     }
 }

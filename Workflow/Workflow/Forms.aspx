@@ -54,25 +54,89 @@
         </div>
         <div id="content-body">
             <h1>Forms</h1>
-            <div runat="server" id="buildWrap"></div>
-            <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveForm()" />
-            <asp:HiddenField runat="server" ID="formBuilderData" />
-            <div runat="server" id="renderWrap"></div>
-            <!--
-            <div runat="server" id="adminDiv" visible="false">
+
+            <div runat="server" id="formListing">
+                <div class="ui secondary segment">
+                    <div class="ui floating dropdown labeled icon button">
+                        <i class="filter icon"></i>
+                        <span class="text">Sort Filter</span>
+                        <div class="menu">
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input type="text" placeholder="Search..." />
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="tags icon"></i>
+                                Sort Filter
+                            </div>
+                            <div class="scrolling menu">
+                                <div class="item">
+                                    <div class="ui orange empty circular label"></div>
+                                    All
+                                </div>
+                                <div class="item">
+                                    <div class="ui red empty circular label"></div>
+                                    Open
+                                </div>
+                                <div class="item">
+                                    <div class="ui blue empty circular label"></div>
+                                    Closed
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p runat="server" id="numberShowing"></p>
+                    <script>
+                        $('.ui.dropdown')
+                            .dropdown();
+                    </script>
+                </div>
+                <div runat="server" class="ui items" id="formList">
+                </div>
+                <button class="fluid ui button">Show 10 More...</button>
             </div>
-            -->
+
+            <div runat="server" id="formBuilder" visible="false">
+                <div>
+                    <h3>Form Name</h3>
+                    <asp:Label runat="server" ID="FormResult" Visible="false"></asp:Label><br />
+                    <asp:TextBox runat="server" ID="FormName"></asp:TextBox>
+                </div>
+                <div id="buildWrap"></div>
+                <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveForm()" />
+                <asp:HiddenField runat="server" ID="formBuilderData" />
+            </div>
+
+            <div runat="server" id="formViewer" visible="false">
+                <div>
+                    <h3><asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
+                    <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
+                </div>
+                <div id="renderWrap"></div>
+                <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveForm()" />
+                <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
+                <asp:HiddenField runat="server" ID="formViewerData" />
+            </div>
         </div>
         <script>
-            var options = {
-                onSave: function (formData) {
-                    //document.getElementById("formBuilderData").value = JSON.stringify(formData);
-                    document.getElementById("formBuilderData").value = formBuilder.formData;
-                },
+            var builderOptions = {
+                dataType: 'json',
+                formData: document.getElementById("formBuilderData").value
             };
-            var formBuilder = $('#buildWrap').formBuilder(options);
+            var formBuilder = $('#buildWrap').formBuilder(builderOptions);
+
+            var viewerOptions = {
+                dataType: 'json',
+                formData: document.getElementById("formViewerData").value
+            };
+            var formViewer = $('#renderWrap').formRender(viewerOptions);
 
             function SaveForm() {
+                document.getElementById("formBuilderData").value = formBuilder.formData;
+            }
+
+            function SubmitForm() {
                 jQuery(function() {
                     formRenderOpts = {
                         dataType: 'json',

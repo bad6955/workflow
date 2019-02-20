@@ -76,13 +76,58 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button current;
         
         /// <summary>
-        /// buildWrap control.
+        /// formListing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl buildWrap;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formListing;
+        
+        /// <summary>
+        /// numberShowing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl numberShowing;
+        
+        /// <summary>
+        /// formList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formList;
+        
+        /// <summary>
+        /// formBuilder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formBuilder;
+        
+        /// <summary>
+        /// FormResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FormResult;
+        
+        /// <summary>
+        /// FormName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FormName;
         
         /// <summary>
         /// CreateFormBtn control.
@@ -103,21 +148,57 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.HiddenField formBuilderData;
         
         /// <summary>
-        /// renderWrap control.
+        /// formViewer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl renderWrap;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formViewer;
         
         /// <summary>
-        /// adminDiv control.
+        /// FormNameLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminDiv;
+        protected global::System.Web.UI.WebControls.Label FormNameLbl;
+        
+        /// <summary>
+        /// FormResult2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FormResult2;
+        
+        /// <summary>
+        /// SaveFormBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SaveFormBtn;
+        
+        /// <summary>
+        /// SubmitFormBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitFormBtn;
+        
+        /// <summary>
+        /// formViewerData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField formViewerData;
     }
 }

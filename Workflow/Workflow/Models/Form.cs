@@ -10,6 +10,7 @@ namespace Workflow.Models
         int id;
         int workflowId;
         string name;
+        string formData;
         int statusId;
         int approvalRequiredId;
 
@@ -22,6 +23,13 @@ namespace Workflow.Models
         {
             this.id = formId;
             this.name = name;
+        }
+
+        public Form(int formId, string name, string formData)
+        {
+            this.id = formId;
+            this.name = name;
+            this.formData = formData;
         }
 
         public Form(int formId, int workflowId, string name, int approvalRequiredId, int statusId)
@@ -61,6 +69,12 @@ namespace Workflow.Models
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public string FormData
+        {
+            get { return formData; }
+            set { formData = value; }
         }
     }
 }
