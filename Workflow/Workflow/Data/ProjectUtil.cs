@@ -23,6 +23,11 @@ namespace Workflow.Data
             DBConn conn = new DBConn();
             int id = conn.ExecuteInsertCommand(cmd);
 
+            List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+            foreach(WorkflowComponent wc in workflowComponents)
+            {
+                ComponentCompletionUtil.CreateCompletionStatus(wc.WFComponentID, id, workflowId);
+            }
             /*
             cmd = new MySqlCommand("SELECT LAST_INSERT_ID();");
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);

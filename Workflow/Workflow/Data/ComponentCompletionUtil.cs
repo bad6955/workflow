@@ -10,6 +10,20 @@ namespace Workflow.Data
 {
     public static class ComponentCompletionUtil
     {
+        public static void CreateCompletionStatus(int wfcid, int projid, int wkfid)
+        {
+            string query = "INSERT INTO ComponentCompletion(WFComponentID, ProjectID, WorkflowID, CompletionID) VALUES (@wfcid, @projid, @wkfid, 0)";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@wfcid", wfcid);
+            cmd.Parameters.AddWithValue("@projid", projid);
+            cmd.Parameters.AddWithValue("@wkfid", wkfid);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            conn.CloseConnection();
+        }
+
         public static ComponentCompletion GetProCompletionStatus(int wfid, int projid)
         {
             string query = "SELECT WFComponentID, ProjectID, CompletionID from ComponentCompletion WHERE WFComponentID = @wfid AND ProjectID = @projid";

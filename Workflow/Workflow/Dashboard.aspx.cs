@@ -86,20 +86,24 @@ namespace Workflow
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
 
                 /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
+                ComponentCompletion compstatus = null;
                 foreach (WorkflowComponent step in steps)
                 {
-                    ComponentCompletion compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
-                    var stat = compstatus.CompletionID;
-                    if (stat == 0)
-                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Not Started</td></tr>";
-                    if (stat == 1)
-                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
-                    if (stat == 2)
-                        projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
-                    if (stat == 3)
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Needs Modification</td></tr>";
-                    if (stat == 4)
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Denied</td></tr>";
+                    compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
+                    if (compstatus != null)
+                    {
+                        var stat = compstatus.CompletionID;
+                        if (stat == 0)
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Not Started</td></tr>";
+                        if (stat == 1)
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>In Progress</td></tr>";
+                        if (stat == 2)
+                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                        if (stat == 3)
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Needs Modification</td></tr>";
+                        if (stat == 4)
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Denied</td></tr>";
+                    }
                 }
 
                 // Complete table, add tab pages numbers
