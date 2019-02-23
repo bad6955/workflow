@@ -117,16 +117,16 @@
                 </div>
                 <div runat="server" class="ui items" id="projectList">
                 </div>
-                <button class="fluid ui button">Show 10 More...</button>
+                <button runat="server" onclick="LoadMoreProjects" class="fluid ui button">Show 5 More...</button>
             </div>
 
             <div runat="server" id="projectBuilder" visible="false">
                 <h3>Create Project</h3><br />
-                <asp:TextBox runat="server" ID="ProjectName" placeholder="Project Name"></asp:TextBox><br />
-                <asp:DropDownList runat="server" ID="CompanySelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
-                <asp:DropDownList runat="server" ID="WorkflowSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
-                <asp:DropDownList runat="server" ID="CoachSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
-                <asp:TextBox runat="server" ID="ProjectNotes" placeholder="Project Notes (Optional)" TextMode="MultiLine"></asp:TextBox><br />
+                <asp:TextBox runat="server" ID="ProjectName" class="ui input focus" placeholder="Project Name"></asp:TextBox><br />
+                <asp:DropDownList runat="server" ID="CompanySelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:DropDownList runat="server" ID="WorkflowSelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:DropDownList runat="server" ID="CoachSelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
+                <asp:TextBox runat="server" ID="ProjectNotes" class="ui form" Rows="6" placeholder="Project Notes (Optional)" TextMode="MultiLine"></asp:TextBox><br />
                 <asp:Button runat="server" ID="CreateProjectBtn" Text="Create Project" OnClick="CreateProjectBtn_Click" />
                 <asp:HiddenField runat="server" ID="SelectedCompany" />
                 <asp:HiddenField runat="server" ID="SelectedWorkflow" />

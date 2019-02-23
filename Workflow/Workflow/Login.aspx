@@ -7,6 +7,9 @@
     <title>Venture Creation Log in</title>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/gradient_style.css" type="text/css" />
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <script type="text/javascript" src="assets/js/semantic.js"></script>
+    <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
 <body>
@@ -19,11 +22,15 @@
                     <div>
                         <asp:Label runat="server" ID="ErrorLabel2" CssClass="error"></asp:Label><br />
                         <asp:Label runat="server" ID="ErrorLabel" CssClass="error"></asp:Label>
-                        <div class="email-control">
-                        <div class="login-email-icon"></div>
-                        <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox><br />
+                        <div class="ui left icon input">
+                            <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
+                            <i class="envelope icon"></i>
+                            <br />
                         </div>
-                        <asp:TextBox runat="server" ID="Password" TextMode="Password" placeholder="Password"></asp:TextBox><br />
+                        <div class="ui left icon input">
+                            <asp:TextBox runat="server" ID="Password" TextMode="Password" placeholder="Password"></asp:TextBox><br />
+                            <i class="lock icon"></i>
+                        </div>
                         <asp:Button runat="server" ID="LoginBtn" Text="Login" OnClick="LoginBtn_Click" /><br />
                         <asp:Button runat="server" ID="ForgotBtn" Text="Forgot Password" OnClick="ForgotBtn_Click" />
                     </div>

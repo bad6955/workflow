@@ -38,16 +38,18 @@
     }
 </script>
 <body>
-
-    <div class="container">
-            <img  src="https://uvc.org/wp-content/uploads/2016/07/VentureCreations_Logo.jpg" alt="UAH" />
-
-        <div class="omb_login">
-                <h1>Admin Panel</h1><br />
-
-                <form class="omb_loginForm" id="form1" runat="server">
-                    <div class="row col-sm">
-                        <div class="col-sm-6">
+    <form class="omb_loginForm" id="form1" runat="server">
+        <h1>Administration</h1>
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="user">Users</a>
+            <a class="item" data-tab="company">Companies</a>
+            <a class="item" data-tab="unlock">Unlock Account</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="user">
+            <div class="ui placeholder segment">
+                <div class="ui two column very relaxed stackable grid">
+                    <div class="column">
+                        <div class="ui form">
                             <h3>User Registration</h3>
                             <asp:Label runat="server" ID="UserCreateResult" CssClass="success" Visible="false"></asp:Label>
                             <asp:Label runat="server" ID="EmailError" CssClass="error" Visible="false"></asp:Label>
@@ -76,35 +78,60 @@
                             </div>
 
                             <div class="input-group">
-                                <asp:Button runat="server" class="btn btn-lg btn-primary btn-block" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
+                                <asp:Button runat="server" class="btn btn-dark" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
                             </div>
                             <!-- HiddenFields don't need styles -->
                             <asp:HiddenField runat="server" ID="SelectedRole" />
                             <asp:HiddenField runat="server" ID="SelectedCompany" />
                         </div>
-                        <div class="col-sm-6">
-
-                            <div>
-                                <h3><span>Create Company</span></h3><br />
-                                <asp:Label runat="server" ID="CompanyResult" CssClass="success" Visible="false"></asp:Label>
-                                <asp:Label runat="server" ID="CompanyError" CssClass="error" Visible="false"></asp:Label><br />
-                                <asp:TextBox runat="server" class="form-control" name="newid" ID="Company" placeholder="Company Name"></asp:TextBox>
-                                <asp:Button runat="server" type="button" class="btn btn-success btn-block" ID="CompanyBtn" Text="Create Company" OnClick="CompanyBtn_Click" />
-                            </div>
-                            <hr />
-                            <div>
-                                <h3><span>Unlock Accounts</span><br /></h3>
-                                <asp:Label runat="server" ID="UnlockResult" CssClass="success" Visible="false"></asp:Label>
-                                <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />
-                                <asp:DropDownList runat="server" ID="LockedAccountSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
-                                <asp:Button runat="server"  type="button" class="btn btn-success " ID="UnlockAccountBtn" Text="Unlock Account" OnClick="UnlockAccountBtn_Click" />
-                                <asp:HiddenField runat="server" ID="SelectedAccount" />
-                            </div>
-
-                        </div>
                     </div>
-                </form>
+                    <div class="middle aligned column">
+                        <h3>All Users</h3>
+                        <div runat="server" class="middle aligned column" id="UserTable"></div>
+                    </div>
+                </div>
+                <div class="ui vertical divider">
+                    <i class="user circle icon"></i>
+                </div>
             </div>
-    </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="company">
+            <div class="ui placeholder segment">
+                <div class="ui two column very relaxed stackable grid">
+                    <div class="column">
+                        <h3><span>Create Company</span></h3>
+                        <br />
+                        <asp:Label runat="server" ID="CompanyResult" CssClass="success" Visible="false"></asp:Label>
+                        <asp:Label runat="server" ID="CompanyError" CssClass="error" Visible="false"></asp:Label><br />
+                        <asp:TextBox runat="server" class="form-control" name="newid" ID="Company" placeholder="Company Name"></asp:TextBox>
+                        <asp:Button runat="server" type="button" class="btn btn-success btn-block" ID="CompanyBtn" Text="Create Company" OnClick="CompanyBtn_Click" />
+                    </div>
+                    <div class="middle aligned column">
+                        <h3>All Companies</h3>
+                        <div runat="server" class="middle aligned column" id="CompanyTable"></div>
+                    </div>
+                </div>
+                <div class="ui vertical divider">
+                    <i class="address icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="unlock">
+            <div>
+                <h3><span>Unlock Accounts</span><br />
+                </h3>
+                <asp:Label runat="server" ID="UnlockResult" CssClass="success" Visible="false"></asp:Label>
+                <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />
+                <asp:DropDownList runat="server" ID="LockedAccountSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
+                <asp:Button runat="server" type="button" class="btn btn-success " ID="UnlockAccountBtn" Text="Unlock Account" OnClick="UnlockAccountBtn_Click" />
+                <asp:HiddenField runat="server" ID="SelectedAccount" />
+            </div>
+        </div>
+    </form>
+    <script>
+        $('.menu .item')
+            .tab()
+            ;
+    </script>
 </body>
 </html>

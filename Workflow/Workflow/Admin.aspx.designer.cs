@@ -157,6 +157,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.HiddenField SelectedCompany;
         
         /// <summary>
+        /// UserTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl UserTable;
+        
+        /// <summary>
         /// CompanyResult control.
         /// </summary>
         /// <remarks>
@@ -191,6 +200,15 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CompanyBtn;
+        
+        /// <summary>
+        /// CompanyTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CompanyTable;
         
         /// <summary>
         /// UnlockResult control.

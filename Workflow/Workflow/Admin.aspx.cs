@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using Workflow.Data;
@@ -27,7 +28,7 @@ namespace Workflow
                 User user = (User)Session["User"];
 
                 //checks user is an admin
-                if(user.RoleId == 4)
+                if (user.RoleId == 4)
                 {
                     //DEBUG move selectors from below, here
                 }
@@ -66,6 +67,9 @@ namespace Workflow
             LockedAccountSelect.DataBind();
             LockedAccountSelect.SelectedIndex = 0;
             //DEBUG end move
+
+            MakeUserTable();
+            MakeCompanyTable();
         }
 
         private void ClearFields()
@@ -289,7 +293,7 @@ namespace Workflow
             UnlockError.Visible = false;
 
             int userId = int.Parse(SelectedAccount.Value);
-            if(userId > 0)
+            if (userId > 0)
             {
                 User lockedUser = UserUtil.GetUser(userId);
                 FirebaseUtil.ForgotPassword(lockedUser.Email);
@@ -304,6 +308,41 @@ namespace Workflow
             }
 
             ClearFields();
+        }
+
+        protected void MakeUserTable()
+        {
+            List<User> users = UserUtil.GetUsers();
+            var userTable = "";
+            userTable += "<table class=\"ui orange table\"><thead><tr><th>Name</th><th>Email</th><th>Company</th><th>Role</th></tr></thead>";
+            userTable += "<tbody>";
+            foreach (User user in users)
+            {
+                if (user.UserId != -1 && user.UserId != -2)
+                {
+                    Company company = CompanyUtil.GetCompany(user.CompanyId);
+                    Role role = RoleUtil.GetRole(user.RoleId);
+                    userTable += "<tr><td>" + user.FullName + "</td><td>" + user.Email + "</td><td>" + company.CompanyName + "</td><td>" + role.RoleName + "</td></tr>";
+                }
+            }
+            userTable += "</tbody></table>";
+            UserTable.InnerHtml += userTable;
+        }
+
+        protected void MakeCompanyTable()
+        {
+            List<Company> companies = CompanyUtil.GetCompanies();
+            var companyTable = "";
+            companyTable += "<table class=\"ui orange table\"><thead><tr><th>Company Name</th><th>Edit</th></tr></thead>";
+            companyTable += "<tbody>";
+            foreach (Company company in companies)
+            {
+                if (company.CompanyId != -1 && company.CompanyId != -2)
+                    companyTable += "<tr><td>" + company.CompanyName+ "</td><td>Edit(?)</td></tr>";
+               
+            }
+            companyTable += "</tbody></table>";
+            CompanyTable.InnerHtml += companyTable;
         }
     }
 }

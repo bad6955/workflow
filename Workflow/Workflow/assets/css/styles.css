@@ -220,6 +220,7 @@ html, body {
 
 #vc-coach-dashboard-top {
     width: 90%;
+    padding-top: 2em;
     margin: 0 auto;
 }
 
@@ -265,7 +266,6 @@ html, body {
 #login img, #forgot-password img {
     width: 120px;
     height: 120px;
-    padding-bottom: 2em;
 }
 
 #login, #forgot-password {
@@ -288,30 +288,17 @@ html, body {
     font-family: 'Titillium Web', sans-serif;
 }
 
-#login input[type=text], #login input[type=password], #forgot-password input[type=text] {
-    padding: 1.5em 4em;
-    margin: 1.5em;
-    border-radius: 6px;
-    box-sizing: border-box;
-    color: black;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid black;
-}
-
-#login #Email, #forgot-password #Email {
-    background-image: url('../icons/email.png');
-    background-size: 35px 35px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-}
-
-#login #Password {
-    background-image: url('../icons/password.png');
-    background-size: 35px 35px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-}
+    #login input[type=text], #login input[type=password], #forgot-password input[type=text] {
+        font-family: 'Titillium Web', sans-serif;
+        padding: 1.5em 4em;
+        margin: 0.8em;
+        border-radius: 6px;
+        box-sizing: border-box;
+        color: black;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid black;
+    }
 
 #login #LoginBtn, #ForgotBtn, #forgot-password #changeBtn, #returnBtn {
     border: none;
@@ -576,7 +563,6 @@ tbody tr {
     color: black;
     line-height: 1.2;
     font-weight: unset;
-    background: #cccccc;
 }
 
     tbody tr:hover {
@@ -707,9 +693,24 @@ tbody tr {
 
 /** Admin page *****/
 
+#RegisterBtn {
+    margin: 0 auto;
+}
+
+#UserTable {
+    height: 300px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.omb_loginForm {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .omb_login .omb_loginForm .input-group.i {
     width: 2em;
-  
 }
 .form-control{
     margin-bottom:10px;

@@ -65,6 +65,23 @@ namespace Workflow.Data
             return u;
         }
 
+        public static List<User> GetUsers()
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            List<User> users = new List<User>();
+            while (dr.Read())
+            {
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                users.Add(u);
+            }
+            conn.CloseConnection();
+            return users;
+        }
+
         public static User GetUser(int userId)
         {
             string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = @userId";

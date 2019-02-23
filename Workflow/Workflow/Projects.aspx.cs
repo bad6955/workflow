@@ -11,6 +11,7 @@ namespace Workflow
 {
     public partial class Projects : System.Web.UI.Page
     {
+        private int count = 0;
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -115,9 +116,9 @@ namespace Workflow
         private void CreateProjectList()
         {
             var projectNode = "";
+            numberShowing.InnerHtml = "";
             List<Project> projects = ProjectUtil.GetProjects();
-            var count = 0;
-            for (int i = 0; i < 5 && i < projects.Count; i++)
+            for (int i = 0; i < projects.Count; i++)
             {
                 User coach = UserUtil.GetCoach(projects[i].CoachId);
                 WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
@@ -126,6 +127,7 @@ namespace Workflow
                 projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
                 projectNode += projects[i].Notes + "</div></div></div>";
                 projectList.InnerHtml += projectNode;
+                projectNode = "";
                 count++;
 
             }
@@ -190,6 +192,28 @@ namespace Workflow
         protected void CreateNewProjectBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Projects.aspx?edit=1");
+        }
+
+        protected void LoadMoreProjects()
+        {
+            var moreProjects = "";
+            var five = 0;
+            List<Project> projects = ProjectUtil.GetProjects();
+            for (int i = count; i < projects.Count && i < five; i++)
+            {
+                User coach = UserUtil.GetCoach(projects[i].CoachId);
+                WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
+                moreProjects = "<h1>"+count+"</h1><div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
+                moreProjects += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
+                moreProjects += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
+                moreProjects += projects[i].Notes + "</div></div></div>";
+                projectList.InnerHtml += moreProjects;
+                moreProjects = "";
+                count++;
+            }
+            numberShowing.InnerHtml = "";
+            var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
+            numberShowing.InnerHtml += showing;
         }
     }
 }

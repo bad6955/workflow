@@ -29,5 +29,23 @@ namespace Workflow.Data
             conn.CloseConnection();
             return roleList;
         }
+
+        public static Role GetRole(int roleid)
+        {
+            string query = "SELECT RoleID, RoleName from Roles WHERE RoleID = @roleid";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@roleId", roleid);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            Role role = null;
+            while (dr.Read())
+            {
+                role = new Role((int)dr["RoleID"], (string)dr["RoleName"]);
+            }
+            conn.CloseConnection();
+            return role;
+        }
     }
 }

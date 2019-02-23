@@ -7,6 +7,8 @@
     <title>Forgot Password</title>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/gradient_style.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
+    <script type="text/javascript" src="assets/js/semantic.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
 <body>
@@ -16,7 +18,10 @@
             <h1>RESET PASSWORD</h1>
             <asp:Label runat="server" ID="ErrorLabel" CssClass="error"></asp:Label>
             <asp:Label runat="server" ID="SuccessLabel" CssClass="success"></asp:Label>
-            <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
+            <div class="ui left icon input">
+                <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
+                <i class="envelope icon"></i>
+            </div>
             <asp:Button runat="server" ID="changeBtn" Text="Reset Password" OnClick="ChangeBtn_Click" />
             <br />
             <asp:Button runat="server" ID="returnBtn" Text="Return to Login" OnClick="ReturnBtn_Click" />
