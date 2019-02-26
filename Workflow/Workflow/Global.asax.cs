@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -12,7 +13,7 @@ namespace Workflow
     {
         public Global()
         {
-            Log.Init();
+            Workflow.Utility.Log.Init();
         }
 
         protected void Application_Start(object sender, EventArgs e)
@@ -22,7 +23,7 @@ namespace Workflow
 
         public override void Dispose()
         {
-            Log.Shutdown();
+            Workflow.Utility.Log.Shutdown();
             base.Dispose();
         }
 
