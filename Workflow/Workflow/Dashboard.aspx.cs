@@ -133,7 +133,7 @@ namespace Workflow
 
                 /*id for opening project?*/
                 projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
-                projectNode += "<div class=\"content\"><a class=\"header\">" + project.Name + "</a>";
+                projectNode += "<div class=\"content\"><a class=\"header\" href='"+"Projects.aspx?pid="+project.ProjectId +"'>" + project.Name + "</a>";
                 projectNode += "<div class=\"description\">" + project.Notes + "</div>";
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
 
