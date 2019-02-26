@@ -14,10 +14,6 @@ namespace Workflow
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //DEBUG testing
-            //string html = JSONtoHTML.ConvertToHTML("[ { \"type\": \"header\", \"subtype\": \"h1\", \"label\": \"Header\" }, { \"type\": \"paragraph\", \"subtype\": \"p\", \"label\": \"Paragraph\" }, { \"type\": \"text\", \"label\": \"Text Field\", \"className\": \"form-control\", \"name\": \"text-1550510559308\", \"subtype\": \"text\" }, { \"type\": \"textarea\", \"label\": \"Text Area\", \"className\": \"form-control\", \"name\": \"textarea-1550510560317\", \"subtype\": \"textarea\" }, { \"type\": \"button\", \"label\": \"Button\", \"subtype\": \"button\", \"name\": \"button-1550510564127\" } ]");
-            //PDFGen.CreateHTMLPDF(html, "testPDF");
-
             //checks if the user is logged in and redirects them to their dashboard
             if (Session["User"] != null)
             {
@@ -65,7 +61,10 @@ namespace Workflow
                     else
                     {
                         UserUtil.InvalidLogin(user);
-                        ErrorLabel2.Text = (5-user.InvalidLoginCt+1) + " attempt(s) remaining until account is locked";
+                        if((5-user.InvalidLoginCt+1) <= 3)
+                        {
+                            ErrorLabel2.Text = (5 - user.InvalidLoginCt + 1) + " attempt(s) remaining until account is locked";
+                        }
                     }
                 }
                 else

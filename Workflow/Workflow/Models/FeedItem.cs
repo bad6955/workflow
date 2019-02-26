@@ -42,26 +42,6 @@ namespace Workflow.Models
             this.projectId = projectId;
         }
 
-        /*
-        [Bindable(true)]
-        [Category("Appearance")]
-        [DefaultValue("")]
-        [Localizable(true)]
-        public string Text
-        {
-            get
-            {
-                String s = (String)ViewState["Text"];
-                return ((s == null) ? String.Empty : s);
-            }
-
-            set
-            {
-                ViewState["Text"] = value;
-            }
-        }
-        */
-
         protected override void CreateChildControls()
         {
             Controls.Clear();
@@ -72,8 +52,6 @@ namespace Workflow.Models
             Button dismissBtn = new Button();
             dismissBtn.ID = "DismissBtn" + id;
             dismissBtn.Text = "Dismiss";
-            dismissBtn.CssClass = "ui button";
-            //dismissBtn.Click += DismissBtn_Click;
             dismissBtn.Click += new EventHandler(DismissBtn_Click);
 
             HtmlGenericControl itemDiv = new HtmlGenericControl("div");
@@ -104,46 +82,15 @@ namespace Workflow.Models
             aText.Controls.Add(textControl);
             descDiv.Controls.Add(timeControl);
             contentDiv.Controls.Add(aText);
-            //contentDiv.Controls.Add(closeAText);
             contentDiv.Controls.Add(descDiv);
-            //contentDiv.Controls.Add(closeDiv);
-
-            buttonDiv.Controls.Add(dismissBtn);
-            itemDiv.Controls.Add(buttonDiv);
-            //itemDiv.Controls.Add(closeDiv);
+            //buttonDiv.Controls.Add(dismissBtn);
+            //itemDiv.Controls.Add(buttonDiv);
             itemDiv.Controls.Add(icon);
             itemDiv.Controls.Add(contentDiv);
-            //itemDiv.Controls.Add(closeDiv);
 
             string html = RenderControl(itemDiv);
             this.html = html;
-
             this.Controls.Add(itemDiv);
-            /*
-            html += "<div class=\"right floated content\">";
-            html += "<asp:Button runat=\"server\" ID=\"DismissBtn" + id + "\" OnClick=\"DismissBtn_Click\" class=\"ui button\" Text=\"Dismiss\"></asp:Button>";
-            html += "</div>";
-            html += "<i class=\"bell outline icon\"></i>";
-            html += "<div class=\"content\">";
-            html += "<a class=\"header\">" + text + "</a>";
-            html += "<div class=\"description\">Updated " + TimeDifference(feedTime) + " ago</div>";
-            html += "</div>";
-            html += "</div>";
-            return html;
-
-            <div id="FeedItem2" class="item">
-                <div class="right floated content">
-                    <input type="submit" name="DismissBtn2" value="Dismiss" id="DismissBtn2" class="ui button">
-                </div>
-                <div class="content">
-                    <a class="header">Added as a coach on company's project</a>
-                    <!--/a-->
-                    <div class="description">Updated 0 min ago</div>
-                </div>
-            </div>
-
-
-            */
         }
 
         private string RenderControl(Control control)
