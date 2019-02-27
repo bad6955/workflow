@@ -20,7 +20,7 @@
             <asp:Label runat="server" ID="SuccessLabel" CssClass="success"></asp:Label>
             <div class="ui left icon input">
                 <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
-                <i class="envelope icon"></i>
+                <i class="large envelope icon"></i>
             </div>
             <asp:Button runat="server" ID="changeBtn" Text="Reset Password" OnClick="ChangeBtn_Click" />
             <br />

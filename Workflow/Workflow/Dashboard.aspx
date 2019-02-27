@@ -20,7 +20,7 @@
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
-                        <img src="assets/icons/person.png" />
+                        <i class="large user circle outline icon"></i>
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
@@ -57,7 +57,7 @@
                 <div class="ui placeholder segment">
                     <div class="ui two column stackable center aligned grid">
                         <div class="ui vertical divider">
-                                <i class="ellipsis horizontal icon"></i></div>
+                                <!--<i class="ellipsis horizontal icon"></i>--></div>
                         <div class="middle aligned row">
                             <div class="column">
                                 <h2>Activity Feed</h2>

@@ -32,7 +32,7 @@
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
-                        <img src="assets/icons/person.png" />
+                        <i class="large user circle outline icon"></i>
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
@@ -117,7 +117,7 @@
                 </div>
                 <div runat="server" class="ui items" id="projectList">
                 </div>
-                <button runat="server" onclick="LoadMoreProjects" class="fluid ui button">Show 5 More...</button>
+                <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreProjects" CssClass="fluid ui button" />
             </div>
 
             <div runat="server" id="projectBuilder" visible="false">

@@ -64,7 +64,7 @@ html, body {
     font-weight: normal;
 }
 
-#top-bar img {
+#top-bar i {
     vertical-align: middle;
 }
 
@@ -252,6 +252,14 @@ html, body {
     overflow-x: auto;
     overflow-y: auto;
     height: 300px;
+}
+
+#empty-feed {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 3em;
+    width: 150px;
+    color: #aaaaaa;
 }
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
 /* These two share most (see also: all) of the same design so if you change someone on one, do

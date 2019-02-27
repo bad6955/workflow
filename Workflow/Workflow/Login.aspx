@@ -24,12 +24,12 @@
                         <asp:Label runat="server" ID="ErrorLabel" CssClass="error"></asp:Label>
                         <div class="ui left icon input">
                             <asp:TextBox runat="server" ID="Email" placeholder="Email"></asp:TextBox>
-                            <i class="envelope icon"></i>
+                            <i class="large envelope icon"></i>
                             <br />
                         </div>
                         <div class="ui left icon input">
                             <asp:TextBox runat="server" ID="Password" TextMode="Password" placeholder="Password"></asp:TextBox><br />
-                            <i class="lock icon"></i>
+                            <i class="large lock icon"></i>
                         </div>
                         <asp:Button runat="server" ID="LoginBtn" Text="Login" OnClick="LoginBtn_Click" /><br />
                         <asp:Button runat="server" ID="ForgotBtn" Text="Forgot Password" OnClick="ForgotBtn_Click" />

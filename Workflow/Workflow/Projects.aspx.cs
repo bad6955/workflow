@@ -12,6 +12,7 @@ namespace Workflow
     public partial class Projects : System.Web.UI.Page
     {
         private int count = 0;
+        private String projectNode = "";
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -28,7 +29,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.Email;
+                userLbl.Text = user.FullName;
 
                 CreateProjectList();
 
@@ -115,23 +116,15 @@ namespace Workflow
 
         private void CreateProjectList()
         {
-            var projectNode = "";
+            projectNode = "";
+            projectList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Project> projects = ProjectUtil.GetProjects();
-            for (int i = 0; i < projects.Count; i++)
+            for (int i = 0; i < projects.Count && i < 5; i++)
             {
-                User coach = UserUtil.GetCoach(projects[i].CoachId);
-                WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
-                projectNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
-                projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid="+projects[i].ProjectId+"'>" + projects[i].Name + "</a><div class=\"meta\">";
-                projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
-                projectNode += projects[i].Notes + "</div></div></div>";
-                projectList.InnerHtml += projectNode;
-                projectNode = "";
-                count++;
-
+                MakeText(projects, projectNode, i);
             }
-            var showing = "Showing 1 - "+ count +" of " + projects.Count + " Results";
+            var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
         }
 
@@ -194,26 +187,38 @@ namespace Workflow
             Response.Redirect("Projects.aspx?edit=1");
         }
 
-        protected void LoadMoreProjects()
+        protected void LoadMoreProjects(object sender, EventArgs e)
         {
-            var moreProjects = "";
-            var five = 0;
+            ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
+            int loaded = Convert.ToInt32(ViewState["count"]);
+
             List<Project> projects = ProjectUtil.GetProjects();
-            for (int i = count; i < projects.Count && i < five; i++)
+            if (loaded == 1)
             {
-                User coach = UserUtil.GetCoach(projects[i].CoachId);
-                WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
-                moreProjects = "<h1>"+count+"</h1><div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
-                moreProjects += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
-                moreProjects += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
-                moreProjects += projects[i].Notes + "</div></div></div>";
-                projectList.InnerHtml += moreProjects;
-                moreProjects = "";
-                count++;
+                ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
+                loaded = Convert.ToInt32(ViewState["count"]);
             }
+            for (int i = 5; i < loaded * 5 && i < projects.Count; i++)
+            {
+                MakeText(projects, projectNode, i);
+            }
+
             numberShowing.InnerHtml = "";
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
+        }
+
+        private void MakeText(List<Project> projects, String projectNode, int i)
+        {
+            User coach = UserUtil.GetCoach(projects[i].CoachId);
+            WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
+            projectNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/project.png\"/></div>";
+            projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
+            projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
+            projectNode += projects[i].Notes + "</div></div></div>";
+            projectList.InnerHtml += projectNode;
+            projectNode = "";
+            count++;
         }
     }
 }
