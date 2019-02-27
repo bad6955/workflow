@@ -27,7 +27,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.Email;
+                userLbl.Text = user.FullName;
 
                 if (user.RoleId == 4)
                 {

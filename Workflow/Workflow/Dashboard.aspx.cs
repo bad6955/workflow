@@ -27,7 +27,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.Email;
+                userLbl.Text = user.FullName;
 
                 //loads activity feeds
                 LoadActivityFeed(user.UserId);
@@ -79,11 +79,11 @@ namespace Workflow
                         waitingOnCompany++;
                 }
             }
-            var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"250\"></canvas>";
+            var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"300\"></canvas>";
             graphScript += "<script>new Chart(document.getElementById(\"pie-chart\"), {type:'pie', data:{labels: [";
-            graphScript += "\"All Open Projects\", \"My Waiting on Company\", \"My Projects\", \"My Pending Approval\"],";
+            graphScript += "\"My Waiting on Company\", \"My Projects\", \"My Pending Approval\"],";
             graphScript += "datasets: [{label: \"Total\", backgroundColor: [\"#dc7a32\", \"#04828F\", \"#5C3315\", \"#32CBDC\"],";
-            graphScript += "data: [" + allProjects.Count + ", " + waitingOnCompany + ", " + projects.Count + ", " + waitingForApproval + "]}]}});</script>";
+            graphScript += "data: [" + waitingOnCompany + ", " + projects.Count + ", " + waitingForApproval + "]}]}, options:{title:{display:true,text:'All Projects: "+allProjects.Count+"', position: 'bottom'}}});</script>";
 
             piechart.InnerHtml += graphScript;
         }

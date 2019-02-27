@@ -22,7 +22,7 @@
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
-                        <img src="assets/icons/person.png" />
+                        <i class="user circle outline icon"></i>
                         <h1><asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <!-- not passing argument ID=user -->
                         <div id="dropdown-content">
