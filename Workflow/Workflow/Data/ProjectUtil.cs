@@ -94,5 +94,22 @@ namespace Workflow.Data
             conn.CloseConnection();
             return projectList;
         }
+
+        public static List<Project> GetWorkflowProjects(int workflowId)
+        {
+            MySqlCommand cmd = new MySqlCommand("SELECT ProjectID, WorkflowID, CompanyID, StatusID, CoachID, ProjectName, ProjectNotes from Project WHERE WorkflowID = @workflowId");
+            cmd.Parameters.AddWithValue("@workflowId", workflowId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<Project> projectList = new List<Project>();
+            while (dr.Read())
+            {
+                Project p = new Project((int)dr["ProjectID"], (int)dr["WorkflowID"], (int)dr["CompanyID"], (int)dr["StatusID"], (int)dr["CoachID"], (string)dr["ProjectName"], (string)dr["ProjectNotes"]);
+                projectList.Add(p);
+            }
+            conn.CloseConnection();
+            return projectList;
+        }
     }
 }

@@ -10,16 +10,38 @@ namespace Workflow.Data
 {
     public class WorkflowComponentUtil
     {
-        public static WorkflowComponent CreateWorkflowComponent(int wfid, int workflowID, string componenttitle, string componenttext)
+        public static WorkflowComponent CreateWorkflowComponent(int workflowID)
         {
-            WorkflowComponent w = new WorkflowComponent(wfid, workflowID, componenttitle, componenttext);
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO WorkflowComponents (WFComponentID, WorkflowID, ComponentTitle, ComponentText) VALUES (@wfid, @workflowID, @componenttitle, @componenttext)");
+            WorkflowComponent w = new WorkflowComponent(workflowID);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO WorkflowComponents(WorkflowID, ComponentTitle, ComponentText) VALUES (@workflowID, '', '')");
             cmd.Parameters.AddWithValue("@workflowID", workflowID);
-            cmd.Parameters.AddWithValue("@wfid", wfid);
+            DBConn conn = new DBConn();
+            w.WFComponentID = conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return w;
+        }
+        public static WorkflowComponent CreateWorkflowComponent(int workflowID, string componenttitle, int formId)
+        {
+            WorkflowComponent w = new WorkflowComponent(workflowID, componenttitle, formId);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO WorkflowComponents(WorkflowID, ComponentTitle, FormID) VALUES (@workflowID, @componenttitle, @formId)");
+            cmd.Parameters.AddWithValue("@workflowID", workflowID);
+            cmd.Parameters.AddWithValue("@componenttitle", componenttitle);
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            w.WFComponentID = conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return w;
+        }
+        public static WorkflowComponent CreateWorkflowComponent(int wfcId, int workflowID, string componenttitle, string componenttext)
+        {
+            WorkflowComponent w = new WorkflowComponent(wfcId, workflowID, componenttitle, componenttext);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO WorkflowComponents (WFComponentID, WorkflowID, ComponentTitle, ComponentText) VALUES (@wfcId, @workflowID, @componenttitle, @componenttext)");
+            cmd.Parameters.AddWithValue("@workflowID", workflowID);
+            cmd.Parameters.AddWithValue("@wfcId", wfcId);
             cmd.Parameters.AddWithValue("@componenttitle", componenttitle);
             cmd.Parameters.AddWithValue("@componenttext", componenttext);
             DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
+            w.WFComponentID = conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
             return w;
         }
@@ -40,6 +62,26 @@ namespace Workflow.Data
             }
             conn.CloseConnection();
             return componentList;
+        }
+
+        public static void UpdateWorkflowComponent(int wfcId, string title, int formId)
+        {
+            MySqlCommand cmd = new MySqlCommand("UPDATE WorkflowComponents SET ComponentTitle=@title, FormID=@formId WHERE WFComponentID=@wfcId");
+            cmd.Parameters.AddWithValue("@wfcId", wfcId);
+            cmd.Parameters.AddWithValue("@title", title);
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+        }
+
+        public static void DeleteWorkflowComponent(int wfcId)
+        {
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM WorkflowComponents WHERE WFComponentID=@wfcId");
+            cmd.Parameters.AddWithValue("@wfcId", wfcId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
         }
     }
 }

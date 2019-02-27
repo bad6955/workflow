@@ -16,7 +16,7 @@ namespace Workflow.Data
             MySqlCommand cmd = new MySqlCommand("INSERT INTO Workflows (WorkflowName) VALUES (@workflowName)");
             cmd.Parameters.AddWithValue("@workflowName", workflowName);
             DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
+            w.WorkflowId = conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
             return w;
         }
@@ -96,6 +96,42 @@ namespace Workflow.Data
         public static string GetWorklowName(int workflowId)
         {
             return GetWorkflow(workflowId).WorkflowName;
+        }
+
+        public static void UpdateWorkflow(int workflowId, string workflowName)
+        {
+            string query = "UPDATE Workflows SET WorkflowName=@workflowName WHERE WorkflowID=@workflowId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@workflowId", workflowId);
+            cmd.Parameters.AddWithValue("@workflowName", workflowName);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+        }
+
+        public static bool DeleteWorkflow(int workflowId)
+        {
+            List<Project> projects = ProjectUtil.GetWorkflowProjects(workflowId);
+            if (projects.Count == 0)
+            {
+                List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+                foreach (WorkflowComponent item in comps)
+                {
+                    WorkflowComponentUtil.DeleteWorkflowComponent(item.WFComponentID);
+                }
+                string query = "DELETE FROM Workflows WHERE WorkflowID=@workflowId";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@workflowId", workflowId);
+                DBConn conn = new DBConn();
+                conn.ExecuteInsertCommand(cmd);
+                conn.CloseConnection();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

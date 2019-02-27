@@ -94,6 +94,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button CreateNewWorkflowBtn;
         
         /// <summary>
+        /// WorkflowError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label WorkflowError;
+        
+        /// <summary>
         /// numberShowing control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,24 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox WorkflowName;
+        
+        /// <summary>
+        /// AddWorkflowComponentBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AddWorkflowComponentBtn;
+        
+        /// <summary>
+        /// WorkflowSteps control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder WorkflowSteps;
         
         /// <summary>
         /// CreateWorkflowBtn control.

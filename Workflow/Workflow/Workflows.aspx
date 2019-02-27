@@ -49,6 +49,7 @@
             <h1>Workflows</h1>
                 <div runat="server" id="workflowListing">
                     <asp:Button runat="server" ID="CreateNewWorkflowBtn" Text="Create New Workflow" OnClick="CreateNewWorkflowBtn_Click" CssClass="fluid ui button" />
+                    <asp:Label runat="server" ID="WorkflowError" Visible="false" CssClass="error"></asp:Label>
                     <div class="ui secondary segment">
                         <div class="ui floating dropdown labeled icon button">
                             <i class="filter icon"></i>
@@ -93,6 +94,8 @@
                 <div runat="server" id="workflowBuilder" visible="false">
                     <span>Create Workflow</span><br />
                     <asp:TextBox runat="server" ID="WorkflowName" placeholder="Workflow Name"></asp:TextBox>
+                    <asp:Button runat="server" ID="AddWorkflowComponentBtn" Text="Add Workflow Step" OnClick="AddWorkflowComponentBtn_Click" />
+                    <asp:PlaceHolder runat="server" ID="WorkflowSteps" />
                     <asp:Button runat="server" ID="CreateWorkflowBtn" Text="Create Workflow" OnClick="CreateWorkflowBtn_Click" />
                 </div>
 
