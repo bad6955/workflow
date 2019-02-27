@@ -76,13 +76,49 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button form;
         
         /// <summary>
-        /// adminDiv control.
+        /// workflowListing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowListing;
+        
+        /// <summary>
+        /// CreateNewWorkflowBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateNewWorkflowBtn;
+        
+        /// <summary>
+        /// numberShowing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl numberShowing;
+        
+        /// <summary>
+        /// workflowList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowList;
+        
+        /// <summary>
+        /// workflowBuilder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowBuilder;
         
         /// <summary>
         /// WorkflowName control.
@@ -101,5 +137,14 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateWorkflowBtn;
+        
+        /// <summary>
+        /// workflowViewer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowViewer;
     }
 }

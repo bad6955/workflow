@@ -53,9 +53,6 @@
         </div>
         <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
         <div id="content-body">
-            <div>
-                <asp:Panel runat="server" ID="test"></asp:Panel>
-            </div>
             <div id="vc-coach-dashboard-top">
                 <div class="ui placeholder segment">
                     <div class="ui two column stackable center aligned grid">

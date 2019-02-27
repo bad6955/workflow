@@ -23,6 +23,25 @@ namespace Workflow.Data
 
         public static List<WorkflowModel> GetWorkflows()
         {
+            string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID > 0";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<WorkflowModel> workflowList = new List<WorkflowModel>();
+            while (dr.Read())
+            {
+                WorkflowModel w = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
+                workflowList.Add(w);
+            }
+            conn.CloseConnection();
+            return workflowList;
+        }
+        
+        //INCLUDES WORKFLOWS LIKE '--SELECT WORKFLOW--'
+        public static List<WorkflowModel> GetAllWorkflows()
+        {
             string query = "SELECT WorkflowID, WorkflowName from Workflows";
 
             MySqlCommand cmd = new MySqlCommand(query);
