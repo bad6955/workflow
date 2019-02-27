@@ -253,6 +253,14 @@ html, body {
     overflow-y: auto;
     height: 300px;
 }
+
+#empty-feed {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 3em;
+    width: 150px;
+    color: #aaaaaa;
+}
 /****************************** LOGIN & FORGOT PASSWORD PAGES CSS *******************************/
 /* These two share most (see also: all) of the same design so if you change someone on one, do
     so with the knowledge that you're 100% changing something on another page as well.

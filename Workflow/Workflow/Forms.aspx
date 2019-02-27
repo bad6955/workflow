@@ -23,7 +23,7 @@
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
-                        <i class="user circle outline icon"></i>
+                        <i class="large user circle outline icon"></i>
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
@@ -44,7 +44,7 @@
                             <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="workflow" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
                         <li>
                             <img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
-                        <li>
+                        <li id="current-page">
                             <img src="assets/icons/form.png" /><asp:Button runat="server" ID="current" OnClick="FormBtn_Click" Text="Forms" /></li>
                     </ul>
                 </div>

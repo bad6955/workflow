@@ -61,6 +61,10 @@ namespace Workflow
             {
                 activityFeed.Controls.AddAt(0, item);
             }
+            if (feedList.Count == 0)
+            {
+                activityFeed.InnerHtml += "<div id=\"empty-feed\"><h4>No Recent Activity</h4><i class=\"big disabled coffee icon\"></i></div>";
+            }
         }
 
         private void CreateGraph(List<Project> projects)

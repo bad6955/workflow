@@ -19,7 +19,7 @@
             <div id="top-bar">
                 <div id="right">
                     <div id="account-dropdown">
-                        <i class="user circle outline icon"></i>
+                        <i class="large user circle outline icon"></i>
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
