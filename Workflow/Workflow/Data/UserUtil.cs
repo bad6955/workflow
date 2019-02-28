@@ -188,5 +188,23 @@ namespace Workflow.Data
         {
             return GetCoach(coachId).FullName;
         }
+
+        public static List<User> GetClients(int companyId)
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where CompanyID = @companyId";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@companyId", companyId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            List<User> clientList = new List<User>();
+            while (dr.Read())
+            {
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                clientList.Add(u);
+            }
+            conn.CloseConnection();
+            return clientList;
+        }
     }
 }

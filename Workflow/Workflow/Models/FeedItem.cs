@@ -19,6 +19,7 @@ namespace Workflow.Models
     {
         int id;
         int projectId;
+        int formId;
         string text;
         DateTime time;
         string html;
@@ -34,12 +35,13 @@ namespace Workflow.Models
             this.projectId = projectId;
         }
 
-        public FeedItem(int id, string text, DateTime time, int projectId)
+        public FeedItem(int id, string text, DateTime time, int projectId, int formId)
         {
             this.id = id;
             this.text = text;
             this.time = time;
             this.projectId = projectId;
+            this.formId = formId;
         }
 
         protected override void CreateChildControls()
@@ -49,10 +51,10 @@ namespace Workflow.Models
             TimeSpan feedTime = (DateTime.Now - time);
             string timeStr = "Updated " + TimeDifference(feedTime) + " ago";
 
-            Button dismissBtn = new Button();
-            dismissBtn.ID = "DismissBtn" + id;
-            dismissBtn.Text = "Dismiss";
-            dismissBtn.Click += new EventHandler(DismissBtn_Click);
+            //Button dismissBtn = new Button();
+            //dismissBtn.ID = "DismissBtn" + id;
+            //dismissBtn.Text = "Dismiss";
+            //dismissBtn.Click += new EventHandler(DismissBtn_Click);
 
             HtmlGenericControl itemDiv = new HtmlGenericControl("div");
             HtmlGenericControl buttonDiv = new HtmlGenericControl("div");
@@ -73,7 +75,12 @@ namespace Workflow.Models
             contentDiv.Attributes["class"] = "content";
             aText.Attributes["class"] = "header";
 
-            if(this.projectId != -1)
+            //links to a form if there is one, otherwise links to project
+            if (this.formId != -1)
+            {
+                aText.Attributes["href"] = "Forms.aspx?pfid=" + this.formId;
+            }
+            else if (this.projectId != -1)
             {
                 aText.Attributes["href"] = "Projects.aspx?pid="+this.projectId;
             }
@@ -127,13 +134,6 @@ namespace Workflow.Models
         protected override void Render(HtmlTextWriter output)
         {
             output.Write(html);
-        }
-
-        public void DismissBtn_Click(object sender, EventArgs e)
-        {
-            FeedUtil.DismissItem(this.id);
-            EnsureChildControls();
-            this.Visible = false;
         }
     }
 }

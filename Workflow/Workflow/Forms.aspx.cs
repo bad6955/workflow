@@ -38,6 +38,10 @@ namespace Workflow
                 {
                     CreateAdminFormList();
                 }
+                else if (user.RoleId == 1)
+                {
+                    CreateClientFormList(user.CompanyId);
+                }
                 else
                 {
                     CreateFormList();
@@ -64,10 +68,10 @@ namespace Workflow
                     }
                     else
                     {
-                        formListing.Visible = false;
                         //if they are trying to edit and they are admin, show form builder
                         if (Request.QueryString["edit"] != null && user.RoleId == 4)
                         {
+                            formListing.Visible = false;
                             formBuilder.Visible = true;
                             formBuilderData.Value = f.FormData;
                             FormName.Text = f.FormName;
@@ -76,11 +80,16 @@ namespace Workflow
                         //otherwise just show the form viewer
                         else
                         {
-                            formViewer.Visible = true;
-                            formViewerData.Value = f.FormData;
-                            FormNameLbl.Text = f.FormName;
+                            ShowFormViewer(f);
                         }
                     }
+                }
+                //if theyre a client trying to fill out a form
+                else if (Request.QueryString["pfid"] != null)
+                {
+                    int formId = int.Parse(Request.QueryString["pfid"]);
+                    Form f = FormUtil.GetForm(formId);
+                    ShowClientFormViewer(f);
                 }
                 //if theyre an admin and trying to make a new form
                 else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId == 4)
@@ -94,6 +103,21 @@ namespace Workflow
                 //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private void ShowFormViewer(Form f)
+        {
+            formListing.Visible = false;
+            formBuilder.Visible = false;
+            formViewer.Visible = true;
+            formViewerData.Value = f.FormData;
+            FormNameLbl.Text = f.FormName;
+        }
+
+        private void ShowClientFormViewer(Form f)
+        {
+            ShowFormViewer(f);
+            SaveFormBtn.Visible = false;
         }
 
         private void ReloadSection()
@@ -147,6 +171,24 @@ namespace Workflow
                 formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
+            }
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
+        private void CreateClientFormList(int companyId)
+        {
+            var formNode = "";
+            List<Form> forms = FormUtil.GetCompanyForms(companyId);
+            var count = 0;
+            for (int i = 0; i < 5 && i < forms.Count; i++)
+            {
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?pfid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formList.InnerHtml += formNode;
+                count++;
+
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -213,7 +255,43 @@ namespace Workflow
 
         protected void SaveFormBtn_Click(object sender, EventArgs e)
         {
-            
+            FormResult.Visible = false;
+
+            if (FormName.Text.Length > 0)
+            {
+                string formJson = formBuilderData.Value.ToString();
+
+                if (formJson.Length > 0)
+                {
+                    //updating a form not, creating it
+                    if (Request.QueryString["pfid"] != null)
+                    {
+                        int formId = int.Parse(Request.QueryString["pfid"]);
+                        FormUtil.UpdateFormTemplate(formId, FormName.Text, formJson);
+                        FormResult.CssClass = "success";
+                        FormResult.Text = "Updated form " + FormName.Text;
+                        Response.Redirect("Forms.aspx?pfid=" + formId);
+                    }
+                    else
+                    {
+                        Form f = FormUtil.CreateFormTemplate(FormName.Text, formJson);
+                        FormResult.CssClass = "success";
+                        FormResult.Text = "Created form " + FormName.Text;
+                        Response.Redirect("Forms.aspx?pfid=" + f.FormId);
+                    }
+                }
+                else
+                {
+                    FormResult.CssClass = "error";
+                    FormResult.Text = "Please add elements to the form";
+                }
+            }
+            else
+            {
+                FormResult.CssClass = "error";
+                FormResult.Text = "Please enter a form name";
+            }
+            FormResult.Visible = true;
         }
 
         protected void SubmitFormBtn_Click(object sender, EventArgs e)

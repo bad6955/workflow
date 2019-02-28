@@ -31,9 +31,21 @@ namespace Workflow.Data
             conn.CloseConnection();
         }
 
+        public static void CreateProjectFormFeedItem(string feedText, int userId, int projectId, int formId)
+        {
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO ActivityFeed (FeedItemText, UserID, ProjectID, FormID) VALUES (@feedText, @userId, @projectId, @formId)");
+            cmd.Parameters.AddWithValue("@feedText", feedText);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+        }
+
         public static List<FeedItem> GetFeed(int userId)
         {
-            string query = "SELECT FeedItemID, FeedItemText, ProjectID, Time FROM ActivityFeed WHERE UserID = @userId AND Dismissed = 0 ORDER BY Time";
+            string query = "SELECT FeedItemID, FeedItemText, ProjectID, FormID, Time FROM ActivityFeed WHERE UserID = @userId ORDER BY Time";
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@userId", userId);
             DBConn conn = new DBConn();
@@ -42,22 +54,11 @@ namespace Workflow.Data
             List<FeedItem> feedList = new List<FeedItem>();
             while (dr.Read())
             {
-                FeedItem f = new FeedItem((int)dr["FeedItemID"], (string)dr["FeedItemText"], (DateTime)dr["Time"], (int)dr["ProjectID"]);
+                FeedItem f = new FeedItem((int)dr["FeedItemID"], (string)dr["FeedItemText"], (DateTime)dr["Time"], (int)dr["ProjectID"], (int)dr["FormID"]);
                 feedList.Add(f);
             }
             conn.CloseConnection();
             return feedList;
-        }
-
-        public static void DismissItem(int feedItemId)
-        {
-            string query = "UPDATE ActivityFeed SET Dismissed = 1 WHERE FeedItemID = @feedItemId";
-
-            MySqlCommand cmd = new MySqlCommand(query);
-            cmd.Parameters.AddWithValue("@feedItemId", feedItemId);
-            DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
-            conn.CloseConnection();
         }
     }
 }

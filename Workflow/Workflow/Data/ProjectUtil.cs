@@ -23,21 +23,24 @@ namespace Workflow.Data
             DBConn conn = new DBConn();
             int id = conn.ExecuteInsertCommand(cmd);
 
+            //creates notification for the coach
+            FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, id);
+
             List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             foreach(WorkflowComponent wc in workflowComponents)
             {
+                //create completion status and forms for the project
                 ComponentCompletionUtil.CreateCompletionStatus(wc.WFComponentID, id, workflowId);
+                Form f = FormUtil.CreateForm(wc.FormID, id);
+
+                //creates notifications for each member of the company and each form
+                List<User> clients = UserUtil.GetClients(companyId);
+                foreach(User client in clients)
+                {
+                    FeedUtil.CreateProjectFormFeedItem("Form " + f.FormName + " needs completion for " + name, client.UserId, id, f.FormId);
+                }
             }
-            /*
-            cmd = new MySqlCommand("SELECT LAST_INSERT_ID();");
-            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-            while (dr.Read())
-            {
-                int projId = (int)dr["ProjectID"];
-                FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, projId);
-            }
-            */
-            FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, id);
+
             conn.CloseConnection();
             return p;
         }
@@ -111,5 +114,25 @@ namespace Workflow.Data
             conn.CloseConnection();
             return projectList;
         }
+
+        public static List<Project> GetCompanyProjects(int companyId)
+        {
+            string query = "SELECT ProjectID, WorkflowID, CompanyID, StatusID, CoachID, ProjectName, ProjectNotes from Project WHERE CompanyID = @companyId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@companyId", companyId);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+
+            List<Project> projectList = new List<Project>();
+            while (dr.Read())
+            {
+                Project p = new Project((int)dr["ProjectID"], (int)dr["WorkflowID"], (int)dr["CompanyID"], (int)dr["StatusID"], (int)dr["CoachID"], (string)dr["ProjectName"], (string)dr["ProjectNotes"]);
+                projectList.Add(p);
+            }
+            conn.CloseConnection();
+            return projectList;
+        }
+
     }
 }

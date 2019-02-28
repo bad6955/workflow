@@ -33,6 +33,10 @@ namespace Workflow
                 {
                     CreateAdminWorkflowList();
                 }
+                else if(user.RoleId == 1)
+                {
+                    CreateClientWorkflowList(user.CompanyId);
+                }
                 else
                 {
                     CreateWorkflowList();
@@ -113,6 +117,23 @@ namespace Workflow
                 workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
                 workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
                 workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
+                workflowList.InnerHtml += workflowNode;
+                count++;
+            }
+            var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
+        private void CreateClientWorkflowList(int companyId)
+        {
+            var workflowNode = "";
+            List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
+            var count = 0;
+            for (int i = 0; i < 5 && i < workflows.Count; i++)
+            {
+                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
+                workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + "</span></div></div></div>";
                 workflowList.InnerHtml += workflowNode;
                 count++;
             }

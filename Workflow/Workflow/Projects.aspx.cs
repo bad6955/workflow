@@ -31,7 +31,19 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
 
-                CreateProjectList();
+                if(user.RoleId == 4)
+                {
+                    //CreateAdminProjectList();
+                    CreateProjectList();
+                }
+                else if (user.RoleId == 1)
+                {
+                    CreateClientProjectList(user.CompanyId);
+                }
+                else
+                {
+                    CreateProjectList();
+                }
 
                 //loads the selected form if there is one
                 if (Request.QueryString["pid"] != null)
@@ -128,6 +140,20 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
+        private void CreateClientProjectList(int companyId)
+        {
+            projectNode = "";
+            projectList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
+            List<Project> projects = ProjectUtil.GetCompanyProjects(companyId);
+            for (int i = 0; i < projects.Count && i < 5; i++)
+            {
+                MakeText(projects, projectNode, i);
+            }
+            var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
         protected void DashboardBtn_Click(Object sender, EventArgs e)
         {
             Response.Redirect("Dashboard.aspx");
@@ -171,7 +197,8 @@ namespace Workflow
                     {
                         if (coachId != -1)
                         {
-                            ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                            Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                            Response.Redirect("Projects.aspx?pid="+p.ProjectId);
                         }
                     }
                 }
