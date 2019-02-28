@@ -32,20 +32,22 @@ namespace Workflow
                 //loads activity feeds
                 LoadActivityFeed(user.UserId);
 
-                List<Project> allProjects;
+                List<Project> projectList = new List<Project>();
                 //loads role specific items
-                if (user.RoleId == 2)
+                if (user.RoleId == 1)
                 {
-                    allProjects = ProjectUtil.GetCoachProjects(user.UserId);
-                    CreateGraph(allProjects);
-                    CreateProjectPanel(allProjects);
+                    projectList = ProjectUtil.GetCompanyProjects(user.CompanyId);
                 }
-                if (user.RoleId == 3 || user.RoleId == 4)
+                else if (user.RoleId == 2)
                 {
-                    allProjects = ProjectUtil.GetProjects();
-                    CreateProjectPanel(allProjects);
-                    CreateAdminGraph(allProjects);
+                    projectList = ProjectUtil.GetCoachProjects(user.UserId);
                 }
+                else if (user.RoleId == 3 || user.RoleId == 4)
+                {
+                    projectList = ProjectUtil.GetProjects();
+                }
+                CreateGraph(projectList);
+                CreateProjectPanel(projectList);
             }
             //kicks them out if they arent
             else

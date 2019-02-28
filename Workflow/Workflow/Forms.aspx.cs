@@ -178,6 +178,7 @@ namespace Workflow
 
         private void CreateClientFormList(int companyId)
         {
+            CreateNewFormBtn.Visible = false;
             var formNode = "";
             List<Form> forms = FormUtil.GetCompanyForms(companyId);
             var count = 0;

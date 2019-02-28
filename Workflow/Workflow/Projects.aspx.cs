@@ -142,6 +142,7 @@ namespace Workflow
 
         private void CreateClientProjectList(int companyId)
         {
+            CreateNewProjectBtn.Visible = false;
             projectNode = "";
             projectList.InnerHtml = "";
             numberShowing.InnerHtml = "";

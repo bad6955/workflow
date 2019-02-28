@@ -21,23 +21,23 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@notes", notes);
             DBConn conn = new DBConn();
-            int id = conn.ExecuteInsertCommand(cmd);
+            p.ProjectId = conn.ExecuteInsertCommand(cmd);
 
             //creates notification for the coach
-            FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, id);
+            FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, p.ProjectId);
 
             List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             foreach(WorkflowComponent wc in workflowComponents)
             {
                 //create completion status and forms for the project
-                ComponentCompletionUtil.CreateCompletionStatus(wc.WFComponentID, id, workflowId);
-                Form f = FormUtil.CreateForm(wc.FormID, id);
+                ComponentCompletionUtil.CreateCompletionStatus(wc.WFComponentID, p.ProjectId, workflowId);
+                Form f = FormUtil.CreateForm(wc.FormID, p.ProjectId);
 
                 //creates notifications for each member of the company and each form
                 List<User> clients = UserUtil.GetClients(companyId);
                 foreach(User client in clients)
                 {
-                    FeedUtil.CreateProjectFormFeedItem("Form " + f.FormName + " needs completion for " + name, client.UserId, id, f.FormId);
+                    FeedUtil.CreateProjectFormFeedItem("Form " + f.FormName + " needs completion for " + name, client.UserId, p.ProjectId, f.FormId);
                 }
             }
 

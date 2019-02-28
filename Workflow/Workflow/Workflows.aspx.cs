@@ -126,6 +126,7 @@ namespace Workflow
 
         private void CreateClientWorkflowList(int companyId)
         {
+            CreateNewWorkflowBtn.Visible = false;
             var workflowNode = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
             var count = 0;
