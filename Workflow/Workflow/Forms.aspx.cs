@@ -89,7 +89,7 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
                     Form f = FormUtil.GetForm(formId);
-                    ShowClientFormViewer(f);
+                    ShowFormViewer(f);
                 }
                 //if theyre an admin and trying to make a new form
                 else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId == 4)
@@ -112,12 +112,15 @@ namespace Workflow
             formViewer.Visible = true;
             formViewerData.Value = f.FormData;
             FormNameLbl.Text = f.FormName;
-        }
 
-        private void ShowClientFormViewer(Form f)
-        {
-            ShowFormViewer(f);
-            SaveFormBtn.Visible = false;
+            //the form has been submitted already
+            //lock it all down and get rid of submit/save btns
+            if (f.Submission == 1)
+            {
+                formLocking.Visible = true;
+                SubmitFormBtn.Visible = false;
+                SaveFormBtn.Visible = false;
+            }
         }
 
         private void ReloadSection()
@@ -212,6 +215,7 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
+        //admin / director creating form
         protected void CreateFormBtn_Click(object sender, EventArgs e)
         {
             FormResult.Visible = false;
@@ -253,51 +257,37 @@ namespace Workflow
             FormResult.Visible = true;
         }
 
+        //client saving form
         protected void SaveFormBtn_Click(object sender, EventArgs e)
         {
             FormResult.Visible = false;
+            string formJson = formBuilderData.Value.ToString();
 
-            if (FormName.Text.Length > 0)
+            if (formJson.Length > 0)
             {
-                string formJson = formBuilderData.Value.ToString();
-
-                if (formJson.Length > 0)
+                //updating a form not, creating it
+                if (Request.QueryString["pfid"] != null)
                 {
-                    //updating a form not, creating it
-                    if (Request.QueryString["pfid"] != null)
-                    {
-                        int formId = int.Parse(Request.QueryString["pfid"]);
-                        FormUtil.UpdateFormTemplate(formId, FormName.Text, formJson);
-                        FormResult.CssClass = "success";
-                        FormResult.Text = "Updated form " + FormName.Text;
-                        Response.Redirect("Forms.aspx?pfid=" + formId);
-                    }
-                    else
-                    {
-                        Form f = FormUtil.CreateFormTemplate(FormName.Text, formJson);
-                        FormResult.CssClass = "success";
-                        FormResult.Text = "Created form " + FormName.Text;
-                        Response.Redirect("Forms.aspx?pfid=" + f.FormId);
-                    }
-                }
-                else
-                {
-                    FormResult.CssClass = "error";
-                    FormResult.Text = "Please add elements to the form";
+                    int formId = int.Parse(Request.QueryString["pfid"]);
+                    FormUtil.UpdateForm(formId, FormName.Text, formJson);
+                    FormResult.CssClass = "success";
+                    FormResult.Text = "Updated form " + FormName.Text;
+                    Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else
             {
                 FormResult.CssClass = "error";
-                FormResult.Text = "Please enter a form name";
+                FormResult.Text = "Please fill out the form";
             }
             FormResult.Visible = true;
         }
 
+        //client submitting form
         protected void SubmitFormBtn_Click(object sender, EventArgs e)
         {
-            string formHtml = formBuilderData.Value.ToString();
-            PDFGen.CreateHTMLPDF(formHtml, "tests");
+            //string formHtml = formBuilderData.Value.ToString();
+            //PDFGen.CreateHTMLPDF(formHtml, "tests");
         }
 
         protected void CreateNewFormBtn_Click(object sender, EventArgs e)

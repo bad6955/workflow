@@ -14,6 +14,7 @@ namespace Workflow.Models
         string formData;
         int statusId;
         int approvalRequiredId;
+        int submission;
 
         public Form(string name)
         {
@@ -26,7 +27,7 @@ namespace Workflow.Models
             this.name = name;
         }
 
-        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId)
+        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission)
         {
             this.id = formId;
             this.name = name;
@@ -34,6 +35,16 @@ namespace Workflow.Models
             this.projectId = projectId;
             this.approvalRequiredId = approvalRequiredId;
             this.statusId = statusId;
+            this.submission = submission;
+        }
+
+        public Form(int formId, string name, string formData, int projectId, int submission)
+        {
+            this.id = formId;
+            this.name = name;
+            this.formData = formData;
+            this.projectId = projectId;
+            this.submission = submission;
         }
 
         public Form(int formId, string name, string formData)
@@ -100,6 +111,12 @@ namespace Workflow.Models
         {
             get { return formData; }
             set { formData = value; }
+        }
+
+        public int Submission
+        {
+            get { return submission; }
+            set { submission = value; }
         }
     }
 }

@@ -156,6 +156,14 @@
                         });
                     }
                 </script>
+                <div runat="server" id="formLocking" visible="false">
+                    <script>
+                        $(function () {
+                            console.log("LOCKING FORM");
+                            $("#renderWrap :input").attr("disabled", true);
+                        })
+                    </script>
+                </div>
             </div>
         </div>
     </form>
