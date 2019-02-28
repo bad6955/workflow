@@ -34,17 +34,17 @@ namespace Workflow
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
 
-                if (user.RoleId == 4)
-                {
-                    CreateAdminFormList();
-                }
-                else if (user.RoleId == 1)
+                if (user.RoleId == 1)
                 {
                     CreateClientFormList(user.CompanyId);
                 }
-                else
+                else if (user.RoleId == 2)
                 {
-                    CreateFormList();
+                    CreateFormList(user.UserId);
+                }
+                else if (user.RoleId == 4 || user.RoleId == 3)
+                {
+                    CreateAdminFormList();
                 }
 
                 //loads the selected form if there is one
@@ -195,15 +195,15 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
-        private void CreateFormList()
+        private void CreateFormList(int userId)
         {
             var formNode = "";
-            List<Form> forms = FormUtil.GetFormTemplates();
+            List<Form> forms = FormUtil.GetCoachForms(userId);
             var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
-                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
+                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
                 formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;

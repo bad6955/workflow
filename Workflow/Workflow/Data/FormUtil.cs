@@ -72,6 +72,25 @@ namespace Workflow.Data
             return formList;
         }
 
+        public static List<Form> GetCoachForms(int coachId)
+        {
+            List<Project> projects = ProjectUtil.GetCoachProjects(coachId);
+            List<Form> formList = new List<Form>();
+            foreach (Project p in projects)
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT FormID, FormName, FormData, ProjectId, ApprovalRequiredID, ApprovalStatusID FROM Forms WHERE ProjectId = @projId");
+                cmd.Parameters.AddWithValue("@projId", p.ProjectId);
+                DBConn conn = new DBConn();
+                MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+                while (dr.Read())
+                {
+                    Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId);
+                    formList.Add(f);
+                }
+                conn.CloseConnection();
+            }
+            return formList;
+        }
 
         public static Form GetFormTemplate(int formId)
         {

@@ -58,6 +58,29 @@ namespace Workflow.Data
             return workflowList;
         }
 
+        public static List<WorkflowModel> GetCoachWorkflows(int coachId)
+        {
+            List<Project> projects = ProjectUtil.GetCoachProjects(coachId);
+            List<WorkflowModel> workflowList = new List<WorkflowModel>();
+            foreach (Project proj in projects)
+            {
+                string query = "SELECT WorkflowID, WorkflowName from Workflows WHERE WorkflowID = @workflowId";
+
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@workflowId", proj.WorkflowId);
+                DBConn conn = new DBConn();
+                MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+                while (dr.Read())
+                {
+                    WorkflowModel w = new WorkflowModel((int)dr["WorkflowID"], (string)dr["WorkflowName"]);
+                    workflowList.Add(w);
+                }
+                conn.CloseConnection();
+            }
+            workflowList = workflowList.GroupBy(p => p.WorkflowId).Select(g => g.First()).ToList();
+            return workflowList;
+        }
+
         public static List<WorkflowModel> GetCompanyWorkflows(int companyId)
         {
             List<Project> projects = ProjectUtil.GetCompanyProjects(companyId);

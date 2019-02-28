@@ -28,18 +28,17 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
-
-                if (user.RoleId == 4)
-                {
-                    CreateAdminWorkflowList();
-                }
-                else if(user.RoleId == 1)
+                if (user.RoleId == 1)
                 {
                     CreateClientWorkflowList(user.CompanyId);
                 }
-                else
+                else if (user.RoleId == 2)
                 {
-                    CreateWorkflowList();
+                    CreateWorkflowList(user.UserId);
+                }
+                else if (user.RoleId == 4 || user.RoleId == 3)
+                {
+                    CreateAdminWorkflowList();
                 }
 
                 //loads the selected form if there is one
@@ -142,10 +141,10 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
-        private void CreateWorkflowList()
+        private void CreateWorkflowList(int userId)
         {
             var workflowNode = "";
-            List<WorkflowModel> workflows = WorkflowUtil.GetWorkflows();
+            List<WorkflowModel> workflows = WorkflowUtil.GetCoachWorkflows(userId);
             var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {

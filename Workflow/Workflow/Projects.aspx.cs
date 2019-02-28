@@ -30,19 +30,17 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
-
-                if(user.RoleId == 4)
-                {
-                    //CreateAdminProjectList();
-                    CreateProjectList();
-                }
-                else if (user.RoleId == 1)
+                if (user.RoleId == 1)
                 {
                     CreateClientProjectList(user.CompanyId);
                 }
-                else
+                else if (user.RoleId == 2)
                 {
-                    CreateProjectList();
+                    CreateProjectList(user.UserId);
+                }
+                else if (user.RoleId == 4 || user.RoleId == 3)
+                {
+                    CreateAdminProjectList();
                 }
 
                 //loads the selected form if there is one
@@ -126,7 +124,21 @@ namespace Workflow
             CoachSelect.SelectedIndex = 0;
         }
 
-        private void CreateProjectList()
+        private void CreateProjectList(int userId)
+        {
+            projectNode = "";
+            projectList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
+            List<Project> projects = ProjectUtil.GetCoachProjects(userId);
+            for (int i = 0; i < projects.Count && i < 5; i++)
+            {
+                MakeText(projects, projectNode, i);
+            }
+            var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
+        private void CreateAdminProjectList()
         {
             projectNode = "";
             projectList.InnerHtml = "";
