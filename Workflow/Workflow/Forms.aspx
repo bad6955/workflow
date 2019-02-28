@@ -57,6 +57,7 @@
 
             <div runat="server" id="formListing">
                 <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Form" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
+                <asp:Label runat="server" ID="FormError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
                     <div class="ui floating dropdown labeled icon button">
                         <i class="filter icon"></i>

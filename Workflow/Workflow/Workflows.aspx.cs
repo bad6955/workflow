@@ -110,8 +110,8 @@ namespace Workflow
             {
                 workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
                 workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + "|";
-                workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + "|";
+                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
+                workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
                 workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
                 workflowList.InnerHtml += workflowNode;
                 count++;
@@ -166,7 +166,8 @@ namespace Workflow
             //create new
             if (WorkflowName.Text.Length > 0 && Request.QueryString["wid"] == null)
             {
-                WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                SaveComponents(w.WorkflowId);
             }
             //update existing
             else if (WorkflowName.Text.Length > 0 && Request.QueryString["wid"] != null)
@@ -174,17 +175,22 @@ namespace Workflow
                 int workflowId = int.Parse(Request.QueryString["wid"]);
                 WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
 
-                List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
-                int i = 0;
-                foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
-                {
-                    string id = panelControls.ID.Replace("stepControl", string.Empty);
-                    TextBox stepTitle = (TextBox)panelControls.FindControl("stepTitle" + id);
-                    DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
-                    int formId = int.Parse(formSelector.SelectedValue);
-                    WorkflowComponentUtil.UpdateWorkflowComponent(compList[0].WFComponentID, stepTitle.Text, formId);
-                    i++;
-                }
+                SaveComponents(workflowId);
+            }
+        }
+
+        private void SaveComponents(int workflowId)
+        {
+            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+            int i = 0;
+            foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
+            {
+                string id = panelControls.ID.Replace("stepControl", string.Empty);
+                TextBox stepTitle = (TextBox)panelControls.FindControl("stepTitle" + id);
+                DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
+                int formId = int.Parse(formSelector.SelectedValue);
+                WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
+                i++;
             }
         }
 
@@ -200,18 +206,19 @@ namespace Workflow
             {
                 workflowId = int.Parse(Request.QueryString["wid"]);
                 WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
+                SaveComponents(workflowId);
                 wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
             }
             else
             {
                 WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
                 workflowId = w.WorkflowId;
+                SaveComponents(workflowId);
                 wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
             }
             Panel componentPanel = CreateWorkflowStep(guid, wc);
             this.ControlIDs = ids;
             Response.Redirect("Workflows.aspx?edit=1&wid=" + workflowId);
-            //workflowSteps.Controls.Add(new WorkflowComponent());
         }
 
         private void DelWorkflowComponentBtn_Click(object sender, EventArgs e)
@@ -245,7 +252,7 @@ namespace Workflow
 
             DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
-            formSelector.DataSource = FormUtil.GetFormTemplates();
+            formSelector.DataSource = FormUtil.GetAllFormTemplates();
             formSelector.DataValueField = "FormId";
             formSelector.DataTextField = "FormName";
             formSelector.DataBind();

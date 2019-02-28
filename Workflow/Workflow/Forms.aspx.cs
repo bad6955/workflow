@@ -46,24 +46,40 @@ namespace Workflow
                 //loads the selected form if there is one
                 if (Request.QueryString["fid"] != null)
                 {
-                    formListing.Visible = false;
                     int formId = int.Parse(Request.QueryString["fid"]);
                     Form f = FormUtil.GetFormTemplate(formId);
 
-                    //if they are trying to edit and they are admin, show form builder
-                    if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                    //admin and trying to del
+                    if (Request.QueryString["del"] != null && user.RoleId == 4)
                     {
-                        formBuilder.Visible = true;
-                        formBuilderData.Value = f.FormData;
-                        FormName.Text = f.FormName;
-                        CreateFormBtn.Text = "Update Form";
+                        if (FormUtil.DeleteForm(f.FormId))
+                        {
+                            ReloadSection();
+                        }
+                        else
+                        {
+                            FormError.Visible = true;
+                            FormError.Text = "Unable to delete Form " + f.FormName;
+                        }
                     }
-                    //otherwise just show the form viewer
                     else
                     {
-                        formViewer.Visible = true;
-                        formViewerData.Value = f.FormData;
-                        FormNameLbl.Text = f.FormName;
+                        formListing.Visible = false;
+                        //if they are trying to edit and they are admin, show form builder
+                        if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                        {
+                            formBuilder.Visible = true;
+                            formBuilderData.Value = f.FormData;
+                            FormName.Text = f.FormName;
+                            CreateFormBtn.Text = "Update Form";
+                        }
+                        //otherwise just show the form viewer
+                        else
+                        {
+                            formViewer.Visible = true;
+                            formViewerData.Value = f.FormData;
+                            FormNameLbl.Text = f.FormName;
+                        }
                     }
                 }
                 //if theyre an admin and trying to make a new form
@@ -78,6 +94,16 @@ namespace Workflow
                 //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private void ReloadSection()
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        private void ReloadCurrentPage()
+        {
+            Response.Redirect(Request.RawUrl);
         }
 
         protected void DashboardBtn_Click(Object sender, EventArgs e)
@@ -116,10 +142,11 @@ namespace Workflow
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
                 formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid="+forms[i].FormId+"&edit=1'>Edit Form</a>" + " | " + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + " | ";
+                formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
+                formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
-
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;

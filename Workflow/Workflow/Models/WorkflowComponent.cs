@@ -19,18 +19,20 @@ namespace Workflow.Models
         int formId;
         string componentTitle;
         string componentText;
-        public WorkflowComponent(int wfComponentId, int workflowId, string componentTitle, string componentText)
+        public WorkflowComponent(int wfComponentId, int workflowId, string componentTitle, string componentText, int formId)
         {
             this.workflowId = workflowId;
             this.componentText = componentText;
             this.componentTitle = componentTitle;
             this.wfComponentId = wfComponentId;
+            this.formId = formId;
         }
 
-        public WorkflowComponent(int wfComponentId, int workflowId, string componentTitle)
+        public WorkflowComponent(int wfComponentId, int workflowId, string componentTitle, string componentText)
         {
             this.workflowId = workflowId;
             this.componentTitle = componentTitle;
+            this.componentText = componentText;
             this.wfComponentId = wfComponentId;
         }
 

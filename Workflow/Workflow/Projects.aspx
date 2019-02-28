@@ -67,6 +67,7 @@
 
             <div runat="server" id="projectListing">
                 <asp:Button runat="server" ID="CreateNewProjectBtn" Text="Create New Project" OnClick="CreateNewProjectBtn_Click" CssClass="fluid ui button" />
+                <asp:Label runat="server" ID="ProjectError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
                     <div class="ui floating dropdown labeled icon button">
                         <i class="filter icon"></i>
