@@ -112,9 +112,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
                 workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
-                workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
+                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
                 workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
                 workflowList.InnerHtml += workflowNode;
                 count++;
@@ -132,8 +131,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
                 workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + "</span></div></div></div>";
+                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+                workflowNode += "</div></div></div>";
                 workflowList.InnerHtml += workflowNode;
                 count++;
             }
@@ -149,8 +148,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
                 workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + "</span></div></div></div>";
+                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+                workflowNode += "</div></div></div>";
                 workflowList.InnerHtml += workflowNode;
                 count++;
             }

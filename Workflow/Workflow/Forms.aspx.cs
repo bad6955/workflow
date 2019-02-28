@@ -165,9 +165,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
-                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + " | ";
-                formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
+                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a><div class=\"meta\">";
+                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
                 formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
@@ -185,8 +184,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
-                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?pfid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?pfid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
+                formNode += "</div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
 
@@ -203,8 +202,8 @@ namespace Workflow
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
-                formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + "</span></div></div></div>";
+                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
+                formNode += "</div></div></div>";
                 formList.InnerHtml += formNode;
                 count++;
 
