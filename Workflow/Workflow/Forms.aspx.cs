@@ -80,7 +80,10 @@ namespace Workflow
                         //otherwise just show the form viewer
                         else
                         {
-                            ShowFormViewer(f);
+                            //disable the save/submit buttons for form templates
+                            SubmitFormBtn.Visible = false;
+                            SaveFormBtn.Visible = false;
+                            ShowFormViewer(f, user.RoleId);
                         }
                     }
                 }
@@ -89,7 +92,7 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
                     Form f = FormUtil.GetForm(formId);
-                    ShowFormViewer(f);
+                    ShowFormViewer(f, user.RoleId);
                 }
                 //if theyre an admin and trying to make a new form
                 else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId == 4)
@@ -105,8 +108,10 @@ namespace Workflow
             }
         }
 
-        private void ShowFormViewer(Form f)
+        private void ShowFormViewer(Form f, int roleId)
         {
+            FormResult2.Visible = false;
+
             formListing.Visible = false;
             formBuilder.Visible = false;
             formViewer.Visible = true;
@@ -120,6 +125,31 @@ namespace Workflow
                 formLocking.Visible = true;
                 SubmitFormBtn.Visible = false;
                 SaveFormBtn.Visible = false;
+
+                //form has been approved
+                if (f.Approved == 1)
+                {
+                    FormResult2.Visible = true;
+                    FormResult2.CssClass = "success";
+                    FormResult2.Text = "APPROVED";
+                }
+                //form has been denied and the reason
+                else if (f.Denied == 1)
+                {
+                    FormResult2.Visible = true;
+                    FormResult2.Text = "DENIED: " + f.DenialReason;
+                }
+                else
+                {
+                    //if its a coach reviewing the submission
+                    //show approve / deny buttons
+                    if (roleId == 2 || roleId == 3 || roleId == 4)
+                    {
+                        ApproveFormBtn.Visible = true;
+                        DenyFormBtn.Visible = true;
+                        DenyReason.Visible = true;
+                    }
+                }
             }
         }
 
@@ -261,7 +291,7 @@ namespace Workflow
         protected void SaveFormBtn_Click(object sender, EventArgs e)
         {
             FormResult.Visible = false;
-            string formJson = formBuilderData.Value.ToString();
+            string formJson = formViewerData.Value.ToString();
 
             if (formJson.Length > 0)
             {
@@ -269,9 +299,9 @@ namespace Workflow
                 if (Request.QueryString["pfid"] != null)
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
-                    FormUtil.UpdateForm(formId, FormName.Text, formJson);
+                    FormUtil.UpdateForm(formId, FormNameLbl.Text, formJson);
                     FormResult.CssClass = "success";
-                    FormResult.Text = "Updated form " + FormName.Text;
+                    FormResult.Text = "Updated form " + FormNameLbl.Text;
                     Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
@@ -286,13 +316,67 @@ namespace Workflow
         //client submitting form
         protected void SubmitFormBtn_Click(object sender, EventArgs e)
         {
-            //string formHtml = formBuilderData.Value.ToString();
-            //PDFGen.CreateHTMLPDF(formHtml, "tests");
+            FormResult.Visible = false;
+            string formJson = formViewerData.Value.ToString();
+
+            if (formJson.Length > 0)
+            {
+                //updating a form not, creating it
+                if (Request.QueryString["pfid"] != null)
+                {
+                    int formId = int.Parse(Request.QueryString["pfid"]);
+                    FormUtil.SubmitForm(formId, FormNameLbl.Text, formJson);
+                    FormResult.CssClass = "success";
+                    FormResult.Text = "Submitted form " + FormNameLbl.Text;
+                    Response.Redirect("Forms.aspx?pfid=" + formId);
+                }
+            }
+            else
+            {
+                FormResult.CssClass = "error";
+                FormResult.Text = "Please fill out the form";
+            }
+            FormResult.Visible = true;
         }
 
         protected void CreateNewFormBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Forms.aspx?edit=1");
+        }
+
+        protected void ApproveFormBtn_Click(object sender, EventArgs e)
+        {
+            FormResult.Visible = false;
+            //updating a form not, creating it
+            if (Request.QueryString["pfid"] != null)
+            {
+                int formId = int.Parse(Request.QueryString["pfid"]);
+                FormUtil.ApproveForm(formId);
+                FormResult.CssClass = "success";
+                FormResult.Text = "Approved form " + FormName.Text;
+                Response.Redirect("Forms.aspx?pfid=" + formId);
+                FormResult.Visible = true;
+            }
+        }
+
+        protected void DenyFormBtn_Click(object sender, EventArgs e)
+        {
+            FormResult.Visible = false;
+            //updating a form not, creating it
+            if (Request.QueryString["pfid"] != null)
+            {
+                string denyText = DenyReason.Text;
+                int formId = int.Parse(Request.QueryString["pfid"]);
+                FormUtil.DenyForm(formId, denyText);
+                FormResult.CssClass = "success";
+                FormResult.Text = "Denied form " + FormName.Text;
+                if(denyText.Length > 0)
+                {
+                    FormResult.Text += ": " + denyText;
+                }
+                Response.Redirect("Forms.aspx?pfid=" + formId);
+                FormResult.Visible = true;
+            }
         }
     }
 }

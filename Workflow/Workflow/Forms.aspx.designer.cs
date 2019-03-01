@@ -211,6 +211,33 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button SubmitFormBtn;
         
         /// <summary>
+        /// ApproveFormBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ApproveFormBtn;
+        
+        /// <summary>
+        /// DenyReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DenyReason;
+        
+        /// <summary>
+        /// DenyFormBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DenyFormBtn;
+        
+        /// <summary>
         /// formViewerData control.
         /// </summary>
         /// <remarks>

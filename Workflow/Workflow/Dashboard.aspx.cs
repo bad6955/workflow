@@ -126,11 +126,24 @@ namespace Workflow
 
                 //Preparing Lists of the project's workflow components and their completion status
                 List<WorkflowComponent> steps = WorkflowComponentUtil.GetWorkflowComponents(project.WorkflowId);
-                List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
+                //List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
+
+                double totalSteps = steps.Count;
+                double stepsCompleted = 0;
+
+                List<Form> formSteps = new List<Form>();
+                foreach(WorkflowComponent step in steps)
+                {
+                    Form f = FormUtil.GetProjectFormByTemplate(step.FormID, project.ProjectId);
+                    formSteps.Add(f);
+                    if(f.Approved == 1)
+                    {
+                        stepsCompleted++;
+                    }
+                }
+
 
                 // Calculate percentage of steps completed using total steps and number completed 
-                double totalSteps = steps.Count;
-                double stepsCompleted = completionitems.Count;
                 int percent = Convert.ToInt32((stepsCompleted / totalSteps) * 100);
 
                 projectNode += "<div class=\"item\"><div class=\"ui small image\">";
@@ -144,9 +157,33 @@ namespace Workflow
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
 
                 /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
-                ComponentCompletion compstatus = null;
+                //ComponentCompletion compstatus = null;
+                int i = 0;
                 foreach (WorkflowComponent step in steps)
                 {
+                    Form f = formSteps[i];
+                    if(f.Approved == 1)
+                    {
+                        projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                    }
+                    else if(f.Denied == 1 && f.DenialReason.Length > 0)
+                    {
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
+                    }
+                    else if(f.Denied == 1)
+                    {
+                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
+                    }
+                    else if(f.Submission == 1)
+                    {
+                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
+                    }
+                    else
+                    {
+                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
+                    }
+
+                    /*
                     compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
                     if (compstatus != null)
                     {
@@ -162,6 +199,8 @@ namespace Workflow
                         if (stat == 4)
                             projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
                     }
+                    */
+                    i++;
                 }
 
                 // Complete table, add tab pages numbers

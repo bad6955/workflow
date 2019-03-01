@@ -129,6 +129,9 @@
                 <div id="renderWrap"></div>
                 <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
                 <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
+                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" />
+                <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" Visible="false" />
+                <asp:Button runat="server" ID="DenyFormBtn" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" />
                 <asp:HiddenField runat="server" ID="formViewerData" />
                 <script>
                     var viewerOptions = {
