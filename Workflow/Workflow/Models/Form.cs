@@ -8,7 +8,6 @@ namespace Workflow.Models
     public class Form
     {
         int id;
-        int workflowId;
         int projectId;
         string name;
         string formData;
@@ -74,25 +73,10 @@ namespace Workflow.Models
             this.projectId = projId;
         }
 
-        public Form(int formId, int workflowId, string name, int approvalRequiredId, int statusId)
-        {
-            this.id = formId;
-            this.workflowId = workflowId;
-            this.name = name;
-            this.approvalRequiredId = approvalRequiredId;
-            this.statusId = statusId;
-        }
-
         public int FormId
         {
             get { return id; }
             set { id = value; }
-        }
-
-        public int WorkflowId
-        {
-            get { return workflowId; }
-            set { workflowId = value; }
         }
 
         public int ProjectId
