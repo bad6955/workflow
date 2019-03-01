@@ -51,27 +51,18 @@
                 </div>
             </div>
         </div>
-    </form>
-    <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
-    <div id="content-body">
+        <div id="content-body">
         <h1>Account Settings</h1>
         <div class="ui raised very padded text container segment">
             <div class="ui form">
-                <div class="two fields">
-                    <div class="field">
-                        Email:
-                    </div>
-                    <div class="field">
-                        <input type="email" name="email" placeholder="INSERT USER EMAIL HERE" />
-                    </div>
-                </div>
                 <div id="account-settings-password">
+                    <asp:Label runat="server" ID="PasswordChangeError" Visible="false" CssClass="error"></asp:Label><br />
                     <div class="two fields">
                         <div class="field">
-                            Password:
+                            Change Password:
                         </div>
                         <div class="field">
-                            <a href="">Change Password</a>
+                            <asp:Button runat="server" ID="ChangePassword" Text="Change Password" OnClick="ChangePassword_Click" />
                         </div>
                     </div>
                 </div>
@@ -93,5 +84,6 @@
             </div>
         </div>
     </div>
+    </form>
 </body>
 </html>
