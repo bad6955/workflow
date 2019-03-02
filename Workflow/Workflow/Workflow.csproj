@@ -254,7 +254,6 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ComponentCompletion.cs" />
     <Compile Include="Models\Form.cs" />
-    <Compile Include="Models\FormField.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\User.cs" />
