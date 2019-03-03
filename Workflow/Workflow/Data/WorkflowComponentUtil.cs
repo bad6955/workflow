@@ -44,11 +44,16 @@ namespace Workflow.Data
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
 
             List<WorkflowComponent> componentList = new List<WorkflowComponent>();
-            while (dr.Read())
+            WorkflowComponent w = null;
+            try
             {
-                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (string)dr["ComponentText"], (int)dr["FormID"]);
-                componentList.Add(w);
+                while (dr.Read())
+                {
+                    w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (string)dr["ComponentText"], (int)dr["FormID"]);
+                    componentList.Add(w);
+                }
             }
+            catch (Exception e) { }
             conn.CloseConnection();
             return componentList;
         }

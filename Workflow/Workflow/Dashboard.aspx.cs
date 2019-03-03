@@ -11,6 +11,7 @@ namespace Workflow
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        List<Project> allProjects = null;
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -33,21 +34,24 @@ namespace Workflow
                 LoadActivityFeed(user.UserId);
 
                 List<Project> projectList = new List<Project>();
+                allProjects = ProjectUtil.GetProjects();
                 //loads role specific items
                 if (user.RoleId == 1)
                 {
                     projectList = ProjectUtil.GetCompanyProjects(user.CompanyId);
+                    CreateProjectPanel(projectList);
                 }
                 else if (user.RoleId == 2)
                 {
                     projectList = ProjectUtil.GetCoachProjects(user.UserId);
+                    CreateGraph(projectList);
+                    CreateProjectPanel(projectList);
                 }
                 else if (user.RoleId == 3 || user.RoleId == 4)
                 {
-                    projectList = ProjectUtil.GetProjects();
+                    CreateAdminGraph(allProjects);
+                    CreateProjectPanel(allProjects);
                 }
-                CreateGraph(projectList);
-                CreateProjectPanel(projectList);
             }
             //kicks them out if they arent
             else
@@ -63,6 +67,7 @@ namespace Workflow
             {
                 activityFeed.Controls.AddAt(0, item);
             }
+            // if the feed is empty, fill with message and icon
             if (feedList.Count == 0)
             {
                 activityFeed.InnerHtml += "<div id=\"empty-feed\"><h4>No Recent Activity</h4><i class=\"big disabled coffee icon\"></i></div>";
@@ -71,25 +76,24 @@ namespace Workflow
 
         private void CreateGraph(List<Project> projects)
         {
-            List<Project> allProjects = ProjectUtil.GetProjects();
             int waitingForApproval = 0;
             int waitingOnCompany = 0;
-            foreach (Project proj in allProjects)
+            foreach (Project proj in projects)
             {
-                List<ComponentCompletion> completion = ComponentCompletionUtil.GetAllProCompletionStatus(proj.ProjectId);
-                foreach (ComponentCompletion comp in completion)
+                List<Form> completion = FormUtil.GetCoachForms(proj.CoachId);
+                foreach (Form comp in completion)
                 {
-                    if (comp.CompletionID == 5)
+                    if (comp.Approved == 0 && comp.Submission == 1)
                         waitingForApproval++;
-                    if (comp.CompletionID == 1 || comp.CompletionID == 0)
+                    if (comp.Denied == 1)
                         waitingOnCompany++;
                 }
             }
             var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"300\"></canvas>";
             graphScript += "<script>new Chart(document.getElementById(\"pie-chart\"), {type:'pie', data:{labels: [";
-            graphScript += "\"My Waiting on Company\", \"My Projects\", \"My Pending Approval\"],";
+            graphScript += "\"Waiting on Company\", \"Pending My Approval\"],";
             graphScript += "datasets: [{label: \"Total\", backgroundColor: [\"#dc7a32\", \"#04828F\", \"#5C3315\", \"#32CBDC\"],";
-            graphScript += "data: [" + waitingOnCompany + ", " + projects.Count + ", " + waitingForApproval + "]}]}, options:{title:{display:true,text:'All Projects: "+allProjects.Count+"', position: 'bottom'}}});</script>";
+            graphScript += "data: [" + waitingOnCompany + ", " + waitingForApproval + "]}]}, options:{title:{display:true,text:'My Projects: "+projects.Count+"', position: 'bottom'}}});</script>";
 
             piechart.InnerHtml += graphScript;
         }
@@ -126,7 +130,6 @@ namespace Workflow
 
                 //Preparing Lists of the project's workflow components and their completion status
                 List<WorkflowComponent> steps = WorkflowComponentUtil.GetWorkflowComponents(project.WorkflowId);
-                //List<ComponentCompletion> completionitems = ComponentCompletionUtil.GetCompletedProCompletionStatus(project.ProjectId);
 
                 double totalSteps = steps.Count;
                 double stepsCompleted = 0;
@@ -141,10 +144,9 @@ namespace Workflow
                         stepsCompleted++;
                     }
                 }
-
-
+                projectNode += "<h1>"+steps.Count+"</h1>";
                 // Calculate percentage of steps completed using total steps and number completed 
-                int percent = Convert.ToInt32((stepsCompleted / totalSteps) * 100);
+                int percent = 30;//Convert.ToInt32((stepsCompleted / totalSteps));
 
                 projectNode += "<div class=\"item\"><div class=\"ui small image\">";
                 projectNode += "<div class=\"ui orange progress\" data-percent=" + percent + " id=\"project" + project.ProjectId + "\">";
@@ -182,24 +184,6 @@ namespace Workflow
                     {
                         projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
                     }
-
-                    /*
-                    compstatus = ComponentCompletionUtil.GetProCompletionStatus(step.WFComponentID, project.ProjectId);
-                    if (compstatus != null)
-                    {
-                        var stat = compstatus.CompletionID;
-                        if (stat == 0)
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
-                        if (stat == 1)
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
-                        if (stat == 2)
-                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
-                        if (stat == 3)
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
-                        if (stat == 4)
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
-                    }
-                    */
                     i++;
                 }
 
