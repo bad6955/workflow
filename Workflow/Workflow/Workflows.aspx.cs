@@ -12,6 +12,7 @@ namespace Workflow
     public partial class Workflows : System.Web.UI.Page
     {
         private int count = 0;
+        private String workflowNode = "";
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -108,7 +109,7 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
             {
-                //MakeText(projects, projectNode, i);
+                MakeText(workflows, workflowNode, i);
             }
 
             numberShowing.InnerHtml = "";
@@ -116,7 +117,17 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
-        private void ReloadSection()
+        private void MakeText(List<WorkflowModel> workflows, String workflowNode, int i)
+        {
+            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
+            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
+            workflowList.InnerHtml += workflowNode;
+            count++;
+        }
+
+            private void ReloadSection()
         {
             Response.Redirect("Workflows.aspx");
         }
@@ -128,17 +139,13 @@ namespace Workflow
 
         private void CreateAdminWorkflowList()
         {
-            var workflowNode = "";
+            workflowNode = "";
+            workflowList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetWorkflows();
-            var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
-                workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
-                workflowList.InnerHtml += workflowNode;
-                count++;
+                MakeText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -147,16 +154,13 @@ namespace Workflow
         private void CreateClientWorkflowList(int companyId)
         {
             CreateNewWorkflowBtn.Visible = false;
-            var workflowNode = "";
+            workflowNode = "";
+            workflowList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
-            var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "</div></div></div>";
-                workflowList.InnerHtml += workflowNode;
-                count++;
+                MakeText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -164,16 +168,13 @@ namespace Workflow
 
         private void CreateWorkflowList(int userId)
         {
-            var workflowNode = "";
+            workflowNode = "";
+            workflowList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetCoachWorkflows(userId);
-            var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
-                workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-                workflowNode += "</div></div></div>";
-                workflowList.InnerHtml += workflowNode;
-                count++;
+                MakeText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
