@@ -144,7 +144,7 @@ namespace Workflow
                         stepsCompleted++;
                     }
                 }
-                projectNode += "<h1>"+steps.Count+"</h1>";
+
                 // Calculate percentage of steps completed using total steps and number completed 
                 int percent = 30;//Convert.ToInt32((stepsCompleted / totalSteps));
 

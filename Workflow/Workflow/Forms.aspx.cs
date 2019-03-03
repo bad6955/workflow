@@ -14,6 +14,7 @@ namespace Workflow
     {
         int fieldCt { get; set; }
         int approvalCt { get; set; }
+        private int count = 0;
 
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
@@ -197,7 +198,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
                 formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a><div class=\"meta\">";
                 formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
                 formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
@@ -216,7 +217,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
                 formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?pfid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
                 formNode += "</div></div></div>";
                 formList.InnerHtml += formNode;
@@ -234,7 +235,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/form.png\"/></div>";
+                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
                 formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
                 formNode += "</div></div></div>";
                 formList.InnerHtml += formNode;
@@ -377,6 +378,27 @@ namespace Workflow
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
             }
+        }
+
+        protected void LoadMoreForms(object sender, EventArgs e)
+        {
+            ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
+            int loaded = Convert.ToInt32(ViewState["formcount"]);
+            
+            List<Form> forms = FormUtil.GetAllForms();
+            if (loaded == 1)
+            {
+                ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
+                loaded = Convert.ToInt32(ViewState["count"]);
+            }
+            for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
+            {
+                //MakeText(projects, projectNode, i);
+            }
+
+            numberShowing.InnerHtml = "";
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
         }
     }
 }

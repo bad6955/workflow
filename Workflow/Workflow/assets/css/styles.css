@@ -367,7 +367,21 @@ input:-webkit-autofill:active {
     margin-left: 6em;
 }
 
+/***************************************WORKFLOW PAGE*********************************************/
+#workflowList .ui.small.image {
+    color: #dc7a32;
+    text-align: center;
+}
 
+#projectList .ui.small.image {
+    color: #32cbdc;
+    text-align: center;
+}
+
+#formList .ui.small.image {
+    color: #5c3315;
+    text-align: center;
+}
 
 
 

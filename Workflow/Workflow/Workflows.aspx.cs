@@ -11,6 +11,7 @@ namespace Workflow
 {
     public partial class Workflows : System.Web.UI.Page
     {
+        private int count = 0;
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -94,6 +95,27 @@ namespace Workflow
             }
         }
 
+        protected void LoadMoreWorkflows(object sender, EventArgs e)
+        {
+            ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
+            int loaded = Convert.ToInt32(ViewState["workflowcount"]);
+            
+            List<WorkflowModel> workflows = WorkflowUtil.GetAllWorkflows();
+            if (loaded == 1)
+            {
+                ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
+                loaded = Convert.ToInt32(ViewState["workflowcount"]);
+            }
+            for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
+            {
+                //MakeText(projects, projectNode, i);
+            }
+
+            numberShowing.InnerHtml = "";
+            var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
         private void ReloadSection()
         {
             Response.Redirect("Workflows.aspx");
@@ -111,7 +133,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
+                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
                 workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
                 workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
                 workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
@@ -130,7 +152,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
+                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
                 workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
                 workflowNode += "</div></div></div>";
                 workflowList.InnerHtml += workflowNode;
@@ -147,7 +169,7 @@ namespace Workflow
             var count = 0;
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><img src=\"assets/icons/workflow.png\"/></div>";
+                workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
                 workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
                 workflowNode += "</div></div></div>";
                 workflowList.InnerHtml += workflowNode;

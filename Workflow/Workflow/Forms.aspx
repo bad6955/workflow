@@ -96,7 +96,7 @@
                 </div>
                 <div runat="server" class="ui items" id="formList">
                 </div>
-                <button class="fluid ui button">Show 10 More...</button>
+                <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreForms" CssClass="fluid ui button" />
             </div>
 
             <div runat="server" id="formBuilder" visible="false">

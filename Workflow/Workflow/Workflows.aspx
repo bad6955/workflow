@@ -88,7 +88,7 @@
                     </div>
                     <div runat="server" class="ui items" id="workflowList">
                     </div>
-                    <button class="fluid ui button">Show 10 More...</button>
+                    <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
                 </div>
 
                 <div runat="server" id="workflowBuilder" visible="false">
