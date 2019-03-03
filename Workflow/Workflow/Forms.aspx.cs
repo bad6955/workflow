@@ -15,6 +15,7 @@ namespace Workflow
         int fieldCt { get; set; }
         int approvalCt { get; set; }
         private int count = 0;
+        private String formNode = "";
 
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
@@ -193,17 +194,13 @@ namespace Workflow
 
         private void CreateAdminFormList()
         {
-            var formNode = "";
+            formNode = "";
+            formList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetFormTemplates();
-            var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a><div class=\"meta\">";
-                formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
-                formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
-                formList.InnerHtml += formNode;
-                count++;
+                MakeText(forms, formNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -212,17 +209,13 @@ namespace Workflow
         private void CreateClientFormList(int companyId)
         {
             CreateNewFormBtn.Visible = false;
-            var formNode = "";
+            formNode = "";
+            formList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetCompanyForms(companyId);
-            var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?pfid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
-                formNode += "</div></div></div>";
-                formList.InnerHtml += formNode;
-                count++;
-
+                MakeText(forms, formNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -230,20 +223,52 @@ namespace Workflow
 
         private void CreateFormList(int userId)
         {
-            var formNode = "";
+            formNode = "";
+            formList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetCoachForms(userId);
-            var count = 0;
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-                formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + ProjectUtil.GetProject(forms[i].ProjectId).Name + "<div class=\"meta\">";
-                formNode += "</div></div></div>";
-                formList.InnerHtml += formNode;
-                count++;
-
+                MakeText(forms, formNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
+        }
+
+        protected void LoadMoreForms(object sender, EventArgs e)
+        {
+            ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
+            int loaded = Convert.ToInt32(ViewState["formcount"]);
+            
+            List<Form> forms = FormUtil.GetAllForms();
+            if (loaded == 1)
+            {
+                ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
+                loaded = Convert.ToInt32(ViewState["formcount"]);
+            }
+            for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
+            {
+                MakeText(forms, formNode, i);
+            }
+
+            numberShowing.InnerHtml = "";
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
+        private void MakeText(List<Form> forms, String formNode, int i)
+        {
+            var name = "";
+            try
+            {
+                name = ProjectUtil.GetProject(forms[i].ProjectId).Name;
+            }
+            catch (Exception e) { }
+            formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
+            formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + name + "<div class=\"meta\">";
+            formNode += "</div></div></div>";
+            formList.InnerHtml += formNode;
+            count++;
         }
 
         //admin / director creating form
@@ -378,27 +403,6 @@ namespace Workflow
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
             }
-        }
-
-        protected void LoadMoreForms(object sender, EventArgs e)
-        {
-            ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
-            int loaded = Convert.ToInt32(ViewState["formcount"]);
-            
-            List<Form> forms = FormUtil.GetAllForms();
-            if (loaded == 1)
-            {
-                ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
-                loaded = Convert.ToInt32(ViewState["count"]);
-            }
-            for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
-            {
-                //MakeText(projects, projectNode, i);
-            }
-
-            numberShowing.InnerHtml = "";
-            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
-            numberShowing.InnerHtml += showing;
         }
     }
 }

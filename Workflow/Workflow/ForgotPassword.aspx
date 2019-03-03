@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Forgot Password</title>
+    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png"/>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/gradient_style.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />

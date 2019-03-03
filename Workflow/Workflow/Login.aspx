@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Venture Creation Log in</title>
+    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png"/>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/gradient_style.css" type="text/css" />
     <script type="text/javascript" src="assets/js/jquery.js"></script>
