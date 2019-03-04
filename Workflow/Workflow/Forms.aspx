@@ -143,10 +143,8 @@
                     var formViewer = $('#renderWrap').formRender(viewerOptions);
                     document.getElementById("formViewerData").value = formViewer.formData;
 
-                    function SaveFormViewer()
-                    {
-                        console.log("FormData: " + formViewer.formData);
-                        document.getElementById("formViewerData").value = formViewer.formData;
+                    function SaveFormViewer() {
+                        document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
                     }
 
                     function SubmitForm() {
