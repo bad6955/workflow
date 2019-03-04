@@ -135,15 +135,18 @@ namespace Workflow
                 double stepsCompleted = 0;
 
                 List<Form> formSteps = new List<Form>();
-                foreach(WorkflowComponent step in steps)
+                try
                 {
-                    Form f = FormUtil.GetProjectFormByTemplate(step.FormID, project.ProjectId);
-                    formSteps.Add(f);
-                    if(f.Approved == 1)
+                    foreach (WorkflowComponent step in steps)
                     {
-                        stepsCompleted++;
+                        Form f = FormUtil.GetProjectFormByTemplate(step.FormID, project.ProjectId);
+                        formSteps.Add(f);
+                        if (f.Approved == 1)
+                        {
+                            stepsCompleted++;
+                        }
                     }
-                }
+                } catch(Exception e) { }
 
                 // Calculate percentage of steps completed using total steps and number completed 
                 int percent = 30;//Convert.ToInt32((stepsCompleted / totalSteps));
@@ -160,31 +163,34 @@ namespace Workflow
 
                 /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
                 int i = 0;
-                foreach (WorkflowComponent step in steps)
+                try
                 {
-                    Form f = formSteps[i];
-                    if(f.Approved == 1)
+                    foreach (WorkflowComponent step in steps)
                     {
-                        projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                        Form f = formSteps[i];
+                        if (f.Approved == 1)
+                        {
+                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                        }
+                        else if (f.Denied == 1 && f.DenialReason.Length > 0)
+                        {
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
+                        }
+                        else if (f.Denied == 1)
+                        {
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
+                        }
+                        else if (f.Submission == 1)
+                        {
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
+                        }
+                        else
+                        {
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
+                        }
+                        i++;
                     }
-                    else if(f.Denied == 1 && f.DenialReason.Length > 0)
-                    {
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
-                    }
-                    else if(f.Denied == 1)
-                    {
-                        projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
-                    }
-                    else if(f.Submission == 1)
-                    {
-                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
-                    }
-                    else
-                    {
-                        projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
-                    }
-                    i++;
-                }
+                } catch (Exception e) { }
 
                 // Complete table, add tab pages numbers
                 projectNode += "</tbody></table></div></div></div><script>$('#project" + project.ProjectId + "').progress();</script><hr>";

@@ -67,11 +67,7 @@ namespace Workflow
                     else
                     {
                         projectViewer.Visible = true;
-                        ProjectViewerName.Text = p.Name;
-                        CompanyName.Text = CompanyUtil.GetCompanyName(p.CompanyId);
-                        CoachName.Text = UserUtil.GetCoachName(p.CoachId);
-                        WorkflowName.Text = WorkflowUtil.GetWorklowName(p.WorkflowId);
-                        ProjectViewerNotes.Text = p.Notes;
+                        ProjectView(p);
                     }
                 }
                 //if theyre an admin and trying to make a new project
@@ -98,6 +94,30 @@ namespace Workflow
                 //kicks them out if they arent
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        protected void ProjectView(Project p)
+        {
+            projectNode += "<h2>"+p.Name+ "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
+            projectNode += "<i class=\"huge circular building icon\"></i><h3>" + CompanyUtil.GetCompany(p.CompanyId).CompanyName + "</h3></div><div class=\"project-item\">";
+            projectNode += "<i class=\"huge circular user icon\"></i><h3>" + UserUtil.GetCoach(p.CoachId).FullName + "</h3></div>";
+            projectNode += "<div class=\"project-item\"><i class=\"huge circular money icon\"></i>";
+            projectNode += "<h3>Funding Source</h3></div></div></div>";
+            projectNode += "<h3 style=\"font-weight:light\">Project Notes</h3><p>"+p.Notes+"</p></div>";
+
+            try
+            {
+                projectNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
+                foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
+                {
+                    projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                    projectNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                }
+                projectNode += "</ol></div>";
+            } catch(Exception e) { }
+
+            projectViewer.InnerHtml += projectNode;
         }
 
         private void GenerateProjectDropdowns()
@@ -256,6 +276,8 @@ namespace Workflow
             projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
             projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
             projectNode += projects[i].Notes + "</div></div></div>";
+
+
             projectList.InnerHtml += projectNode;
             projectNode = "";
             count++;

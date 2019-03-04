@@ -97,57 +97,11 @@
                     </script>
                 </div>
                 <div runat="server" class="ui items" id="workflowList">
-                    <!-- Bootstrap core JavaScript -->
-    <script src="assets/jquery/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-        $('#carouselExample').on('slide.bs.carousel', function (e) {
-
-
-            var $e = $(e.relatedTarget);
-            var idx = $e.index();
-            var itemsPerSlide = 4;
-            var totalItems = $('.carousel-item').length;
-
-            if (idx >= totalItems - (itemsPerSlide - 1)) {
-                var it = itemsPerSlide - (totalItems - idx);
-                for (var i = 0; i < it; i++) {
-                    // append slides to end
-                    if (e.direction == "left") {
-                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
-                    }
-                    else {
-                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
-                    }
-                }
-            }
-        });
-
-
-        $('#carouselExample').carousel({
-            interval: 2000
-        });
-
-
-        $(document).ready(function () {
-            /* show lightbox when clicking a thumbnail */
-            $('a.thumb').click(function (event) {
-                event.preventDefault();
-                var content = $('.modal-body');
-                content.empty();
-                var title = $(this).attr("title");
-                $('.modal-title').html(title);
-                content.html($(this).html());
-                $(".modal-profile").modal({ show: true });
-            });
-
-        });
-    </script>
                 </div>
                 <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
             </div>
-            
-                <div runat="server" id="test"></div>
+
+            <div runat="server" id="test"></div>
             <div runat="server" id="workflowBuilder" visible="false">
                 <div id="formName">
                     <div class="ui left corner labeled input">
@@ -166,31 +120,8 @@
 
             <div runat="server" id="workflowViewer" visible="false">
             </div>
-            <!-- Forms 
-            <h1>Forms:</h1>
-            <div class="container-fluid">
-                <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
-                    <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                        <div class="carousel-item col-md-3  active">
-                            <div class="panel panel-default">
-                                <div class="panel-thumbnail">
-                                    <a href="#" title="image 1" class="thumb">
-                                        <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/150x200?text=Form 1" alt="slide 1" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
+            <!-- Forms-->
+
 
 
             <!-- Table 
@@ -237,13 +168,54 @@
             </div>-->
         </div>
     </form>
+    <script src="assets/jquery/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $('#carouselExample').on('slide.bs.carousel', function (e) {
 
 
+            var $e = $(e.relatedTarget);
+            var idx = $e.index();
+            var itemsPerSlide = 4;
+            var totalItems = $('.carousel-item').length;
 
-    
-                    <script>
-                        $('.ui.selection.dropdown').dropdown();
-                    </script>
-    
+            if (idx >= totalItems - (itemsPerSlide - 1)) {
+                var it = itemsPerSlide - (totalItems - idx);
+                for (var i = 0; i < it; i++) {
+                    // append slides to end
+                    if (e.direction == "left") {
+                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
+                    }
+                    else {
+                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
+                    }
+                }
+            }
+        });
+
+
+        $('#carouselExample').carousel({
+            interval: 2000
+        });
+
+
+        $(document).ready(function () {
+            /* show lightbox when clicking a thumbnail */
+            $('a.thumb').click(function (event) {
+                event.preventDefault();
+                var content = $('.modal-body');
+                content.empty();
+                var title = $(this).attr("title");
+                $('.modal-title').html(title);
+                content.html($(this).html());
+                $(".modal-profile").modal({ show: true });
+            });
+
+        });
+    </script>
+    <script>
+        $('.ui.selection.dropdown').dropdown();
+    </script>
+
 </body>
 </html>

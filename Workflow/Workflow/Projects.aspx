@@ -137,26 +137,7 @@
             </div>
 
             <div runat="server" id="projectViewer" visible="false">
-                <h2>
-                    <asp:Label runat="server" ID="ProjectViewerName"></asp:Label></h2>
-                <div class="project-info">
-                    <div id="project-top">
-                        <div class="project-item">
-                            <i class="huge circular building icon"></i>
-                            <asp:Label runat="server" ID="CompanyName"></asp:Label>
-                        </div>
-                        <div class="project-item">
-                            <i class="huge circular user icon"></i>
-                            <asp:Label runat="server" ID="CoachName"></asp:Label>
-                        </div>
-                        <div class="project-item">
-                            <i class="huge circular money icon"></i>
-                            <asp:Label runat="server" ID="FundingSource" Text="Funding Source"></asp:Label>
-                        </div>
-                    </div>
-                    <asp:Label runat="server" ID="WorkflowName"></asp:Label><br />
-                    <asp:Label runat="server" ID="ProjectViewerNotes"></asp:Label><br />
-                </div>
+                
             </div>
         </div>
     </form>
