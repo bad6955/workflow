@@ -433,6 +433,10 @@ input:-webkit-autofill:active {
     text-align: center;
 }
 
+#workflow-creation-buttons {
+    text-align: center;
+}
+
 
 
 /** Workflow page - form carousel **/

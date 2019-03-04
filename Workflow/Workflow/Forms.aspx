@@ -105,13 +105,13 @@
                 <div>
                     <asp:Label runat="server" ID="FormResult" Visible="false"></asp:Label>
                     <div id="formName">
-                    <div class="ui left corner labeled input">
-                        <asp:TextBox runat="server" ID="FormName" Placeholder="Form Name..."></asp:TextBox>
-                        <div class="ui teal left corner label">
-                            <i class="white asterisk icon"></i>
+                        <div class="ui left corner labeled input">
+                            <asp:TextBox runat="server" ID="FormName" Placeholder="Form Name..."></asp:TextBox>
+                            <div class="ui teal left corner label">
+                                <i class="white asterisk icon"></i>
+                            </div>
                         </div>
                     </div>
-                        </div>
                 </div>
                 <div id="buildWrap"></div>
                 <div id="CreateFormBtnDiv">
@@ -121,6 +121,8 @@
                 <script>
                     var builderOptions = {
                         dataType: 'json',
+                        disabledActionButtons: ['data', 'save'],
+                        controlPosition: 'left',
                         formData: document.getElementById("formBuilderData").value
                     };
                     var formBuilder = $('#buildWrap').formBuilder(builderOptions);
