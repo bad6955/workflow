@@ -233,22 +233,10 @@ namespace Workflow
             foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
             {
                 string id = panelControls.ID.Replace("stepControl", string.Empty);
-                TextBox stepTitle = (TextBox)panelControls.FindControl("stepTitle" + id);
-                Panel formSelector = (Panel)panelControls.FindControl("formSelector" + id);
-                Panel dropdownselect = (Panel)formSelector.FindControl("menu" + id);
-
-                var selected = "-1";
-                Console.WriteLine("Child doesnt");
-                foreach (Control child in dropdownselect.Controls)
-                {
-                    Panel c = (Panel)child;
-                    Console.WriteLine("Child exists");
-                    if (c.Attributes["class"] == "item active selected")
-                        selected = c.Attributes["data-value"];
-                    else
-                        selected = "1";
-                }
-                int formId = int.Parse(selected);
+                Panel div = (Panel)panelControls.FindControl("title" + id);
+                TextBox stepTitle = (TextBox)div.FindControl("stepTitle" + id);
+                DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
+                int formId = int.Parse(formSelector.SelectedValue);
                 WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
                 i++;
             }
@@ -302,15 +290,25 @@ namespace Workflow
             string id = guid.ToString("N");
             Panel p = new Panel();
             SetID(p, "stepControl", id);
+            p.CssClass = "create-workflow-component";
             p.ID = id;
+
+            Panel uilefticon = new Panel();
+            uilefticon.CssClass = "ui left icon input";
+            SetID(uilefticon, "title", id);
+            Literal icon = new Literal();
+            icon.Text = "<i class=\"file icon\"></i>";
 
             TextBox stepTitleTb = new TextBox();
             SetID(stepTitleTb, "stepTitle", id);
             stepTitleTb.Attributes.Add("placeholder", "Step Title");
             stepTitleTb.Text = wc.ComponentTitle;
-            p.Controls.Add(stepTitleTb);
 
-            Panel dropdownPanel = new Panel();
+            uilefticon.Controls.Add(stepTitleTb);
+            uilefticon.Controls.Add(icon);
+            p.Controls.Add(uilefticon);
+
+            /*Panel dropdownPanel = new Panel();
             SetID(dropdownPanel, "formSelector", id);
             dropdownPanel.CssClass = "ui selection dropdown";
 
@@ -327,8 +325,7 @@ namespace Workflow
 
             Panel dropdown = new Panel();
             dropdown.CssClass = "menu";
-            SetID(dropdown, "menu", id);
-            
+            SetID(dropdown, "menu", id);            
             foreach(Form form in FormUtil.GetAllForms())
             {
                 Panel item = new Panel();
@@ -338,18 +335,17 @@ namespace Workflow
                 item.Controls.Add(new LiteralControl(form.FormName));
                 item.DataBind();
                 dropdown.Controls.Add(item);
-            }
+            }*/
 
-            /*DropDownList formSelector = new DropDownList();
+            DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
             formSelector.DataSource = FormUtil.GetAllFormTemplates();
             formSelector.DataValueField = "FormId";
             formSelector.DataTextField = "FormName";
             formSelector.DataBind();
-            formSelector.SelectedValue = wc.FormID.ToString();*/
+            formSelector.SelectedValue = wc.FormID.ToString();
 
-            dropdownPanel.Controls.Add(dropdown);
-            p.Controls.Add(dropdownPanel);
+            p.Controls.Add(formSelector);
 
             Button delBtn = new Button();
             SetID(delBtn, "delBtn", id);

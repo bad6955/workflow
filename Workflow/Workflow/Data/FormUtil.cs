@@ -208,7 +208,7 @@ namespace Workflow.Data
 
         public static List<Form> GetForms()
         {
-            string query = "SELECT FormID, FormName from Forms WHERE FormID > 0";
+            string query = "SELECT FormID, FormName, ProjectID from Forms WHERE FormID > 0";
 
             MySqlCommand cmd = new MySqlCommand(query);
             DBConn conn = new DBConn();
@@ -217,7 +217,7 @@ namespace Workflow.Data
             List<Form> formList = new List<Form>();
             while (dr.Read())
             {
-                Form f = new Form((int)dr["FormID"], (string)dr["FormName"]);
+                Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (int)dr["ProjectID"]);
                 formList.Add(f);
             }
             conn.CloseConnection();

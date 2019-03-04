@@ -375,8 +375,6 @@ input:-webkit-autofill:active {
 }
 
 .project-info {
-    border: 1px solid black;
-    border-radius: 5px;
     width: 90%;
     margin: 0 auto;
 }
@@ -435,17 +433,18 @@ input:-webkit-autofill:active {
 
 #workflow-creation-buttons {
     text-align: center;
+    margin-top: 3em;
 }
 
-
+.create-workflow-component {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
 /** Workflow page - form carousel **/
 @media (min-width: 768px) {
-
     /* show 3 items */
-    .carousel-inner .active,
-    .carousel-inner .active + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-inner .active, .carousel-inner .active + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
         display: block;
     }
 

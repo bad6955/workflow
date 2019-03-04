@@ -73,6 +73,13 @@ namespace Workflow.Models
             this.projectId = projId;
         }
 
+        public Form(int formId, string name, int projId)
+        {
+            this.id = formId;
+            this.name = name;
+            this.projectId = projId;
+        }
+
         public int FormId
         {
             get { return id; }

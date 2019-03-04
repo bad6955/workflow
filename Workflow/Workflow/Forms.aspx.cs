@@ -197,7 +197,7 @@ namespace Workflow
             formNode = "";
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
-            List<Form> forms = FormUtil.GetFormTemplates();
+            List<Form> forms = FormUtil.GetForms();
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 MakeText(forms, formNode, i);
