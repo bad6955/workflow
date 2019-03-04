@@ -114,6 +114,8 @@
                         formData: document.getElementById("formBuilderData").value
                     };
                     var formBuilder = $('#buildWrap').formBuilder(builderOptions);
+                    document.getElementById("formBuilderData").value = formBuilder.formData;
+                    console.log("FormData: " + formBuilder.formData);
 
                     function SaveFormEditor() {
                         document.getElementById("formBuilderData").value = formBuilder.formData;
@@ -139,9 +141,12 @@
                         formData: document.getElementById("formViewerData").value
                     };
                     var formViewer = $('#renderWrap').formRender(viewerOptions);
+                    document.getElementById("formViewerData").value = formViewer.formData;
 
-                    function SaveFormViewer() {
-                        document.getElementById("formViewerData").value = formBuilder.formData;
+                    function SaveFormViewer()
+                    {
+                        console.log("FormData: " + formViewer.formData);
+                        document.getElementById("formViewerData").value = formViewer.formData;
                     }
 
                     function SubmitForm() {
@@ -155,7 +160,7 @@
                             renderedForm.formRender(formRenderOpts);
 
                             console.log(renderedForm.html());
-                            document.getElementById("formBuilderData").value = renderedForm.html();
+                            document.getElementById("formViewerData").value = renderedForm.html();
                         });
                     }
                 </script>

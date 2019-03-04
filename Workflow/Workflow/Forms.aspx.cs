@@ -73,9 +73,13 @@ namespace Workflow
                         {
                             formListing.Visible = false;
                             formBuilder.Visible = true;
-                            formBuilderData.Value = f.FormData;
+                            if (formBuilderData.Value.Length == 0 || formBuilderData.Value == "undefined")
+                            {
+                                formBuilderData.Value = f.FormData;
+                            }
                             FormName.Text = f.FormName;
                             CreateFormBtn.Text = "Update Form";
+
                         }
                         //otherwise just show the form viewer
                         else
@@ -111,11 +115,14 @@ namespace Workflow
         private void ShowFormViewer(Form f, int roleId)
         {
             FormResult2.Visible = false;
-
             formListing.Visible = false;
             formBuilder.Visible = false;
             formViewer.Visible = true;
-            formViewerData.Value = f.FormData;
+            if(formViewerData.Value.Length == 0 || formViewerData.Value == "undefined")
+            {
+                formViewerData.Value = f.FormData;
+            }
+
             FormNameLbl.Text = f.FormName;
 
             //the form has been submitted already
@@ -141,6 +148,9 @@ namespace Workflow
                 }
                 else
                 {
+                    FormResult2.Visible = true;
+                    FormResult2.CssClass = "success";
+                    FormResult2.Text = "Submitted: waiting for approval";
                     //if its a coach reviewing the submission
                     //show approve / deny buttons
                     if (roleId == 2 || roleId == 3 || roleId == 4)
@@ -254,7 +264,7 @@ namespace Workflow
             {
                 string formJson = formBuilderData.Value.ToString();
 
-                if(formJson.Length > 0)
+                if(formJson.Length > 0 && formJson != "undefined")
                 {
                     //updating a form not, creating it
                     if (Request.QueryString["fid"] != null)
@@ -293,7 +303,7 @@ namespace Workflow
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
-            if (formJson.Length > 0)
+            if (formJson.Length > 0 && formJson != "undefined")
             {
                 //updating a form not, creating it
                 if (Request.QueryString["pfid"] != null)
@@ -302,7 +312,7 @@ namespace Workflow
                     FormUtil.UpdateForm(formId, FormNameLbl.Text, formJson);
                     FormResult.CssClass = "success";
                     FormResult.Text = "Updated form " + FormNameLbl.Text;
-                    Response.Redirect("Forms.aspx?pfid=" + formId);
+                    //Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else
@@ -319,7 +329,7 @@ namespace Workflow
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
-            if (formJson.Length > 0)
+            if (formJson.Length > 0 && formJson != "undefined")
             {
                 //updating a form not, creating it
                 if (Request.QueryString["pfid"] != null)
@@ -328,7 +338,7 @@ namespace Workflow
                     FormUtil.SubmitForm(formId, FormNameLbl.Text, formJson);
                     FormResult.CssClass = "success";
                     FormResult.Text = "Submitted form " + FormNameLbl.Text;
-                    Response.Redirect("Forms.aspx?pfid=" + formId);
+                    //Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else

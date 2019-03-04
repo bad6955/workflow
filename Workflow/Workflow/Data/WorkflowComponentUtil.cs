@@ -46,7 +46,7 @@ namespace Workflow.Data
             List<WorkflowComponent> componentList = new List<WorkflowComponent>();
             while (dr.Read())
             {
-                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (string)dr["ComponentText"], (int)dr["FormID"]);
+                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
                 componentList.Add(w);
             }
             conn.CloseConnection();
@@ -76,7 +76,7 @@ namespace Workflow.Data
             List<WorkflowComponent> componentList = new List<WorkflowComponent>();
             while (dr.Read())
             {
-                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (string)dr["ComponentText"], (int)dr["FormID"]);
+                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
                 componentList.Add(w);
             }
             conn.CloseConnection();
