@@ -79,6 +79,8 @@ namespace Workflow
                         else
                         {
                             workflowViewer.Visible = true;
+                            List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowComponents(w.WorkflowId);
+                            ProjectInformation(w, comps);
                         }
                     }
                 }
@@ -348,6 +350,29 @@ namespace Workflow
                 string vals = string.Join(",", value.ToArray<Guid>());
                 ViewState["IDs"] = vals;
             }
+        }
+
+        protected void ProjectInformation(WorkflowModel workflow, List<WorkflowComponent> comps)
+        {
+            workflowNode = "";
+            /*workflowNode += "<div class=\"row\">";
+            workflowNode += "<div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
+            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
+            workflowNode += "<h3>Username</h3></div><div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
+            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
+            workflowNode += "<h3>Coach Name</h3></div><div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
+            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
+            workflowNode += "<h3>Funding Source Name</h3></div></div>";*/
+
+            workflowNode += "<h1>"+workflow.WorkflowName+"</h1>";
+            workflowNode += "<table class=\"ui teal table\"><thead><tr><th>Component Title</th></tr></thead><tbody>";
+            foreach (WorkflowComponent comp in comps)
+            {
+                workflowNode += "<tr><td>"+comp.ComponentTitle+"</td></tr>";
+            }
+            workflowNode += "</tbody></table>";
+
+            workflowViewer.InnerHtml = workflowNode;
         }
 
         // ====== NAV ======

@@ -115,9 +115,9 @@ namespace Workflow
             }
             var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"250\"></canvas>";
             graphScript += "<script>new Chart(document.getElementById(\"pie-chart\"), {type:'pie', data:{labels: [";
-            graphScript += "\"All Projects\", \"Open\", \"Closed\", \"On Hold\"],";
+            graphScript += "\"Open\", \"Closed\", \"On Hold\"],";
             graphScript += "datasets: [{label: \"Total\", backgroundColor: [\"#dc7a32\", \"#04828F\", \"#5C3315\", \"#32CBDC\"],";
-            graphScript += "data: [" + allProjects.Count + ", " + open + ", " + closed + ", " + hold + "]}]}});</script>";
+            graphScript += "data: [" + allProjects.Count + ", " + open + ", " + closed + ", " + hold + "]}]}, options:{title:{display:true,text:'All Projects: " + projects.Count + "', position: 'bottom'}}});</script>";
 
             piechart.InnerHtml += graphScript;
         }
