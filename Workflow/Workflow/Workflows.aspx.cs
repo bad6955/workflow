@@ -70,6 +70,7 @@ namespace Workflow
                         if (Request.QueryString["edit"] != null && user.RoleId == 4)
                         {
                             workflowBuilder.Visible = true;
+                            test.Visible = true;
                             WorkflowName.Text = w.WorkflowName;
                             CreateWorkflowBtn.Text = "Update Workflow";
 
@@ -89,6 +90,7 @@ namespace Workflow
                 {
                     workflowListing.Visible = false;
                     workflowBuilder.Visible = true;
+                    test.Visible = true;
                 }
             }
             else
@@ -232,8 +234,21 @@ namespace Workflow
             {
                 string id = panelControls.ID.Replace("stepControl", string.Empty);
                 TextBox stepTitle = (TextBox)panelControls.FindControl("stepTitle" + id);
-                DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
-                int formId = int.Parse(formSelector.SelectedValue);
+                Panel formSelector = (Panel)panelControls.FindControl("formSelector" + id);
+                Panel dropdownselect = (Panel)formSelector.FindControl("menu" + id);
+
+                var selected = "-1";
+                Console.WriteLine("Child doesnt");
+                foreach (Control child in dropdownselect.Controls)
+                {
+                    Panel c = (Panel)child;
+                    Console.WriteLine("Child exists");
+                    if (c.Attributes["class"] == "item active selected")
+                        selected = c.Attributes["data-value"];
+                    else
+                        selected = "1";
+                }
+                int formId = int.Parse(selected);
                 WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
                 i++;
             }
@@ -295,18 +310,50 @@ namespace Workflow
             stepTitleTb.Text = wc.ComponentTitle;
             p.Controls.Add(stepTitleTb);
 
-            DropDownList formSelector = new DropDownList();
+            Panel dropdownPanel = new Panel();
+            SetID(dropdownPanel, "formSelector", id);
+            dropdownPanel.CssClass = "ui selection dropdown";
+
+
+            Literal input = new Literal();
+            input.Text = "<input type=\"hidden\">";
+            dropdownPanel.Controls.Add(input);
+            Literal icon = new Literal();
+            icon.Text = "<i class=\"dropdown icon\"></i>";
+            dropdownPanel.Controls.Add(icon);
+            Literal def = new Literal();
+            def.Text = "<div class=\"default text\">--SELECT WORKFLOW--</div>";
+            dropdownPanel.Controls.Add(def);
+
+            Panel dropdown = new Panel();
+            dropdown.CssClass = "menu";
+            SetID(dropdown, "menu", id);
+            
+            foreach(Form form in FormUtil.GetAllForms())
+            {
+                Panel item = new Panel();
+                item.CssClass = "item";
+                SetID(item, "item", id+form.FormId);
+                item.Attributes.Add("data-value", form.FormId.ToString());
+                item.Controls.Add(new LiteralControl(form.FormName));
+                item.DataBind();
+                dropdown.Controls.Add(item);
+            }
+
+            /*DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
             formSelector.DataSource = FormUtil.GetAllFormTemplates();
             formSelector.DataValueField = "FormId";
             formSelector.DataTextField = "FormName";
             formSelector.DataBind();
-            formSelector.SelectedValue = wc.FormID.ToString();
+            formSelector.SelectedValue = wc.FormID.ToString();*/
 
-            p.Controls.Add(formSelector);
+            dropdownPanel.Controls.Add(dropdown);
+            p.Controls.Add(dropdownPanel);
 
             Button delBtn = new Button();
             SetID(delBtn, "delBtn", id);
+            delBtn.CssClass = "ui orange basic button";
             delBtn.Text = "Remove";
             delBtn.CommandArgument = id + "," + wc.WFComponentID;
             delBtn.Click += new EventHandler(DelWorkflowComponentBtn_Click);
