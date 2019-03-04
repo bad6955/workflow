@@ -159,7 +159,6 @@ namespace Workflow
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
 
                 /* 3 Cases of project status for the table; completed, not completed/unknown, and needs modification. Check status, then add appropriate class.*/
-                //ComponentCompletion compstatus = null;
                 int i = 0;
                 foreach (WorkflowComponent step in steps)
                 {

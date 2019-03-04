@@ -30,7 +30,6 @@ namespace Workflow.Data
             foreach(WorkflowComponent wc in workflowComponents)
             {
                 //create completion status and forms for the project
-                ComponentCompletionUtil.CreateCompletionStatus(wc.WFComponentID, p.ProjectId, workflowId);
                 Form f = FormUtil.CreateForm(wc.FormID, p.ProjectId);
 
                 //creates notifications for each member of the company and each form

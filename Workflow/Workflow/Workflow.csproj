@@ -223,7 +223,6 @@
     </Compile>
     <Compile Include="Data\CompanyUtil.cs" />
     <Compile Include="Data\FeedUtil.cs" />
-    <Compile Include="Data\ComponentCompletionUtil.cs" />
     <Compile Include="Data\FormUtil.cs" />
     <Compile Include="Data\ProjectUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
@@ -252,7 +251,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\ComponentCompletion.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormField.cs" />
     <Compile Include="Models\Role.cs" />
