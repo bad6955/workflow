@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Project</title>
-    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png"/>
+    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png" />
     <script type="text/javascript" src="assets/jquery/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
@@ -64,9 +64,9 @@
             </div>
         </div>
         <div id="content-body">
-            <h1>Projects</h1>
 
             <div runat="server" id="projectListing">
+                <h1>Projects</h1>
                 <asp:Button runat="server" ID="CreateNewProjectBtn" Text="Create New Project" OnClick="CreateNewProjectBtn_Click" CssClass="fluid ui button" />
                 <asp:Label runat="server" ID="ProjectError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
@@ -123,7 +123,8 @@
             </div>
 
             <div runat="server" id="projectBuilder" visible="false">
-                <h3>Create Project</h3><br />
+                <h3>Create Project</h3>
+                <br />
                 <asp:TextBox runat="server" ID="ProjectName" class="ui input focus" placeholder="Project Name"></asp:TextBox><br />
                 <asp:DropDownList runat="server" ID="CompanySelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
                 <asp:DropDownList runat="server" ID="WorkflowSelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
@@ -136,11 +137,26 @@
             </div>
 
             <div runat="server" id="projectViewer" visible="false">
-                <h3><asp:Label runat="server" ID="ProjectViewerName"></asp:Label></h3><br /><br />
-                Company: <asp:Label runat="server" ID="CompanyName"></asp:Label><br />
-                Workflow: <asp:Label runat="server" ID="WorkflowName"></asp:Label><br />
-                Coach: <asp:Label runat="server" ID="CoachName"></asp:Label><br />
-                Notes: <asp:Label runat="server" ID="ProjectViewerNotes"></asp:Label><br />
+                <h2>
+                    <asp:Label runat="server" ID="ProjectViewerName"></asp:Label></h2>
+                <div class="project-info">
+                    <div id="project-top">
+                        <div class="project-item">
+                            <i class="huge circular building icon"></i>
+                            <asp:Label runat="server" ID="CompanyName"></asp:Label>
+                        </div>
+                        <div class="project-item">
+                            <i class="huge circular user icon"></i>
+                            <asp:Label runat="server" ID="CoachName"></asp:Label>
+                        </div>
+                        <div class="project-item">
+                            <i class="huge circular money icon"></i>
+                            <asp:Label runat="server" ID="FundingSource" Text="Funding Source"></asp:Label>
+                        </div>
+                    </div>
+                    <asp:Label runat="server" ID="WorkflowName"></asp:Label><br />
+                    <asp:Label runat="server" ID="ProjectViewerNotes"></asp:Label><br />
+                </div>
             </div>
         </div>
     </form>

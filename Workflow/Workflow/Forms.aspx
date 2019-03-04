@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" validateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" ValidateRequest="false" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Forms</title>
-    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png"/>
+    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png" />
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
@@ -50,13 +50,14 @@
                     </ul>
                 </div>
                 <div id="help">
-                    <img src="assets/icons/help.png" /></div>
+                    <img src="assets/icons/help.png" />
+                </div>
             </div>
         </div>
         <div id="content-body">
-            <h1>Forms</h1>
 
             <div runat="server" id="formListing">
+                <h1>Forms</h1>
                 <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Form" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
                 <asp:Label runat="server" ID="FormError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
@@ -102,12 +103,20 @@
 
             <div runat="server" id="formBuilder" visible="false">
                 <div>
-                    <h3>Form Name</h3>
-                    <asp:Label runat="server" ID="FormResult" Visible="false"></asp:Label><br />
-                    <asp:TextBox runat="server" ID="FormName"></asp:TextBox>
+                    <asp:Label runat="server" ID="FormResult" Visible="false"></asp:Label>
+                    <div id="formName">
+                    <div class="ui left corner labeled input">
+                        <asp:TextBox runat="server" ID="FormName" Placeholder="Form Name..."></asp:TextBox>
+                        <div class="ui teal left corner label">
+                            <i class="white asterisk icon"></i>
+                        </div>
+                    </div>
+                        </div>
                 </div>
                 <div id="buildWrap"></div>
-                <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" OnClick="CreateFormBtn_Click" OnClientClick="SaveFormEditor()" />
+                <div id="CreateFormBtnDiv">
+                    <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" CssClass="ui teal button" OnClick="CreateFormBtn_Click" OnClientClick="SaveFormEditor()" />
+                </div>
                 <asp:HiddenField runat="server" ID="formBuilderData" />
                 <script>
                     var builderOptions = {
@@ -124,7 +133,8 @@
 
             <div runat="server" id="formViewer" visible="false">
                 <div>
-                    <h3><asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
+                    <h3>
+                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
                 <div id="renderWrap"></div>
@@ -146,12 +156,12 @@
                     }
 
                     function SubmitForm() {
-                        jQuery(function() {
+                        jQuery(function () {
                             formRenderOpts = {
                                 dataType: 'json',
                                 formData: formBuilder.formData
                             };
-  
+
                             var renderedForm = $('<div>');
                             renderedForm.formRender(formRenderOpts);
 

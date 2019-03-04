@@ -47,8 +47,8 @@
         </div>
 
         <div id="content-body">
-            <h1>Workflows</h1>
                 <div runat="server" id="workflowListing">
+                <h1>Workflows</h1>
                     <asp:Button runat="server" ID="CreateNewWorkflowBtn" Text="Create New Workflow" OnClick="CreateNewWorkflowBtn_Click" CssClass="fluid ui button" />
                     <asp:Label runat="server" ID="WorkflowError" Visible="false" CssClass="error"></asp:Label>
                     <div class="ui secondary segment">

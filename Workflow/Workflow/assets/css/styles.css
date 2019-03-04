@@ -367,6 +367,56 @@ input:-webkit-autofill:active {
     margin-left: 6em;
 }
 
+#projectViewer {
+    width: 100%;
+}
+#projectViewer h2 {
+    padding: 1em;
+}
+
+.project-info {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+#project-top {
+    width: 70%;
+    margin: 0 auto;
+}
+
+#project-top span {
+    display: block;
+}
+
+.project-item {
+    width: 30%;
+    text-align: center;
+    display: inline-block;
+}
+
+/***************************************FORM PAGE*********************************************/
+#CreateFormBtnDiv {
+    margin: 0 auto;
+    text-align: center;
+}
+#formName {
+    width: 100%;
+    text-align: center;
+    padding: 2em 0 2em 0;
+}
+    #formName .ui.left.corner.labeled.input {
+        width: 95%;
+    }
+    #FormName {
+        width: 95%;
+    }
+
+#buildWrap {
+    width: 95%;
+    margin: 0 auto;
+}
 /***************************************WORKFLOW PAGE*********************************************/
 #workflowList .ui.small.image {
     color: #dc7a32;
