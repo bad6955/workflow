@@ -39,10 +39,12 @@ namespace Workflow
                 if (user.RoleId == 1)
                 {
                     CreateClientFormList(user.CompanyId);
+                    CreateNewFormBtn.Visible = false;
                 }
                 else if (user.RoleId == 2)
                 {
                     CreateFormList(user.UserId);
+                    CreateNewFormBtn.Visible = false;
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {

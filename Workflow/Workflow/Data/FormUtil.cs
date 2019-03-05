@@ -44,10 +44,13 @@ namespace Workflow.Data
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
 
             Form f = null;
-            while (dr.Read())
+            try
             {
-                f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
-            }
+                while (dr.Read())
+                {
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                }
+            } catch (Exception e) { }
             conn.CloseConnection();
             return f;
         }
@@ -60,10 +63,13 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@formTemplateId", formTemplateId);
             DBConn conn = new DBConn();
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-            while (dr.Read())
+            try
             {
-                f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], projectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
-            }
+                while (dr.Read())
+                {
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], projectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                }
+            } catch(Exception e) { }
             conn.CloseConnection();
             return f;
         }
@@ -78,11 +84,14 @@ namespace Workflow.Data
                 cmd.Parameters.AddWithValue("@projId", p.ProjectId);
                 DBConn conn = new DBConn();
                 MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-                while (dr.Read())
+                try
                 {
-                    Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
-                    formList.Add(f);
-                }
+                    while (dr.Read())
+                    {
+                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                        formList.Add(f);
+                    }
+                } catch (Exception e) { }
                 conn.CloseConnection();
             }
             return formList;
@@ -98,12 +107,15 @@ namespace Workflow.Data
                 cmd.Parameters.AddWithValue("@projId", p.ProjectId);
                 DBConn conn = new DBConn();
                 MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
-                while (dr.Read())
+                try
                 {
-                    Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
-                    formList.Add(f);
-                }
-                conn.CloseConnection();
+                    while (dr.Read())
+                    {
+                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                        formList.Add(f);
+                    }
+                } catch (Exception e) { }
+            conn.CloseConnection();
             }
             return formList;
         }

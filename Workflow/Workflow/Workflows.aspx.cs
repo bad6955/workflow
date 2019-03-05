@@ -33,10 +33,12 @@ namespace Workflow
                 if (user.RoleId == 1)
                 {
                     CreateClientWorkflowList(user.CompanyId);
+                    CreateNewWorkflowBtn.Visible = false;
                 }
                 else if (user.RoleId == 2)
                 {
                     CreateWorkflowList(user.UserId);
+                    CreateNewWorkflowBtn.Visible = false;
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
@@ -339,6 +341,7 @@ namespace Workflow
 
             DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
+            formSelector.CssClass = "form-selector-dropdown";
             formSelector.DataSource = FormUtil.GetAllFormTemplates();
             formSelector.DataValueField = "FormId";
             formSelector.DataTextField = "FormName";
@@ -397,68 +400,30 @@ namespace Workflow
 
         protected void ProjectInformation(WorkflowModel workflow, List<WorkflowComponent> comps)
         {
-            //workflowNode = "";
-            /*workflowNode += "<div class=\"row\">";
-            workflowNode += "<div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
-            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
-            workflowNode += "<h3>Username</h3></div><div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
-            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
-            workflowNode += "<h3>Coach Name</h3></div><div class=\"col-lg-4 col-sm-6 text-center mb-4\">";
-            workflowNode += "<img class=\"rounded-circle img-fluid d-block mx-auto\" src=\"http://placehold.it/200x200\" alt=\"\">";
-            workflowNode += "<h3>Funding Source Name</h3></div></div>";*/
-
             workflowNode += "<h1>" + workflow.WorkflowName + "</h1><hr/><h2>Workflow Steps</h2>";
-            //workflowNode += "<div id=\"workflow-table\"><table class=\"ui teal table\"><thead><tr><th>Title</th><th>Form</th></tr></thead><tbody>";
+
             List<Form> forms = new List<Form>();
             foreach (WorkflowComponent comp in comps)
             {
-                //workflowNode += "<tr><td>" + comp.ComponentTitle + "</td>";
-                try
-                {
-                    //workflowNode += "<td><i class=\"file outline icon\"></i>" + FormUtil.GetForm(comp.FormID).FormName + "</td></tr>";
-                    forms.Add(FormUtil.GetForm(comp.FormID));
-                }
-                catch (Exception e) { }
+                forms.Add(FormUtil.GetForm(comp.FormID));
 
             }
-            //workflowNode += "</tbody></table></div>";
+            workflowNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
 
-            try
+            foreach (WorkflowComponent com in comps)
             {
-                workflowNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
+                workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+            }
+            workflowNode += "</ol></div>";
 
-                foreach (WorkflowComponent com in comps)
-                {
-                    workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                    workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
-                }
-                workflowNode += "</ol></div>";
-            } catch (Exception e) { }
-            
             workflowNode += "<h2>Forms</h2><div id=\"workflow-forms\">";
 
-            /*workflowNode += "<div class=\"container-fluid\"><div id=\"carouselExample\" class=\"carousel slide\" data-ride=\"carousel\" data-interval=\"9000\">";
-            workflowNode += "<div class=\"carousel-inner row w-100 mx-auto\" role=\"listbox\">";*/
-
-            try
+            foreach (Form form in forms)
             {
-                foreach (Form form in forms)
-                {
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
-                    /*workflowNode += "<div class=\"carousel-item col-md-3\"><div class=\"panel panel-default\"><div class=\"panel-thumbnail\">";
-                    workflowNode += "<a href = \"#\" title=\"image 1\" class=\"thumb\">";
-                    workflowNode += "<img class=\"img-fluid mx-auto d-block\" src=\"//via.placeholder.com/150x200?text=Form 1\" alt=\"slide 1\" /></a>";
-                    workflowNode += "</div></div></div>";*/
-                }
+                workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
             }
-            catch (Exception e) { }
-
-            /*workflowNode += "<a class=\"carousel-control-prev\" href=\"#carouselExample\" role=\"button\" data-slide=\"prev\">";
-            workflowNode += "<span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span><span class=\"sr-only\">Previous</span>";
-            workflowNode += "</a><a class=\"carousel-control-next text-faded\" href=\"#carouselExample\" role=\"button\" data-slide=\"next\">";
-            workflowNode += "<span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span><span class=\"sr-only\">Next</span>";
-            workflowNode += "</a></div></div>";*/
 
 
             workflowNode += "</div></div>";
@@ -468,7 +433,7 @@ namespace Workflow
         }
 
 
-        
+
         // ====== NAV ======
         protected void DashboardBtn_Click(Object sender, EventArgs e)
         {

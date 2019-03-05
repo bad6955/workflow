@@ -33,10 +33,12 @@ namespace Workflow
                 if (user.RoleId == 1)
                 {
                     CreateClientProjectList(user.CompanyId);
+                    CreateNewProjectBtn.Visible = false;
                 }
                 else if (user.RoleId == 2)
                 {
                     CreateProjectList(user.UserId);
+                    CreateNewProjectBtn.Visible = false;
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
@@ -58,6 +60,7 @@ namespace Workflow
                         GenerateProjectDropdowns();
                         CreateProjectBtn.Text = "Update Project";
                         ProjectName.Text = p.Name;
+
                         CompanySelect.SelectedValue = p.CompanyId.ToString();
                         CoachSelect.SelectedValue = p.CoachId.ToString();
                         WorkflowSelect.SelectedValue = p.WorkflowId.ToString();
@@ -98,24 +101,21 @@ namespace Workflow
 
         protected void ProjectView(Project p)
         {
-            projectNode += "<h2>"+p.Name+ "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
+            projectNode += "<h2>" + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular building icon\"></i><h3>" + CompanyUtil.GetCompany(p.CompanyId).CompanyName + "</h3></div><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular user icon\"></i><h3>" + UserUtil.GetCoach(p.CoachId).FullName + "</h3></div>";
             projectNode += "<div class=\"project-item\"><i class=\"huge circular money icon\"></i>";
             projectNode += "<h3>Funding Source</h3></div></div></div>";
-            projectNode += "<h3 style=\"font-weight:light\">Project Notes</h3><p>"+p.Notes+"</p></div>";
+            projectNode += "<h3 style=\"font-weight:100\">Project Notes:</h3><p>" + p.Notes + "</p></div>";
 
-            try
+            projectNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
+            foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
             {
-                projectNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
-                foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
-                {
-                    projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                    projectNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
-                }
-                projectNode += "</ol></div>";
-            } catch(Exception e) { }
+                projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                projectNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+            }
+            projectNode += "</ol></div>";
 
             projectViewer.InnerHtml += projectNode;
         }
@@ -142,6 +142,13 @@ namespace Workflow
             CoachSelect.DataValueField = "userId";
             CoachSelect.DataBind();
             CoachSelect.SelectedIndex = 0;
+
+            Panel aster = new Panel();
+            aster.CssClass = "ui teal left corner label";
+            Literal icon = new Literal();
+            icon.Text = "<i class=\"white asterisk icon\"></i>";
+            aster.Controls.Add(icon);
+            ProjectNamePanel.Controls.Add(aster);
         }
 
         private void CreateProjectList(int userId)
@@ -224,14 +231,14 @@ namespace Workflow
 
             if (projectName.Length > 0)
             {
-                if(companyId != -1)
+                if (companyId != -1)
                 {
                     if (workflowId != -1)
                     {
                         if (coachId != -1)
                         {
                             Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
-                            Response.Redirect("Projects.aspx?pid="+p.ProjectId);
+                            Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
                         }
                     }
                 }

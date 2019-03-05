@@ -120,99 +120,11 @@
 
             <div runat="server" id="workflowViewer" visible="false">
             </div>
-            <!-- Forms-->
-
-
-
-            <!-- Table 
-            <hr />
-            <h1>Steps:</h1>
-            <div class="limiter">
-                <div class="container-table100">
-                    <div class="wrap-table100">
-                        <div class="table100">
-                            <table>
-                                <thead>
-                                    <tr class="table100-head">
-                                        <th class="column1">Milestones</th>
-                                        <th class="column2">Deliverables</th>
-                                        <th class="column3">Participants</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="column1">2017-09-29 01:22</td>
-                                        <td class="column2">200398</td>
-                                        <td class="column3">iPhone X 64Gb Grey</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="column1">2017-09-28 05:57</td>
-                                        <td class="column2">200397</td>
-                                        <td class="column3">Samsung S8 Black</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="column1">2017-09-26 05:57</td>
-                                        <td class="column2">200396</td>
-                                        <td class="column3">Game Console Controller</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="column1">2017-09-22 05:57</td>
-                                        <td class="column2">200389</td>
-                                        <td class="column3">Macbook Pro Retina 2017</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </form>
     <script src="assets/jquery/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-        $('#carouselExample').on('slide.bs.carousel', function (e) {
 
-
-            var $e = $(e.relatedTarget);
-            var idx = $e.index();
-            var itemsPerSlide = 4;
-            var totalItems = $('.carousel-item').length;
-
-            if (idx >= totalItems - (itemsPerSlide - 1)) {
-                var it = itemsPerSlide - (totalItems - idx);
-                for (var i = 0; i < it; i++) {
-                    // append slides to end
-                    if (e.direction == "left") {
-                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
-                    }
-                    else {
-                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
-                    }
-                }
-            }
-        });
-
-
-        $('#carouselExample').carousel({
-            interval: 2000
-        });
-
-
-        $(document).ready(function () {
-            /* show lightbox when clicking a thumbnail */
-            $('a.thumb').click(function (event) {
-                event.preventDefault();
-                var content = $('.modal-body');
-                content.empty();
-                var title = $(this).attr("title");
-                $('.modal-title').html(title);
-                content.html($(this).html());
-                $(".modal-profile").modal({ show: true });
-            });
-
-        });
-    </script>
     <script>
         $('.ui.selection.dropdown').dropdown();
     </script>

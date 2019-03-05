@@ -402,6 +402,19 @@ input:-webkit-autofill:active {
     display: inline-block;
 }
 
+#project-builder {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+#ProjectNamePanel {
+    width: 100%;
+}
+#ProjectNotes {
+    width: 100%;
+    border-radius: 4px;
+}
+
 /***************************************FORM PAGE*********************************************/
 #CreateFormBtnDiv {
     margin: 0 auto;
@@ -422,6 +435,12 @@ input:-webkit-autofill:active {
 #buildWrap {
     width: 95%;
     margin: 0 auto;
+}
+
+#formViewer {
+    width: 80%;
+    margin: auto;
+    padding-top: 2em;
 }
 /***************************************WORKFLOW PAGE*********************************************/
 #workflowList .ui.small.image {
@@ -481,6 +500,20 @@ input:-webkit-autofill:active {
     width: 90%;
     margin: auto;
 }
+
+.form-selector-dropdown {
+    border-radius: 5px;
+    border: 1px solid #e2e2e2;
+    height: 40px;
+    text-align-last: center;
+    min-width: 200px;
+    margin: 0 2em 0 2em;
+}
+option {
+    border: none;
+    border-radius: 5px;
+}
+
 
 .ProgressBar-stepLabel:hover {
     display:block;

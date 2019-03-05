@@ -110,7 +110,7 @@ namespace Workflow
                     closed++;
                 if (proj.StatusId == 4)
                     hold++;
-                else
+                if (proj.StatusId == 0 || proj.StatusId == 1)
                     open++;
             }
             var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"250\"></canvas>";
@@ -170,23 +170,23 @@ namespace Workflow
                         Form f = formSteps[i];
                         if (f.Approved == 1)
                         {
-                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
                         }
                         else if (f.Denied == 1 && f.DenialReason.Length > 0)
                         {
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
                         }
                         else if (f.Denied == 1)
                         {
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
+                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
                         }
                         else if (f.Submission == 1)
                         {
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
                         }
                         else
                         {
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + ": " + step.ComponentText + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
+                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
                         }
                         i++;
                     }
