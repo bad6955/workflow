@@ -47,7 +47,7 @@ namespace Workflow.Data
             WorkflowComponent w = null;
             try
             {
-                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
+                w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
                 componentList.Add(w);
             }
             catch (Exception e) { }
