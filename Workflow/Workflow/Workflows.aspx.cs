@@ -410,21 +410,26 @@ namespace Workflow
             }
             workflowNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
 
-            foreach (WorkflowComponent com in comps)
+            try
             {
-                workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
-            }
+                foreach (WorkflowComponent com in comps)
+                {
+                    workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                    workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                }
+            } catch (Exception e) { }
             workflowNode += "</ol></div>";
 
             workflowNode += "<h2>Forms</h2><div id=\"workflow-forms\">";
 
-            foreach (Form form in forms)
+            try
             {
-                workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
-            }
-
+                foreach (Form form in forms)
+                {
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
+                }
+            } catch(Exception e) { }
 
             workflowNode += "</div></div>";
 
