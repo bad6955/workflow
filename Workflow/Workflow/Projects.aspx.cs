@@ -174,6 +174,7 @@ namespace Workflow
             for (int i = 0; i < projects.Count && i < 5; i++)
             {
                 MakeText(projects, projectNode, i);
+                //MakeAdminText(projects, projectNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;

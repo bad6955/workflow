@@ -36,7 +36,7 @@ namespace Workflow.Data
 
         public static List<WorkflowComponent> GetWorkflowComponents(int workflowID)
         {
-            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, ComponentText, FormID FROM WorkflowComponents WHERE WorkflowID = @workflowID";
+            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, FormID FROM WorkflowComponents WHERE WorkflowID = @workflowID";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@workflowID", workflowID);
@@ -44,13 +44,11 @@ namespace Workflow.Data
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
 
             List<WorkflowComponent> componentList = new List<WorkflowComponent>();
-            WorkflowComponent w = null;
-            try
+            while (dr.Read())
             {
-                w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
+                WorkflowComponent w = new WorkflowComponent((int)dr["WFComponentID"], (int)dr["WorkflowID"], (string)dr["ComponentTitle"], (int)dr["FormID"]);
                 componentList.Add(w);
             }
-            catch (Exception e) { }
             conn.CloseConnection();
             return componentList;
         }
@@ -68,7 +66,7 @@ namespace Workflow.Data
 
         public static List<WorkflowComponent> GetFormWorkflowComponents(int formId)
         {
-            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, ComponentText, FormID FROM WorkflowComponents WHERE FormID = @formId";
+            string query = "SELECT WFComponentID, WorkflowID, ComponentTitle, FormID FROM WorkflowComponents WHERE FormID = @formId";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@formId", formId);

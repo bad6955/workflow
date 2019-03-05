@@ -115,7 +115,15 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
             {
-                MakeText(workflows, workflowNode, i);
+                User user = (User) Session["User"];
+                if(user.RoleId == 4)
+                {
+                    MakeAdminText(workflows, workflowNode, i);
+                }
+                else
+                {
+                    MakeText(workflows, workflowNode, i);
+                }
             }
 
             numberShowing.InnerHtml = "";
@@ -128,6 +136,17 @@ namespace Workflow
             workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
             workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
             workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
+            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
+            workflowList.InnerHtml += workflowNode;
+            count++;
+        }
+
+        private void MakeAdminText(List<WorkflowModel> workflows, String workflowNode, int i)
+        {
+            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
+            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
             workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
             workflowList.InnerHtml += workflowNode;
             count++;
@@ -151,7 +170,7 @@ namespace Workflow
             List<WorkflowModel> workflows = WorkflowUtil.GetWorkflows();
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                MakeText(workflows, workflowNode, i);
+                MakeAdminText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;

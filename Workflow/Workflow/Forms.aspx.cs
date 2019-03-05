@@ -212,7 +212,7 @@ namespace Workflow
             List<Form> forms = FormUtil.GetForms();
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
-                MakeText(forms, formNode, i);
+                MakeAdminText(forms, formNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -260,12 +260,37 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
             {
-                MakeText(forms, formNode, i);
+                User user = (User)Session["User"];
+                if (user.RoleId == 4)
+                {
+                    MakeAdminText(forms, formNode, i);
+                }
+                else
+                {
+                    MakeText(forms, formNode, i);
+                }
             }
 
             numberShowing.InnerHtml = "";
             var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
             numberShowing.InnerHtml += showing;
+        }
+
+        private void MakeAdminText(List<Form> forms, String formNode, int i)
+        {
+            var name = "";
+            try
+            {
+                name = ProjectUtil.GetProject(forms[i].ProjectId).Name;
+            }
+            catch (Exception e) { }
+            formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
+            formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
+            formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + " | ";
+            formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
+            formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
+            formList.InnerHtml += formNode;
+            count++;
         }
 
         private void MakeText(List<Form> forms, String formNode, int i)
@@ -277,7 +302,7 @@ namespace Workflow
             }
             catch (Exception e) { }
             formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-            formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + name + "<div class=\"meta\">";
+            formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?pfid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a> | " + name + "<div class=\"meta\">";
             formNode += "</div></div></div>";
             formList.InnerHtml += formNode;
             count++;
