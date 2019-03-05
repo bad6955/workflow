@@ -109,12 +109,15 @@ namespace Workflow
             projectNode += "<h3 style=\"font-weight:100\">Project Notes:</h3><p>" + p.Notes + "</p></div>";
 
             projectNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
-            foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
+            try
             {
-                projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                projectNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
-            }
+                foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
+                {
+                    projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                    projectNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                }
+            } catch(Exception e) { }
             projectNode += "</ol></div>";
 
             projectViewer.InnerHtml += projectNode;

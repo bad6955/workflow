@@ -938,6 +938,23 @@ tbody tr {
 }
 
 /** Admin page *****/
+#admin-top-panel {
+    margin: 0 auto;
+    width: 80%;
+    text-align:center;
+}
+.admin-top-panel-items {
+    display: inline-block;
+    width: 150px;
+    margin: 0 1em 0 1em;
+    padding: 1em 0 1em 0;
+    text-align: center;
+    background-color: #e2e2e2;
+    border-radius: 4px;
+}
+.admin-top-panel-items:hover {
+    cursor: pointer;
+}
 
 #RegisterBtn {
     margin: 0 auto;

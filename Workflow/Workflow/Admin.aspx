@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Venture Creations Admin Page</title>
-    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png"/>
+    <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png" />
 
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
@@ -41,6 +41,17 @@
 <body>
     <form class="omb_loginForm" id="form1" runat="server">
         <h1>Administration</h1>
+        <div id="admin-top-panel">
+            <div class="admin-top-panel-items"><i class="big inbox icon" style="color:#32cbdc"></i>
+                <h3>Create Project</h3>
+            </div>
+            <div class="admin-top-panel-items"><i class="big file icon" style="color:#5c3315"></i>
+                <h3>Create Form</h3>
+            </div>
+            <div class="admin-top-panel-items"><i class="big sitemap icon" style="color:#dc7a32"></i>
+                <h3>Create Workflow</h3>
+            </div>
+        </div>
         <div class="ui top attached tabular menu">
             <a class="item active" data-tab="user">Users</a>
             <a class="item" data-tab="company">Companies</a>
