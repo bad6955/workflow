@@ -209,7 +209,7 @@ namespace Workflow
             formNode = "";
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
-            List<Form> forms = FormUtil.GetForms();
+            List<Form> forms = FormUtil.GetFormTemplates();
             for (int i = 0; i < 5 && i < forms.Count; i++)
             {
                 MakeAdminText(forms, formNode, i);
