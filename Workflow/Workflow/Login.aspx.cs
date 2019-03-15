@@ -15,8 +15,13 @@ namespace Workflow
         protected void Page_Load(object sender, EventArgs e)
         {
             //checks if the user is logged in and redirects them to their dashboard
+            User user = (User)Session["User"];
             if (Session["User"] != null)
             {
+                if(user.RoleId == 5)
+                {
+                    Response.Redirect("Logs.aspx");
+                }
                 Response.Redirect("Dashboard.aspx");
             }
         }
@@ -32,7 +37,16 @@ namespace Workflow
             //Check the user's infomation before logging in
             if (ValidateLogin(email, pass))
             {
-                Response.Redirect("Dashboard.aspx"); //redirecting the user from Login.aspx to Dashboard.aspx
+                User user = UserUtil.GetUser(email);
+                if (user.RoleId == 5)
+                {
+                    Response.Redirect("Logs.aspx");
+                }
+                else if (user.AdminPanel == 1)
+                {
+                    Response.Redirect("Admin.aspx");
+                }
+                Response.Redirect("Dashboard.aspx");
             }
             else
             {

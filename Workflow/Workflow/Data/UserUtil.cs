@@ -50,7 +50,7 @@ namespace Workflow.Data
 
         public static User GetUser(string email)
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where Email = @email";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where Email = @email";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@email", email);
@@ -59,7 +59,7 @@ namespace Workflow.Data
             User u = null;
             while (dr.Read())
             {
-                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
             }
             conn.CloseConnection();
             return u;
@@ -67,7 +67,7 @@ namespace Workflow.Data
 
         public static List<User> GetUsers()
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             DBConn conn = new DBConn();
@@ -75,7 +75,7 @@ namespace Workflow.Data
             List<User> users = new List<User>();
             while (dr.Read())
             {
-                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
                 users.Add(u);
             }
             conn.CloseConnection();
@@ -84,7 +84,7 @@ namespace Workflow.Data
 
         public static User GetUser(int userId)
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = @userId";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where UserID = @userId";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@userId", userId);
@@ -93,7 +93,7 @@ namespace Workflow.Data
             User u = null;
             while (dr.Read())
             {
-                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
             }
             conn.CloseConnection();
             return u;
@@ -111,7 +111,7 @@ namespace Workflow.Data
 
         public static List<User> GetLockedUsers()
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where InvalidLoginCt >= 5";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where InvalidLoginCt >= 5";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             DBConn conn = new DBConn();
@@ -119,7 +119,7 @@ namespace Workflow.Data
             List<User> lockedUsers = new List<User>();
             while (dr.Read())
             {
-                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
                 lockedUsers.Add(u);
             }
             conn.CloseConnection();
@@ -150,9 +150,21 @@ namespace Workflow.Data
             conn.CloseConnection();
         }
 
+        public static void AdminPanelToggle(User user, int toggle)
+        {
+            string validQuery = "UPDATE Users SET AdminPanelToggle = @toggle where Email = @email";
+
+            MySqlCommand cmd = new MySqlCommand(validQuery);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            cmd.Parameters.AddWithValue("@toggle", toggle);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+        }
+
         public static List<User> GetCoaches()
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where RoleID = 2";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where RoleID = 2";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             DBConn conn = new DBConn();
@@ -160,7 +172,7 @@ namespace Workflow.Data
             List<User> coachList = new List<User>();
             while (dr.Read())
             {
-                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
                 coachList.Add(u);
             }
             conn.CloseConnection();
@@ -169,7 +181,7 @@ namespace Workflow.Data
 
         public static User GetCoach(int coachID)
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where UserID = (@coachID)";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where UserID = (@coachID)";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@coachID", coachID);
@@ -178,7 +190,7 @@ namespace Workflow.Data
             User coach = null;
             while (dr.Read())
             {
-                coach = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                coach = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
             }
             conn.CloseConnection();
             return coach;
@@ -191,7 +203,7 @@ namespace Workflow.Data
 
         public static List<User> GetClients(int companyId)
         {
-            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt from Users where CompanyID = @companyId";
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where CompanyID = @companyId";
 
             MySqlCommand cmd = new MySqlCommand(createQuery);
             cmd.Parameters.AddWithValue("@companyId", companyId);
@@ -200,7 +212,7 @@ namespace Workflow.Data
             List<User> clientList = new List<User>();
             while (dr.Read())
             {
-                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"]);
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
                 clientList.Add(u);
             }
             conn.CloseConnection();

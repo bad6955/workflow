@@ -28,6 +28,7 @@
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <!-- not passing argument ID=user -->
                         <div id="dropdown-content">
+                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false" />
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>

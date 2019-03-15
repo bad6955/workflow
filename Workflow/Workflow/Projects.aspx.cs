@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 using Workflow.Models;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -43,6 +44,10 @@ namespace Workflow
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     CreateAdminProjectList();
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
 
                 //loads the selected form if there is one
@@ -80,17 +85,6 @@ namespace Workflow
                     projectBuilder.Visible = true;
                     GenerateProjectDropdowns();
                 }
-
-
-                /*
-                //checks user is an admin
-                if (user.RoleId == 4)
-                {
-                    //sets up admin project creation form
-                    GenerateProjectDropdowns();
-                    projectBuilder.Visible = true;
-                }
-                */
             }
             else
             {
@@ -225,6 +219,11 @@ namespace Workflow
             Response.Redirect("Login.aspx");
         }
 
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
+        }
+
         protected void CreateProjectBtn_Click(object sender, EventArgs e)
         {
             int companyId = int.Parse(SelectedCompany.Value);
@@ -242,6 +241,8 @@ namespace Workflow
                         if (coachId != -1)
                         {
                             Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                            User user = (User)Session["User"];
+                            Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " +UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
                             Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
                         }
                     }

@@ -29,6 +29,15 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
+                if(user.RoleId == 4)
+                {
+                    AdminBtn.Visible = true;
+                    AdminPanelToggler.Visible = true;
+                    if(user.AdminPanel == 1)
+                    {
+                        AdminPanel.Checked = true;
+                    }
+                }
             }
             //kicks them out if they arent
             else
@@ -62,6 +71,11 @@ namespace Workflow
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
         }
 
         protected void ChangePassword_Click(object sender, EventArgs e)
@@ -125,6 +139,19 @@ namespace Workflow
                 return 3;
             }
             return 4;
+        }
+
+        protected void AdminPanel_CheckedChanged(object sender, EventArgs e)
+        {
+            User user = (User)Session["User"];
+            if (AdminPanel.Checked)
+            {
+                UserUtil.AdminPanelToggle(user, 1);
+            }
+            else
+            {
+                UserUtil.AdminPanelToggle(user, 0);
+            }
         }
     }
 }

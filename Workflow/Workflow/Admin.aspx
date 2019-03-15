@@ -42,14 +42,14 @@
     <form class="omb_loginForm" id="form1" runat="server">
         <h1>Administration</h1>
         <div id="admin-top-panel">
-            <div class="admin-top-panel-items"><i class="big inbox icon" style="color:#32cbdc"></i>
-                <h3>Create Project</h3>
+            <div class="admin-top-panel-items"><a href="Projects.aspx?edit=1"><i class="big inbox icon" style="color:#32cbdc"></i>
+                <h3>Create Project</h3></a>
             </div>
-            <div class="admin-top-panel-items"><i class="big file icon" style="color:#5c3315"></i>
-                <h3>Create Form</h3>
+            <div class="admin-top-panel-items"><a href="Forms.aspx?edit=1"><i class="big file icon" style="color:#5c3315"></i>
+                <h3>Create Form</h3></a>
             </div>
-            <div class="admin-top-panel-items"><i class="big sitemap icon" style="color:#dc7a32"></i>
-                <h3>Create Workflow</h3>
+            <div class="admin-top-panel-items"><a href="Workflows.aspx?edit=1"><i class="big sitemap icon" style="color:#dc7a32"></i>
+                <h3>Create Workflow</h3></a>
             </div>
         </div>
         <div class="ui top attached tabular menu">

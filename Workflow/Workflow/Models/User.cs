@@ -14,9 +14,10 @@ namespace Workflow.Models
         string firstName;
         string lastName;
         int invalidLoginCt;
+        int adminPanelToggle;
         Firebase.Auth.User firebaseUser;
 
-        public User(int id, int roleId, int companyId, string email, string firstName, string lastName, int invalidLoginCt)
+        public User(int id, int roleId, int companyId, string email, string firstName, string lastName, int invalidLoginCt, int adminPanelToggle)
         {
             this.id = id;
             this.roleId = roleId;
@@ -25,6 +26,7 @@ namespace Workflow.Models
             this.firstName = firstName;
             this.lastName = lastName;
             this.invalidLoginCt = invalidLoginCt;
+            this.adminPanelToggle = adminPanelToggle;
         }
 
         public User(int id, int roleId, int companyId, string email, string firstName, string lastName)
@@ -96,6 +98,12 @@ namespace Workflow.Models
         {
             get { return invalidLoginCt; }
             set { invalidLoginCt = value; }
+        }
+
+        public int AdminPanel
+        {
+            get { return adminPanelToggle; }
+            set { adminPanelToggle = value; }
         }
 
         public Firebase.Auth.User FirebaseUser

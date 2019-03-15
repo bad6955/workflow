@@ -24,6 +24,7 @@
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
+                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false"/>
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>
@@ -67,17 +68,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="two fields">
+                <div runat="server" id="AdminPanelToggler" class="two fields" visible="false">
                     <div class="field">
-                        Email Alerts:
+                        Go to Admin Panel on login:
                     </div>
-                    <select class="ui dropdown">
-                        <option value="0">Changes to my projects</option>
-                        <option value="1">Approved or denied</option>
-                        <option value="2">Approved only</option>
-                        <option value="3">Denied only</option>
-                        <option value="4">No notifications</option>
-                    </select>
+                    <div class="field">
+                        <asp:CheckBox runat="server" ID="AdminPanel" Checked="false" OnCheckedChanged="AdminPanel_CheckedChanged" />
+                    </div>
                 </div>
                 <div id="button">
                     <button class="ui button" type="submit">Save</button>

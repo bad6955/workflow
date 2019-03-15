@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 using Workflow.Models;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -43,6 +44,10 @@ namespace Workflow
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     CreateAdminWorkflowList();
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
 
                 //loads the selected form if there is one
@@ -56,6 +61,7 @@ namespace Workflow
                     {
                         if (WorkflowUtil.DeleteWorkflow(w.WorkflowId))
                         {
+                            Log.Info(user.Identity + " deleted a workflow template " + w.WorkflowName);
                             ReloadSection();
                         }
                         else
@@ -235,6 +241,8 @@ namespace Workflow
             if (WorkflowName.Text.Length > 0 && Request.QueryString["wid"] == null)
             {
                 WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " created a new workflow template " + w.WorkflowName);
                 SaveComponents(w.WorkflowId);
             }
             //update existing
@@ -249,6 +257,8 @@ namespace Workflow
 
         private void SaveComponents(int workflowId)
         {
+            User user = (User)Session["User"];
+            WorkflowModel w = WorkflowUtil.GetWorkflow(workflowId);
             List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             int i = 0;
             foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
@@ -259,6 +269,7 @@ namespace Workflow
                 DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
                 int formId = int.Parse(formSelector.SelectedValue);
                 WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
+                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetForm(formId).FormName);
                 i++;
             }
         }
@@ -281,6 +292,8 @@ namespace Workflow
             else
             {
                 WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
                 workflowId = w.WorkflowId;
                 SaveComponents(workflowId);
                 wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
@@ -328,35 +341,6 @@ namespace Workflow
             uilefticon.Controls.Add(stepTitleTb);
             uilefticon.Controls.Add(icon);
             p.Controls.Add(uilefticon);
-
-            /*Panel dropdownPanel = new Panel();
-            SetID(dropdownPanel, "formSelector", id);
-            dropdownPanel.CssClass = "ui selection dropdown";
-
-
-            Literal input = new Literal();
-            input.Text = "<input type=\"hidden\">";
-            dropdownPanel.Controls.Add(input);
-            Literal icon = new Literal();
-            icon.Text = "<i class=\"dropdown icon\"></i>";
-            dropdownPanel.Controls.Add(icon);
-            Literal def = new Literal();
-            def.Text = "<div class=\"default text\">--SELECT WORKFLOW--</div>";
-            dropdownPanel.Controls.Add(def);
-
-            Panel dropdown = new Panel();
-            dropdown.CssClass = "menu";
-            SetID(dropdown, "menu", id);            
-            foreach(Form form in FormUtil.GetAllForms())
-            {
-                Panel item = new Panel();
-                item.CssClass = "item";
-                SetID(item, "item", id+form.FormId);
-                item.Attributes.Add("data-value", form.FormId.ToString());
-                item.Controls.Add(new LiteralControl(form.FormName));
-                item.DataBind();
-                dropdown.Controls.Add(item);
-            }*/
 
             DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
@@ -484,6 +468,11 @@ namespace Workflow
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
         }
     }
 }

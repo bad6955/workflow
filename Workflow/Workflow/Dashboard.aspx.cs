@@ -29,7 +29,6 @@ namespace Workflow
             {
                 User user = (User)Session["User"];
                 userLbl.Text = user.FullName;
-
                 //loads activity feeds
                 LoadActivityFeed(user.UserId);
 
@@ -51,6 +50,10 @@ namespace Workflow
                 {
                     CreateAdminGraph(allProjects);
                     CreateProjectPanel(allProjects);
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
             }
             //kicks them out if they arent
@@ -218,8 +221,12 @@ namespace Workflow
         {
             Session.Clear();
             Session.Abandon();
-            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
             Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
         }
     }
 }

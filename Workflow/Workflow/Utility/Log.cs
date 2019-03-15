@@ -6,6 +6,7 @@ using System.Web;
 
 namespace Workflow.Utility
 {
+    /*
     public class Log
     {
         private static Log instance;
@@ -33,24 +34,53 @@ namespace Workflow.Utility
             logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateLogger();
         }
 
-        public static void Info(String info)
+        public static void Info(string info)
         {
             instance.logger.Information(info);
         }
         
-        public static void Warn(String warning)
+        public static void Warn(string warning)
         {
             instance.logger.Warning(warning);
         }
 
-        public static void Debug(String debug)
+        public static void Debug(string debug)
         {
             instance.logger.Debug(debug);
         }
     
-        public static void Error(String error)
+        public static void Error(string error)
         {
             instance.logger.Error(error);
+        }
+    }
+    */
+
+    public static class Log
+    {
+        public static void Info(string info)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("./log.txt", true))
+            {
+                DateTime now = DateTime.Now;
+                string line = String.Format("[{0} : {1}] {2}", now.ToShortDateString(), now.ToShortTimeString(), info);
+                file.WriteLine(line);
+            }
+        }
+
+        public static List<String> ReadLog()
+        {
+            List<string> logLines = new List<string>();
+            using (System.IO.StreamReader file = new System.IO.StreamReader("./log.txt"))
+            {
+                DateTime now = DateTime.Now;
+                string line;
+                while((line = file.ReadLine()) != null)
+                {
+                    logLines.Add(line);
+                }
+            }
+            return logLines;
         }
     }
 }

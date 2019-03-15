@@ -206,6 +206,7 @@
     <Content Include="ForgotPassword.aspx" />
     <Content Include="Forms.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Logs.aspx" />
     <Content Include="Projects.aspx" />
     <Content Include="Web.config" />
     <Content Include="Login.aspx" />
@@ -229,6 +230,13 @@
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowComponentUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
+    <Compile Include="Logs.aspx.cs">
+      <DependentUpon>Logs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logs.aspx.designer.cs">
+      <DependentUpon>Logs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Log.cs" />
     <Compile Include="Utility\DBConn.cs" />
     <Compile Include="Data\FirebaseUtil.cs" />
