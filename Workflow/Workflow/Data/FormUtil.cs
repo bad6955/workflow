@@ -97,6 +97,18 @@ namespace Workflow.Data
             return formList;
         }
 
+        public static List<Form> GetProjectForms(int projectId)
+        {
+            List<Form> formList = new List<Form>();
+            Project p = ProjectUtil.GetProject(projectId);
+            List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId);
+            foreach (WorkflowComponent wc in workflowComponents)
+            {
+                formList.Add(GetProjectFormByTemplate(wc.FormID, projectId));
+            }
+            return formList;
+        }
+
         public static List<Form> GetCoachForms(int coachId)
         {
             List<Project> projects = ProjectUtil.GetCoachProjects(coachId);

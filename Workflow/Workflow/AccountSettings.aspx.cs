@@ -33,9 +33,12 @@ namespace Workflow
                 {
                     AdminBtn.Visible = true;
                     AdminPanelToggler.Visible = true;
-                    if(user.AdminPanel == 1)
+                    if (!IsPostBack)
                     {
-                        AdminPanel.Checked = true;
+                        if (user.AdminPanel == 1)
+                        {
+                            AdminPanel.Checked = true;
+                        }
                     }
                 }
             }

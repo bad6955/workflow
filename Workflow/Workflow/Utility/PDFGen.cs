@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
-using EO.Pdf;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace Workflow.Utility
 {
@@ -12,11 +9,11 @@ namespace Workflow.Utility
         public static void CreateHTMLPDF(string html, string fileName)
         {
             string path = "./PDFGen/";
-            string fullPath = String.Format("{0}{1}", path, fileName);
+            string fullPath = String.Format("{0}{1}.pdf", path, fileName);
             Byte[] pdfData = null;
             using (MemoryStream m = new MemoryStream())
             {
-                var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(html, PdfSharp.PageSize.A4);
+                var pdf = PdfGenerator.GeneratePdf(html, PdfSharp.PageSize.A4);
                 pdf.Save(m);
                 pdfData = m.ToArray();
             }

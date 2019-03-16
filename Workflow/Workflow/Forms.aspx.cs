@@ -434,6 +434,8 @@ namespace Workflow
                 Form f = FormUtil.GetForm(formId);
                 Project p = ProjectUtil.GetProject(f.ProjectId);
                 WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
+
+
                 FormUtil.ApproveForm(formId);
                 User user = (User)Session["User"];
                 Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + FormNameLbl.Text);
@@ -441,7 +443,8 @@ namespace Workflow
                 FormResult.Text = "Approved form " + FormName.Text;
                 FormResult.Visible = true;
 
-                string pdfName = String.Format(w.WorkflowName + " - " + f.FormName + " - " + CompanyUtil.GetCompanyName(p.CompanyId));
+                //pdf generation
+                string pdfName = string.Format("{0} - {1} - {2}", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
                 string html = formViewerData.Value;
                 PDFGen.CreateHTMLPDF(html, pdfName);
                 Response.Redirect("Forms.aspx?pfid=" + formId);

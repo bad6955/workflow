@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -75,7 +78,13 @@ namespace Workflow
                     else
                     {
                         projectViewer.Visible = true;
-                        ProjectFileDownloader.Visible = true;
+                        if(user.RoleId == 4 || user.RoleId == 3)
+                        {
+                            if (ProjectUtil.CheckProjectCompletion(projId))
+                            {
+                                ProjectFileDownloader.Visible = true;
+                            }
+                        }
                         ProjectView(p);
                     }
                 }
@@ -281,7 +290,7 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
-        private void MakeText(List<Project> projects, String projectNode, int i)
+        private void MakeText(List<Project> projects, string projectNode, int i)
         {
             User coach = UserUtil.GetCoach(projects[i].CoachId);
             WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
@@ -298,7 +307,47 @@ namespace Workflow
 
         protected void ProjectFileDownloader_Click(object sender, EventArgs e)
         {
+            if (Request.QueryString["pid"] != null)
+            {
+                int projId = int.Parse(Request.QueryString["pid"]);
+                Project p = ProjectUtil.GetProject(projId);
+                WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
+                List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(w.WorkflowId);
+                string zipPath = String.Format("{0} - {1} - {2}.zip", w.WorkflowName, p.Name, CompanyUtil.GetCompanyName(p.CompanyId));
+                //delete the zip if it exists
+                if (File.Exists(zipPath))
+                {
+                    File.Delete(zipPath);
+                }
 
+                using (ZipArchive zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                {
+                    //for each form get the file
+                    foreach (WorkflowComponent wc in workflowComponents)
+                    {
+                        Form f = FormUtil.GetForm(wc.FormID);
+                        string pdfName = string.Format("{0} - {1} - {2}.pdf", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
+                        string pdfPath = string.Format("./PDFGen/{0}", pdfName);
+                        zip.CreateEntryFromFile(pdfPath, pdfName);
+                    }
+                }
+
+                SendFile(zipPath);
+            }
+        }
+
+        private void SendFile(string path)
+        {
+            FileInfo f = new FileInfo(path);
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\"", path));
+            Response.AddHeader("Content-Length", f.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(f.FullName);
+            Response.End();
         }
     }
 }
