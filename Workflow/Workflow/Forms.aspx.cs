@@ -366,6 +366,11 @@ namespace Workflow
         //client saving form
         protected void SaveFormBtn_Click(object sender, EventArgs e)
         {
+            SaveForm();
+        }
+
+        private void SaveForm()
+        {
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
@@ -394,6 +399,7 @@ namespace Workflow
         //client submitting form
         protected void SubmitFormBtn_Click(object sender, EventArgs e)
         {
+            SaveForm();
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
@@ -408,7 +414,7 @@ namespace Workflow
                     Log.Info(user.Identity + " submitted " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + FormNameLbl.Text + " with " + formJson);
                     FormResult.CssClass = "success";
                     FormResult.Text = "Submitted form " + FormNameLbl.Text;
-                    //Response.Redirect("Forms.aspx?pfid=" + formId);
+                    Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else

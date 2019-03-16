@@ -162,6 +162,7 @@
                     }
 
                     function SubmitForm() {
+                        SaveFormViewer();
                         jQuery(function () {
                             formRenderOpts = {
                                 dataType: 'json',

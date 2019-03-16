@@ -282,7 +282,7 @@ namespace Workflow
                 DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
                 int formId = int.Parse(formSelector.SelectedValue);
                 WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
-                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetForm(formId).FormName);
+                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
                 i++;
             }
         }

@@ -314,6 +314,7 @@ namespace Workflow
             {
                 int projId = int.Parse(Request.QueryString["pid"]);
                 Project p = ProjectUtil.GetProject(projId);
+                Company c = CompanyUtil.GetCompany(p.CompanyId);
                 WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
                 List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(w.WorkflowId);
                 string zipPath = String.Format("{0} - {1} - {2}.zip", w.WorkflowName, p.Name, CompanyUtil.GetCompanyName(p.CompanyId));
@@ -328,8 +329,8 @@ namespace Workflow
                     //for each form get the file
                     foreach (WorkflowComponent wc in workflowComponents)
                     {
-                        Form f = FormUtil.GetForm(wc.FormID);
-                        string pdfName = string.Format("{0} - {1} - {2}.pdf", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
+                        Form f = FormUtil.GetProjectFormByTemplate(wc.FormID, projId);
+                        string pdfName = string.Format("{0} - {1} - {2}.pdf", w.WorkflowName, f.FormName, c.CompanyName);
                         string pdfPath = string.Format("./PDFGen/{0}", pdfName);
                         zip.CreateEntryFromFile(pdfPath, pdfName);
                     }
