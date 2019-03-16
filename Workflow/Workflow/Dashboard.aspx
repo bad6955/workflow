@@ -9,8 +9,10 @@
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
+    <script type="text/javascript" src="assets/js/intro.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/introjs.min.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 </head>
 
@@ -48,9 +50,9 @@
 
                     </ul>
                 </div>
-                <div id="help">
+                <a id="help" href="javascript:void(0);" onclick="javascript:introJs().start();">
                     <img src="assets/icons/help.png" />
-                </div>
+                </a>
             </div>
         </div>
         <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
@@ -76,7 +78,7 @@
                 </div>
             </div>
             <div id="vc-coach-dashboard-bottom">
-                <h2>My Projects</h2>
+                <h2 data-step="1" data-intro="This is a tooltip!">My Projects</h2>
                 <div class="vc-coach-dashboard-project">
                 </div>
 

@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\introjs.min.css" />
     <Content Include="assets\css\semantic.css" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.eot" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.ttf" />
@@ -199,6 +200,7 @@
     <Content Include="assets\icons\project.png" />
     <Content Include="assets\icons\workflow.png" />
     <Content Include="assets\js\Chart.js" />
+    <Content Include="assets\js\intro.min.js" />
     <Content Include="assets\js\semantic.js" />
     <Content Include="assets\js\jquery.js" />
     <Content Include="ForgotPassword.aspx" />
