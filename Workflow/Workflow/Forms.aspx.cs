@@ -261,8 +261,23 @@ namespace Workflow
         {
             ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
             int loaded = Convert.ToInt32(ViewState["formcount"]);
-            
-            List<Form> forms = FormUtil.GetAllForms();
+
+            List<Form> forms = new List<Form>();
+            User user = (User)Session["User"];
+
+            if (user.RoleId == 1)
+            {
+                forms = FormUtil.GetCompanyForms(user.CompanyId);
+            }
+            else if (user.RoleId == 2)
+            {
+                forms = FormUtil.GetCoachForms(user.UserId);
+            }
+            else if (user.RoleId == 4 || user.RoleId == 3)
+            {
+                forms = FormUtil.GetFormTemplates();
+            }
+
             if (loaded == 1)
             {
                 ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
@@ -270,7 +285,6 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
             {
-                User user = (User)Session["User"];
                 if (user.RoleId == 4)
                 {
                     MakeAdminText(forms, formNode, i);

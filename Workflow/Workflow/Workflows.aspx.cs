@@ -113,7 +113,20 @@ namespace Workflow
             ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
             int loaded = Convert.ToInt32(ViewState["workflowcount"]);
 
-            List<WorkflowModel> workflows = WorkflowUtil.GetAllWorkflows();
+            List<WorkflowModel> workflows = new List<WorkflowModel>();
+            User user = (User) Session["User"];
+            if (user.RoleId == 1)
+            {
+                workflows = WorkflowUtil.GetCompanyWorkflows(user.CompanyId);
+            }
+            else if (user.RoleId == 2)
+            {
+                workflows = WorkflowUtil.GetCoachWorkflows(user.UserId);
+            }
+            else if (user.RoleId == 4 || user.RoleId == 3)
+            {
+                workflows = WorkflowUtil.GetWorkflows();
+            }
             if (loaded == 1)
             {
                 ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
@@ -121,7 +134,6 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
             {
-                User user = (User) Session["User"];
                 if(user.RoleId == 4)
                 {
                     MakeAdminText(workflows, workflowNode, i);
