@@ -126,6 +126,10 @@ namespace Workflow
                 {
                     MakeAdminText(workflows, workflowNode, i);
                 }
+                else if(user.RoleId == 1)
+                {
+                    MakeClientText(workflows, workflowNode, i);
+                }
                 else
                 {
                     MakeText(workflows, workflowNode, i);
@@ -135,6 +139,15 @@ namespace Workflow
             numberShowing.InnerHtml = "";
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
+        }
+
+        private void MakeClientText(List<WorkflowModel> workflows, String workflowNode, int i)
+        {
+            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "</div></div></div>";
+            workflowList.InnerHtml += workflowNode;
+            count++;
         }
 
         private void MakeText(List<WorkflowModel> workflows, String workflowNode, int i)
@@ -191,7 +204,7 @@ namespace Workflow
             List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                MakeText(workflows, workflowNode, i);
+                MakeClientText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;

@@ -75,6 +75,7 @@ namespace Workflow
                     else
                     {
                         projectViewer.Visible = true;
+                        ProjectFileDownloader.Visible = true;
                         ProjectView(p);
                     }
                 }
@@ -293,6 +294,11 @@ namespace Workflow
             projectList.InnerHtml += projectNode;
             projectNode = "";
             count++;
+        }
+
+        protected void ProjectFileDownloader_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

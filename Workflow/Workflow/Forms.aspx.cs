@@ -433,13 +433,18 @@ namespace Workflow
                 int formId = int.Parse(Request.QueryString["pfid"]);
                 Form f = FormUtil.GetForm(formId);
                 Project p = ProjectUtil.GetProject(f.ProjectId);
+                WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
                 FormUtil.ApproveForm(formId);
                 User user = (User)Session["User"];
                 Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + FormNameLbl.Text);
                 FormResult.CssClass = "success";
                 FormResult.Text = "Approved form " + FormName.Text;
-                Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
+
+                string pdfName = String.Format(w.WorkflowName + " - " + f.FormName + " - " + CompanyUtil.GetCompanyName(p.CompanyId));
+                string html = formViewerData.Value;
+                PDFGen.CreateHTMLPDF(html, pdfName);
+                Response.Redirect("Forms.aspx?pfid=" + formId);
             }
         }
 

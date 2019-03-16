@@ -142,10 +142,10 @@
                         <asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
-                <div id="renderWrap"></div>
+                <div runat="server" id="renderWrap"></div>
                 <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
                 <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
-                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" />
+                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" />
                 <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" Visible="false" />
                 <asp:Button runat="server" ID="DenyFormBtn" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" />
                 <asp:HiddenField runat="server" ID="formViewerData" />
@@ -165,7 +165,7 @@
                         jQuery(function () {
                             formRenderOpts = {
                                 dataType: 'json',
-                                formData: formBuilder.formData
+                                formData: formViewer.formData
                             };
 
                             var renderedForm = $('<div>');
@@ -173,6 +173,21 @@
 
                             console.log(renderedForm.html());
                             document.getElementById("formViewerData").value = renderedForm.html();
+                        });
+                    }
+
+                    function ApproveForm() {
+                        jQuery(function () {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formViewer.formData
+                            };
+                            var renderedForm = $('#renderWrap');
+                            renderedForm.formRender(formRenderOpts);
+
+                            console.log(renderedForm.html());
+                            document.getElementById("formViewerData").value = renderedForm.html();
+                            //document.getElementById("formViewerData").value = $('#renderWrap').formRender('html');
                         });
                     }
                 </script>
@@ -185,6 +200,7 @@
                     </script>
                 </div>
             </div>
+        </div>
         </div>
     </form>
 </body>
