@@ -99,9 +99,9 @@
                             .tab();
                     </script>
                 </div>
-                <div runat="server" id="tabMenu" class="ui top attached tabular menu">
-                    <asp:Button runat="server" ID="FormTab" class="item active" data-tab="forms" Text="Forms" OnClick="FormTab_Click"></asp:Button>
-                    <asp:Button runat="server" ID="TemplateTab" class="item" data-tab="templates" Text="Templates" OnClick="TemplateTab_Click"></asp:Button>
+                <div runat="server" id="tabMenu" visible="false" class="ui top attached tabular menu">
+                    <asp:Button runat="server" ID="FormTab" Visible="false" class="item active" data-tab="forms" Text="Forms" OnClick="FormTab_Click"></asp:Button>
+                    <asp:Button runat="server" ID="TemplateTab" Visible="false" class="item" data-tab="templates" Text="Templates" OnClick="TemplateTab_Click"></asp:Button>
                 </div>
 
                 <div runat="server" class="ui items" id="formList"></div>

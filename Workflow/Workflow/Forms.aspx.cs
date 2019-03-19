@@ -48,6 +48,10 @@ namespace Workflow
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
+                    tabMenu.Visible = true;
+                    FormTab.Visible = true;
+                    TemplateTab.Visible = true;
+
                     //creates the template list and the full list of forms
                     if (Request.QueryString["templates"] != null)
                     {

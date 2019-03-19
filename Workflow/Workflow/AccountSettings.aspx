@@ -76,9 +76,6 @@
                         <asp:CheckBox runat="server" ID="AdminPanel" Checked="false" OnCheckedChanged="AdminPanel_CheckedChanged" />
                     </div>
                 </div>
-                <div id="button">
-                    <button class="ui button" type="submit">Save</button>
-                </div>
             </div>
         </div>
     </div>
