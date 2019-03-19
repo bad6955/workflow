@@ -143,7 +143,7 @@
 
             <div runat="server" id="projectViewer" visible="false">
             </div>
-            <asp:Button runat="server" ID="ProjectFileDownloader" Visible="false" Text="Download Project Files" OnClick="ProjectFileDownloader_Click"/>
+            <asp:Button runat="server" ID="ProjectFileDownloader" CssClass="fluid ui button" Visible="false" Text="Download Project Files" OnClick="ProjectFileDownloader_Click"/>
         </div>
     </form>
 </body>

@@ -145,7 +145,8 @@
             <div runat="server" id="formViewer" visible="false">
                 <div>
                     <h3>
-                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
+                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label>
+                    </h3>
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
                 <div runat="server" id="renderWrap"></div>

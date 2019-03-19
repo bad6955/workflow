@@ -76,6 +76,7 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["fid"]);
                     Form f = FormUtil.GetFormTemplate(formId);
+                    FormNameLbl.Text = " <a href='Forms.aspx?templates=1'>Forms</a> > "+f.FormName;
 
                     //admin and trying to del
                     if (Request.QueryString["del"] != null && user.RoleId == 4)
@@ -121,6 +122,8 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
                     Form f = FormUtil.GetForm(formId);
+                    Project p = ProjectUtil.GetProject(f.ProjectId);
+                    FormNameLbl.Text = "<a href='Forms.aspx'>Forms</a> > <a href='Projects.aspx?pid=" + f.ProjectId + "'>" + p.Name + "</a> > " + f.FormName;
                     ShowFormViewer(f, user.RoleId);
                 }
                 //if theyre an admin and trying to make a new form
@@ -147,8 +150,6 @@ namespace Workflow
             {
                 formViewerData.Value = f.FormData;
             }
-
-            FormNameLbl.Text = f.FormName;
 
             //the form has been submitted already
             //lock it all down and get rid of submit/save btns
@@ -359,9 +360,8 @@ namespace Workflow
             }
             catch (Exception e) { }
             formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-            formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
-            formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + " | ";
-            formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
+            formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a><div class=\"meta\">";
+            formNode += "<span class=\"stay\"><a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
             formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
             formList.InnerHtml += formNode;
             count++;
@@ -444,11 +444,12 @@ namespace Workflow
                 if (Request.QueryString["pfid"] != null)
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
-                    FormUtil.UpdateForm(formId, FormNameLbl.Text, formJson);
+                    Form f = FormUtil.GetForm(formId);
+                    FormUtil.UpdateForm(formId, f.FormName, formJson);
                     User user = (User)Session["User"];
-                    Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + FormNameLbl.Text + " with " + formJson);
+                    Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + f.FormName + " with " + formJson);
                     FormResult.CssClass = "success";
-                    FormResult.Text = "Updated form " + FormNameLbl.Text;
+                    FormResult.Text = "Updated form " + f.FormName;
                     //Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
@@ -473,11 +474,12 @@ namespace Workflow
                 if (Request.QueryString["pfid"] != null)
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
-                    FormUtil.SubmitForm(formId, FormNameLbl.Text, formJson);
+                    Form f = FormUtil.GetForm(formId);
+                    FormUtil.SubmitForm(formId, f.FormName, formJson);
                     User user = (User)Session["User"];
-                    Log.Info(user.Identity + " submitted " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + FormNameLbl.Text + " with " + formJson);
+                    Log.Info(user.Identity + " submitted " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + f.FormName + " with " + formJson);
                     FormResult.CssClass = "success";
-                    FormResult.Text = "Submitted form " + FormNameLbl.Text;
+                    FormResult.Text = "Submitted form " + f.FormName;
                     Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
@@ -508,9 +510,9 @@ namespace Workflow
 
                 FormUtil.ApproveForm(formId);
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + FormNameLbl.Text);
+                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName);
                 FormResult.CssClass = "success";
-                FormResult.Text = "Approved form " + FormName.Text;
+                FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
 
                 //pdf generation
@@ -533,7 +535,7 @@ namespace Workflow
                 Project p = ProjectUtil.GetProject(f.ProjectId);
                 FormUtil.DenyForm(formId, denyText);
                 FormResult.CssClass = "success";
-                FormResult.Text = "Denied form " + FormName.Text;
+                FormResult.Text = "Denied form " + f.FormName;
                 if(denyText.Length > 0)
                 {
                     FormResult.Text += ": " + denyText;
@@ -543,7 +545,7 @@ namespace Workflow
                     denyText = "None specified";
                 }
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + FormNameLbl.Text + " with reason: " + denyText);
+                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " with reason: " + denyText);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
             }

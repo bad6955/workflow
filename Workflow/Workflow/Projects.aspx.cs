@@ -105,7 +105,7 @@ namespace Workflow
 
         protected void ProjectView(Project p)
         {
-            projectNode += "<h2>" + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
+            projectNode += "<h2><a href='Projects.aspx'>Projects</a> > " + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular building icon\"></i><h3>" + CompanyUtil.GetCompany(p.CompanyId).CompanyName + "</h3></div><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular user icon\"></i><h3>" + UserUtil.GetCoach(p.CoachId).FullName + "</h3></div>";
             projectNode += "<div class=\"project-item\"><i class=\"huge circular money icon\"></i>";
@@ -117,12 +117,11 @@ namespace Workflow
             {
                 foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
                 {
+                    Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
                     projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
-                    Form form = FormUtil.GetForm(com.FormID);
-                        projectNode += "<svg class=\"ProgressBar-icon\"></svg><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span>";
-                            
+                    projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";      
                     projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
                 }
             } catch(Exception e) { }
             projectNode += "</ol></div>";

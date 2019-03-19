@@ -175,9 +175,8 @@ namespace Workflow
         private void MakeAdminText(List<WorkflowModel> workflows, String workflowNode, int i)
         {
             workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
-            workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
-            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
+            workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
             workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
             workflowList.InnerHtml += workflowNode;
             count++;
@@ -428,7 +427,7 @@ namespace Workflow
 
         protected void ProjectInformation(WorkflowModel workflow, List<WorkflowComponent> comps)
         {
-            workflowNode += "<h1>" + workflow.WorkflowName + "</h1><hr/><h2>Workflow Steps</h2>";
+            workflowNode += "<h1><a href='Workflows.aspx'>Workflows</a> > " + workflow.WorkflowName + "</h1><hr/><h2>Workflow Steps</h2>";
 
             List<Form> forms = new List<Form>();
             foreach (WorkflowComponent comp in comps)
@@ -443,8 +442,8 @@ namespace Workflow
                 foreach (WorkflowComponent com in comps)
                 {
                     workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                    workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                    workflowNode += "<span class=\"ProgressBar-stepLabel\"><a href='Forms.aspx?fid=" + com.FormID + "'>" + com.ComponentTitle + "</a></span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetForm(com.FormID).FormName + "</a></h3></div></div></li>";
                 }
             } catch (Exception e) { }
             workflowNode += "</ol></div>";
@@ -455,7 +454,7 @@ namespace Workflow
             {
                 foreach (Form form in forms)
                 {
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + form.FormId + "'>" + form.FormName + "</a></h3></div>";
                 }
             } catch(Exception e) { }
 
