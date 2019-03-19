@@ -59,7 +59,7 @@
 
             <div runat="server" id="formListing">
                 <h1>Forms</h1>
-                <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Form" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
+                <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Template" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
                 <asp:Label runat="server" ID="FormError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
                     <div class="ui floating dropdown labeled icon button">
@@ -95,10 +95,16 @@
                     <script>
                         $('.ui.dropdown')
                             .dropdown();
+                        $('.menu .item')
+                            .tab();
                     </script>
                 </div>
-                <div runat="server" class="ui items" id="formList">
+                <div runat="server" id="tabMenu" class="ui top attached tabular menu">
+                    <asp:Button runat="server" ID="FormTab" class="item active" data-tab="forms" Text="Forms" OnClick="FormTab_Click"></asp:Button>
+                    <asp:Button runat="server" ID="TemplateTab" class="item" data-tab="templates" Text="Templates" OnClick="TemplateTab_Click"></asp:Button>
                 </div>
+
+                <div runat="server" class="ui items" id="formList"></div>
                 <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreForms" CssClass="fluid ui button" />
             </div>
 

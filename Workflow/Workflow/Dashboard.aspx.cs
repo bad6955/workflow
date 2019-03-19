@@ -11,7 +11,6 @@ namespace Workflow
 {
     public partial class Dashboard : System.Web.UI.Page
     {
-        List<Project> allProjects = null;
         //prevents users from using back button to return to login protected pages
         protected override void OnInit(EventArgs e)
         {
@@ -33,7 +32,7 @@ namespace Workflow
                 LoadActivityFeed(user.UserId);
 
                 List<Project> projectList = new List<Project>();
-                allProjects = ProjectUtil.GetProjects();
+                List<Project> allProjects = ProjectUtil.GetProjects();
                 //loads role specific items
                 if (user.RoleId == 1)
                 {
@@ -159,7 +158,7 @@ namespace Workflow
                 projectNode += "<div class=\"bar\"><div class=\"progress\"></div></div><div class=\"label\">Completion</div></div>";
 
                 /*id for opening project?*/
-                projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
+                projectNode += "<a class=\"header\" href='" + "Projects.aspx?pid=" + project.ProjectId + "'><span class=\"ui brown basic button\">View Full Project</span></a></div>";
                 projectNode += "<div class=\"content\"><a class=\"header\" href='"+"Projects.aspx?pid="+project.ProjectId +"'>" + project.Name + "</a>";
                 projectNode += "<div class=\"description\">" + project.Notes + "</div>";
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";
@@ -173,23 +172,23 @@ namespace Workflow
                         Form f = formSteps[i];
                         if (f.Approved == 1)
                         {
-                            projectNode += "<tr class=\"positive\"><td>" + step.ComponentTitle + "</td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                            projectNode += "<tr class=\"positive\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
                         }
                         else if (f.Denied == 1 && f.DenialReason.Length > 0)
                         {
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + "</td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
+                            projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
                         }
                         else if (f.Denied == 1)
                         {
-                            projectNode += "<tr class=\"negative\"><td>" + step.ComponentTitle + "</td><td><i class=\"close icon\"></i>Denied</td></tr>";
+                            projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"close icon\"></i>Denied</td></tr>";
                         }
                         else if (f.Submission == 1)
                         {
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + "</td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
+                            projectNode += "<tr class=\"disabled\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
                         }
                         else
                         {
-                            projectNode += "<tr class=\"disabled\"><td>" + step.ComponentTitle + "</td><td><i class=\"close icon\"></i>Not Started</td></tr>";
+                            projectNode += "<tr class=\"disabled\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"close icon\"></i>Not Started</td></tr>";
                         }
                         i++;
                     }

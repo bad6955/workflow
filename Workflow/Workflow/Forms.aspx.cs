@@ -48,7 +48,19 @@ namespace Workflow
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
-                    CreateAdminFormList();
+                    //creates the template list and the full list of forms
+                    if (Request.QueryString["templates"] != null)
+                    {
+                        CreateAdminFormList();
+                        FormTab.CssClass = "item";
+                        TemplateTab.CssClass = "item active";
+                    }
+                    else
+                    {
+                        CreateFullFormList();
+                        FormTab.CssClass = "item active";
+                        TemplateTab.CssClass = "item";
+                    }
                     if (user.RoleId == 4)
                     {
                         AdminBtn.Visible = true;
@@ -202,6 +214,11 @@ namespace Workflow
             Response.Redirect("Forms.aspx");
         }
 
+        protected void TemplateBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx?templates=1");
+        }
+
         protected void LogoutBtn_Click(Object sender, EventArgs e)
         {
             Session.Clear();
@@ -243,6 +260,21 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
+        private void CreateFullFormList()
+        {
+            CreateNewFormBtn.Visible = false;
+            formNode = "";
+            formList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
+            List<Form> forms = FormUtil.GetForms();
+            for (int i = 0; i < 5 && i < forms.Count; i++)
+            {
+                MakeText(forms, formNode, i);
+            }
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
         private void CreateFormList(int userId)
         {
             formNode = "";
@@ -275,7 +307,14 @@ namespace Workflow
             }
             else if (user.RoleId == 4 || user.RoleId == 3)
             {
-                forms = FormUtil.GetFormTemplates();
+                if(Request.QueryString["templates"] != null)
+                {
+                    forms = FormUtil.GetFormTemplates();
+                }
+                else
+                {
+                    forms = FormUtil.GetForms();
+                }
             }
 
             if (loaded == 1)
@@ -287,7 +326,14 @@ namespace Workflow
             {
                 if (user.RoleId == 4)
                 {
-                    MakeAdminText(forms, formNode, i);
+                    if (Request.QueryString["templates"] != null)
+                    {
+                        MakeAdminText(forms, formNode, i);
+                    }
+                    else
+                    {
+                        MakeText(forms, formNode, i);
+                    }
                 }
                 else
                 {
@@ -496,6 +542,22 @@ namespace Workflow
                 Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + FormNameLbl.Text + " with reason: " + denyText);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
+            }
+        }
+
+        protected void TemplateTab_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["templates"] == null)
+            {
+                Response.Redirect("Forms.aspx?templates=1");
+            }
+        }
+
+        protected void FormTab_Click(object sender, EventArgs e)
+        {
+            if(Request.QueryString["templates"] != null)
+            {
+                Response.Redirect("Forms.aspx");
             }
         }
     }

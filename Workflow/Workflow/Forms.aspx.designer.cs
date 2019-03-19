@@ -121,6 +121,33 @@ namespace Workflow {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl numberShowing;
         
         /// <summary>
+        /// tabMenu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabMenu;
+        
+        /// <summary>
+        /// FormTab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button FormTab;
+        
+        /// <summary>
+        /// TemplateTab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button TemplateTab;
+        
+        /// <summary>
         /// formList control.
         /// </summary>
         /// <remarks>
