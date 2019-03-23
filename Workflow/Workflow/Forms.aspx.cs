@@ -34,7 +34,6 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.FullName;
 
                 if (user.RoleId == 1)
                 {
@@ -175,33 +174,6 @@ namespace Workflow
         private void ReloadCurrentPage()
         {
             Response.Redirect(Request.RawUrl);
-        }
-
-        protected void DashboardBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void ProjectBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void WorkflowBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void FormBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        protected void LogoutBtn_Click(Object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("Login.aspx");
         }
 
         private void CreateAdminFormList()
