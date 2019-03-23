@@ -28,40 +28,12 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.FullName;
             }
             //kicks them out if they arent
             else
             {
                 Response.Redirect("Login.aspx");
             }
-        }
-
-        protected void DashboardBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void ProjectBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void FormBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        protected void WorkflowBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void LogoutBtn_Click(object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("Login.aspx");
         }
 
         protected void ChangePassword_Click(object sender, EventArgs e)

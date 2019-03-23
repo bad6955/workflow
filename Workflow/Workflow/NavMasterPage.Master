@@ -8,14 +8,14 @@
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
     <script type="text/javascript" src="assets/js/intro.min.js"></script>
+    <script type="text/javascript" src="assets/js/form-builder.min.js"></script>
+    <script type="text/javascript" src="assets/js/form-render.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/introjs.min.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 
     <title>Untitled Page</title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -56,7 +56,7 @@
         </div>
 
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <asp:ContentPlaceHolder ID="MasterContentPlaceHolder" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </form>

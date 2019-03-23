@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="AccountSettings.aspx.cs" Inherits="Workflow.AccountSettings" Title="Account Settings" %>
 
-<asp:Content ID="MasterWorkflow" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="MasterWorkflow" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
     <div id="content-body">
         <h1>Account Settings</h1>
         <div class="ui raised very padded text container segment">

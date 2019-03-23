@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Workflows.aspx.cs" Inherits="Workflow.Workflows" Title="Workflows" %>
 
-<asp:Content ID="MasterWorkflow" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="MasterWorkflow" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
     <div id="content-body">
         <div runat="server" id="workflowListing">
             <h1>Workflows</h1>

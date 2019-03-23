@@ -132,7 +132,7 @@ namespace Workflow
 
         private void MakeText(List<WorkflowModel> workflows, String workflowNode, int i)
         {
-            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode = "<div class=\"item\" id=\"workflowList\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
             workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
             workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
             workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
@@ -142,7 +142,7 @@ namespace Workflow
 
         private void MakeAdminText(List<WorkflowModel> workflows, String workflowNode, int i)
         {
-            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode = "<div class=\"item\" id=\"workflowList\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
             workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
             workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
             workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";

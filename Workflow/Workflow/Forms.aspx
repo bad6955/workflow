@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" ValidateRequest="false" Title="Forms" %>
 
-<asp:Content ID="MasterForms" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="MasterForms" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
     <div id="content-body">
 
         <div runat="server" id="formListing">
