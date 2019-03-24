@@ -10,7 +10,7 @@
 namespace Workflow {
     
     
-    public partial class Dashboard {
+    public partial class Logs {
         
         /// <summary>
         /// form1 control.
@@ -49,66 +49,21 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button logout;
         
         /// <summary>
-        /// current control.
+        /// LogBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button current;
+        protected global::System.Web.UI.WebControls.Button LogBtn;
         
         /// <summary>
-        /// workflow control.
+        /// LogText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button workflow;
-        
-        /// <summary>
-        /// project control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button project;
-        
-        /// <summary>
-        /// form control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button form;
-        
-        /// <summary>
-        /// activityFeed control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl activityFeed;
-        
-        /// <summary>
-        /// piechart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl piechart;
-        
-        /// <summary>
-        /// projectParent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl projectParent;
+        protected global::System.Web.UI.WebControls.PlaceHolder LogText;
     }
 }

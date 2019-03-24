@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using Workflow.Data;
+using Workflow.Utility;
 using Workflow.Models;
 
 namespace Workflow
@@ -183,6 +184,8 @@ namespace Workflow
                                         if (fbUser != null)
                                         {
                                             User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
+                                            User user = (User)Session["User"];
+                                            Log.Info(user.Identity + " created a new " + RoleUtil.GetRole(roleId).RoleName + " account under " + CompanyUtil.GetCompanyName(companyId) + " assigned to " +firstName + " " + lastName + " - " +email);
                                             u.FirebaseUser = fbUser;
                                             //display user created msg
                                             UserCreateResult.Visible = true;
@@ -273,6 +276,8 @@ namespace Workflow
                 Company company = CompanyUtil.CreateCompany(companyName);
                 if (company != null)
                 {
+                    User user = (User)Session["User"];
+                    Log.Info(user.Identity + " created a new company " + companyName);
                     //display user created msg
                     CompanyResult.Visible = true;
                     CompanyResult.Text = "Created company " + companyName;
@@ -298,6 +303,8 @@ namespace Workflow
                 User lockedUser = UserUtil.GetUser(userId);
                 FirebaseUtil.ForgotPassword(lockedUser.Email);
                 UserUtil.ValidLogin(lockedUser);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " unlocked an account " + user.Identity);
                 UnlockResult.Visible = true;
                 UnlockResult.Text = "Unlocked account " + lockedUser.Identity;
             }

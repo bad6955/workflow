@@ -28,6 +28,7 @@
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
+                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false"/>
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>
@@ -58,7 +59,7 @@
 
             <div runat="server" id="formListing">
                 <h1>Forms</h1>
-                <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Form" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
+                <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Template" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
                 <asp:Label runat="server" ID="FormError" Visible="false" CssClass="error"></asp:Label>
                 <div class="ui secondary segment">
                     <div class="ui floating dropdown labeled icon button">
@@ -94,10 +95,16 @@
                     <script>
                         $('.ui.dropdown')
                             .dropdown();
+                        $('.menu .item')
+                            .tab();
                     </script>
                 </div>
-                <div runat="server" class="ui items" id="formList">
+                <div runat="server" id="tabMenu" visible="false" class="ui top attached tabular menu">
+                    <asp:Button runat="server" ID="FormTab" Visible="false" class="item active" data-tab="forms" Text="Forms" OnClick="FormTab_Click"></asp:Button>
+                    <asp:Button runat="server" ID="TemplateTab" Visible="false" class="item" data-tab="templates" Text="Templates" OnClick="TemplateTab_Click"></asp:Button>
                 </div>
+
+                <div runat="server" class="ui items" id="formList"></div>
                 <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreForms" CssClass="fluid ui button" />
             </div>
 
@@ -138,13 +145,14 @@
             <div runat="server" id="formViewer" visible="false">
                 <div>
                     <h3>
-                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label></h3>
+                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label>
+                    </h3>
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
-                <div id="renderWrap"></div>
+                <div runat="server" id="renderWrap"></div>
                 <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
                 <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
-                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" />
+                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" />
                 <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" Visible="false" />
                 <asp:Button runat="server" ID="DenyFormBtn" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" />
                 <asp:HiddenField runat="server" ID="formViewerData" />
@@ -161,10 +169,11 @@
                     }
 
                     function SubmitForm() {
+                        SaveFormViewer();
                         jQuery(function () {
                             formRenderOpts = {
                                 dataType: 'json',
-                                formData: formBuilder.formData
+                                formData: formViewer.formData
                             };
 
                             var renderedForm = $('<div>');
@@ -172,6 +181,21 @@
 
                             console.log(renderedForm.html());
                             document.getElementById("formViewerData").value = renderedForm.html();
+                        });
+                    }
+
+                    function ApproveForm() {
+                        jQuery(function () {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formViewer.formData
+                            };
+                            var renderedForm = $('#renderWrap');
+                            renderedForm.formRender(formRenderOpts);
+
+                            console.log(renderedForm.html());
+                            document.getElementById("formViewerData").value = renderedForm.html();
+                            //document.getElementById("formViewerData").value = $('#renderWrap').formRender('html');
                         });
                     }
                 </script>
@@ -184,6 +208,7 @@
                     </script>
                 </div>
             </div>
+        </div>
         </div>
     </form>
 </body>

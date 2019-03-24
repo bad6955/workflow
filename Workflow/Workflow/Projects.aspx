@@ -37,6 +37,7 @@
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
                         <div id="dropdown-content">
+                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false"/>
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>
@@ -142,6 +143,7 @@
 
             <div runat="server" id="projectViewer" visible="false">
             </div>
+            <asp:Button runat="server" ID="ProjectFileDownloader" CssClass="fluid ui button" Visible="false" Text="Download Project Files" OnClick="ProjectFileDownloader_Click"/>
         </div>
     </form>
 </body>

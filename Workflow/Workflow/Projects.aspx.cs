@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 using Workflow.Models;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -43,6 +47,10 @@ namespace Workflow
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     CreateAdminProjectList();
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
 
                 //loads the selected form if there is one
@@ -70,6 +78,13 @@ namespace Workflow
                     else
                     {
                         projectViewer.Visible = true;
+                        if(user.RoleId == 4 || user.RoleId == 3)
+                        {
+                            if (ProjectUtil.CheckProjectCompletion(projId))
+                            {
+                                ProjectFileDownloader.Visible = true;
+                            }
+                        }
                         ProjectView(p);
                     }
                 }
@@ -80,17 +95,6 @@ namespace Workflow
                     projectBuilder.Visible = true;
                     GenerateProjectDropdowns();
                 }
-
-
-                /*
-                //checks user is an admin
-                if (user.RoleId == 4)
-                {
-                    //sets up admin project creation form
-                    GenerateProjectDropdowns();
-                    projectBuilder.Visible = true;
-                }
-                */
             }
             else
             {
@@ -101,7 +105,7 @@ namespace Workflow
 
         protected void ProjectView(Project p)
         {
-            projectNode += "<h2>" + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
+            projectNode += "<h2><a href='Projects.aspx'>Projects</a> > " + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular building icon\"></i><h3>" + CompanyUtil.GetCompany(p.CompanyId).CompanyName + "</h3></div><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular user icon\"></i><h3>" + UserUtil.GetCoach(p.CoachId).FullName + "</h3></div>";
             projectNode += "<div class=\"project-item\"><i class=\"huge circular money icon\"></i>";
@@ -113,12 +117,11 @@ namespace Workflow
             {
                 foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
                 {
+                    Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
                     projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
-                    Form form = FormUtil.GetForm(com.FormID);
-                        projectNode += "<svg class=\"ProgressBar-icon\"></svg><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span>";
-                            
+                    projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";      
                     projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
                 }
             } catch(Exception e) { }
             projectNode += "</ol></div>";
@@ -228,6 +231,11 @@ namespace Workflow
             Response.Redirect("Login.aspx");
         }
 
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
+        }
+
         protected void CreateProjectBtn_Click(object sender, EventArgs e)
         {
             int companyId = int.Parse(SelectedCompany.Value);
@@ -245,6 +253,8 @@ namespace Workflow
                         if (coachId != -1)
                         {
                             Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                            User user = (User)Session["User"];
+                            Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " +UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
                             Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
                         }
                     }
@@ -282,7 +292,7 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
-        private void MakeText(List<Project> projects, String projectNode, int i)
+        private void MakeText(List<Project> projects, string projectNode, int i)
         {
             User coach = UserUtil.GetCoach(projects[i].CoachId);
             WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
@@ -295,6 +305,52 @@ namespace Workflow
             projectList.InnerHtml += projectNode;
             projectNode = "";
             count++;
+        }
+
+        protected void ProjectFileDownloader_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["pid"] != null)
+            {
+                int projId = int.Parse(Request.QueryString["pid"]);
+                Project p = ProjectUtil.GetProject(projId);
+                Company c = CompanyUtil.GetCompany(p.CompanyId);
+                WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
+                List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(w.WorkflowId);
+                string zipPath = String.Format("{0} - {1} - {2}.zip", w.WorkflowName, p.Name, CompanyUtil.GetCompanyName(p.CompanyId));
+                //delete the zip if it exists
+                if (File.Exists(zipPath))
+                {
+                    File.Delete(zipPath);
+                }
+
+                using (ZipArchive zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                {
+                    //for each form get the file
+                    foreach (WorkflowComponent wc in workflowComponents)
+                    {
+                        Form f = FormUtil.GetProjectFormByTemplate(wc.FormID, projId);
+                        string pdfName = string.Format("{0} - {1} - {2}.pdf", w.WorkflowName, f.FormName, c.CompanyName);
+                        string pdfPath = string.Format("./PDFGen/{0}", pdfName);
+                        zip.CreateEntryFromFile(pdfPath, pdfName);
+                    }
+                }
+
+                SendFile(zipPath);
+            }
+        }
+
+        private void SendFile(string path)
+        {
+            FileInfo f = new FileInfo(path);
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\"", path));
+            Response.AddHeader("Content-Length", f.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(f.FullName);
+            Response.End();
         }
     }
 }

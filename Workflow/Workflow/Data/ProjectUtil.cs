@@ -133,5 +133,19 @@ namespace Workflow.Data
             return projectList;
         }
 
+        public static bool CheckProjectCompletion(int projectId)
+        {
+            bool complete = true;
+            List<Form> forms = FormUtil.GetProjectForms(projectId);
+            foreach (Form f in forms)
+            {
+                if (f.Approved != 1)
+                {
+                    complete = false;
+                }
+            }
+
+            return complete;
+        }
     }
 }

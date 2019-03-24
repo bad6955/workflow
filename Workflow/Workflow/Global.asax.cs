@@ -13,7 +13,7 @@ namespace Workflow
     {
         public Global()
         {
-            Workflow.Utility.Log.Init();
+            //Workflow.Utility.Log.Init();
         }
 
         protected void Application_Start(object sender, EventArgs e)
@@ -23,7 +23,7 @@ namespace Workflow
 
         public override void Dispose()
         {
-            Workflow.Utility.Log.Shutdown();
+            //Workflow.Utility.Log.Shutdown();
             base.Dispose();
         }
 

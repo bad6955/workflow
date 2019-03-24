@@ -48,7 +48,27 @@ namespace Workflow
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
-                    CreateAdminFormList();
+                    tabMenu.Visible = true;
+                    FormTab.Visible = true;
+                    TemplateTab.Visible = true;
+
+                    //creates the template list and the full list of forms
+                    if (Request.QueryString["templates"] != null)
+                    {
+                        CreateAdminFormList();
+                        FormTab.CssClass = "item";
+                        TemplateTab.CssClass = "item active";
+                    }
+                    else
+                    {
+                        CreateFullFormList();
+                        FormTab.CssClass = "item active";
+                        TemplateTab.CssClass = "item";
+                    }
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
 
                 //loads the selected form if there is one
@@ -56,12 +76,14 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["fid"]);
                     Form f = FormUtil.GetFormTemplate(formId);
+                    FormNameLbl.Text = " <a href='Forms.aspx?templates=1'>Forms</a> > "+f.FormName;
 
                     //admin and trying to del
                     if (Request.QueryString["del"] != null && user.RoleId == 4)
                     {
                         if (FormUtil.DeleteForm(f.FormId))
                         {
+                            Log.Info(user.Identity + " deleted a form template " + f.FormName);
                             ReloadSection();
                         }
                         else
@@ -100,6 +122,8 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
                     Form f = FormUtil.GetForm(formId);
+                    Project p = ProjectUtil.GetProject(f.ProjectId);
+                    FormNameLbl.Text = "<a href='Forms.aspx'>Forms</a> > <a href='Projects.aspx?pid=" + f.ProjectId + "'>" + p.Name + "</a> > " + f.FormName;
                     ShowFormViewer(f, user.RoleId);
                 }
                 //if theyre an admin and trying to make a new form
@@ -126,8 +150,6 @@ namespace Workflow
             {
                 formViewerData.Value = f.FormData;
             }
-
-            FormNameLbl.Text = f.FormName;
 
             //the form has been submitted already
             //lock it all down and get rid of submit/save btns
@@ -197,11 +219,21 @@ namespace Workflow
             Response.Redirect("Forms.aspx");
         }
 
+        protected void TemplateBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx?templates=1");
+        }
+
         protected void LogoutBtn_Click(Object sender, EventArgs e)
         {
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
         }
 
         private void CreateAdminFormList()
@@ -233,6 +265,21 @@ namespace Workflow
             numberShowing.InnerHtml += showing;
         }
 
+        private void CreateFullFormList()
+        {
+            CreateNewFormBtn.Visible = false;
+            formNode = "";
+            formList.InnerHtml = "";
+            numberShowing.InnerHtml = "";
+            List<Form> forms = FormUtil.GetForms();
+            for (int i = 0; i < 5 && i < forms.Count; i++)
+            {
+                MakeText(forms, formNode, i);
+            }
+            var showing = "Showing 1 - " + count + " of " + forms.Count + " Results";
+            numberShowing.InnerHtml += showing;
+        }
+
         private void CreateFormList(int userId)
         {
             formNode = "";
@@ -251,8 +298,30 @@ namespace Workflow
         {
             ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
             int loaded = Convert.ToInt32(ViewState["formcount"]);
-            
-            List<Form> forms = FormUtil.GetAllForms();
+
+            List<Form> forms = new List<Form>();
+            User user = (User)Session["User"];
+
+            if (user.RoleId == 1)
+            {
+                forms = FormUtil.GetCompanyForms(user.CompanyId);
+            }
+            else if (user.RoleId == 2)
+            {
+                forms = FormUtil.GetCoachForms(user.UserId);
+            }
+            else if (user.RoleId == 4 || user.RoleId == 3)
+            {
+                if(Request.QueryString["templates"] != null)
+                {
+                    forms = FormUtil.GetFormTemplates();
+                }
+                else
+                {
+                    forms = FormUtil.GetForms();
+                }
+            }
+
             if (loaded == 1)
             {
                 ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
@@ -260,10 +329,16 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
             {
-                User user = (User)Session["User"];
                 if (user.RoleId == 4)
                 {
-                    MakeAdminText(forms, formNode, i);
+                    if (Request.QueryString["templates"] != null)
+                    {
+                        MakeAdminText(forms, formNode, i);
+                    }
+                    else
+                    {
+                        MakeText(forms, formNode, i);
+                    }
                 }
                 else
                 {
@@ -285,9 +360,8 @@ namespace Workflow
             }
             catch (Exception e) { }
             formNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge file icon\"/></i></div>";
-            formNode += "<div class=\"content\"><a class=\"header\">" + forms[i].FormName + "</a><div class=\"meta\">";
-            formNode += "<span class=\"stay\">" + "<a href='Forms.aspx?fid=" + forms[i].FormId + "'>View Form</a>" + " | ";
-            formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
+            formNode += "<div class=\"content\"><a class=\"header\" href='Forms.aspx?fid=" + forms[i].FormId + "'>" + forms[i].FormName + "</a><div class=\"meta\">";
+            formNode += "<span class=\"stay\"><a href='Forms.aspx?fid=" + forms[i].FormId + "&edit=1'>Edit Form</a>" + " | ";
             formNode += "<a href='Forms.aspx?fid=" + forms[i].FormId + "&del=1'>Delete Form</a>" + "</span></div></div></div>";
             formList.InnerHtml += formNode;
             count++;
@@ -319,11 +393,13 @@ namespace Workflow
 
                 if(formJson.Length > 0 && formJson != "undefined")
                 {
+                    User user = (User)Session["User"];
                     //updating a form not, creating it
                     if (Request.QueryString["fid"] != null)
                     {
                         int formId = int.Parse(Request.QueryString["fid"]);
                         FormUtil.UpdateFormTemplate(formId, FormName.Text, formJson);
+                        Log.Info(user.Identity + " updated a form template " + FormName.Text + " with " + formJson);
                         FormResult.CssClass = "success";
                         FormResult.Text = "Updated form " + FormName.Text;
                         Response.Redirect("Forms.aspx?fid="+ formId);
@@ -331,6 +407,7 @@ namespace Workflow
                     else
                     {
                         Form f = FormUtil.CreateFormTemplate(FormName.Text, formJson);
+                        Log.Info(user.Identity + " created a form template " + FormName.Text + " with " + formJson);
                         FormResult.CssClass = "success";
                         FormResult.Text = "Created form " + FormName.Text;
                         Response.Redirect("Forms.aspx?fid=" + f.FormId);
@@ -353,6 +430,11 @@ namespace Workflow
         //client saving form
         protected void SaveFormBtn_Click(object sender, EventArgs e)
         {
+            SaveForm();
+        }
+
+        private void SaveForm()
+        {
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
@@ -362,9 +444,12 @@ namespace Workflow
                 if (Request.QueryString["pfid"] != null)
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
-                    FormUtil.UpdateForm(formId, FormNameLbl.Text, formJson);
+                    Form f = FormUtil.GetForm(formId);
+                    FormUtil.UpdateForm(formId, f.FormName, formJson);
+                    User user = (User)Session["User"];
+                    Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + f.FormName + " with " + formJson);
                     FormResult.CssClass = "success";
-                    FormResult.Text = "Updated form " + FormNameLbl.Text;
+                    FormResult.Text = "Updated form " + f.FormName;
                     //Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
@@ -379,6 +464,7 @@ namespace Workflow
         //client submitting form
         protected void SubmitFormBtn_Click(object sender, EventArgs e)
         {
+            SaveForm();
             FormResult.Visible = false;
             string formJson = formViewerData.Value.ToString();
 
@@ -388,10 +474,13 @@ namespace Workflow
                 if (Request.QueryString["pfid"] != null)
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
-                    FormUtil.SubmitForm(formId, FormNameLbl.Text, formJson);
+                    Form f = FormUtil.GetForm(formId);
+                    FormUtil.SubmitForm(formId, f.FormName, formJson);
+                    User user = (User)Session["User"];
+                    Log.Info(user.Identity + " submitted " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + f.FormName + " with " + formJson);
                     FormResult.CssClass = "success";
-                    FormResult.Text = "Submitted form " + FormNameLbl.Text;
-                    //Response.Redirect("Forms.aspx?pfid=" + formId);
+                    FormResult.Text = "Submitted form " + f.FormName;
+                    Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else
@@ -414,11 +503,23 @@ namespace Workflow
             if (Request.QueryString["pfid"] != null)
             {
                 int formId = int.Parse(Request.QueryString["pfid"]);
+                Form f = FormUtil.GetForm(formId);
+                Project p = ProjectUtil.GetProject(f.ProjectId);
+                WorkflowModel w = WorkflowUtil.GetWorkflow(p.WorkflowId);
+
+
                 FormUtil.ApproveForm(formId);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName);
                 FormResult.CssClass = "success";
-                FormResult.Text = "Approved form " + FormName.Text;
-                Response.Redirect("Forms.aspx?pfid=" + formId);
+                FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
+
+                //pdf generation
+                string pdfName = string.Format("{0} - {1} - {2}", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
+                string html = formViewerData.Value;
+                PDFGen.CreateHTMLPDF(html, pdfName);
+                Response.Redirect("Forms.aspx?pfid=" + formId);
             }
         }
 
@@ -430,15 +531,39 @@ namespace Workflow
             {
                 string denyText = DenyReason.Text;
                 int formId = int.Parse(Request.QueryString["pfid"]);
+                Form f = FormUtil.GetForm(formId);
+                Project p = ProjectUtil.GetProject(f.ProjectId);
                 FormUtil.DenyForm(formId, denyText);
                 FormResult.CssClass = "success";
-                FormResult.Text = "Denied form " + FormName.Text;
+                FormResult.Text = "Denied form " + f.FormName;
                 if(denyText.Length > 0)
                 {
                     FormResult.Text += ": " + denyText;
                 }
+                else
+                {
+                    denyText = "None specified";
+                }
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " with reason: " + denyText);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
+            }
+        }
+
+        protected void TemplateTab_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["templates"] == null)
+            {
+                Response.Redirect("Forms.aspx?templates=1");
+            }
+        }
+
+        protected void FormTab_Click(object sender, EventArgs e)
+        {
+            if(Request.QueryString["templates"] != null)
+            {
+                Response.Redirect("Forms.aspx");
             }
         }
     }

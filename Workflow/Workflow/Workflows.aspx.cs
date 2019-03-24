@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Workflow.Data;
 using Workflow.Models;
+using Workflow.Utility;
 
 namespace Workflow
 {
@@ -43,6 +44,10 @@ namespace Workflow
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     CreateAdminWorkflowList();
+                    if (user.RoleId == 4)
+                    {
+                        AdminBtn.Visible = true;
+                    }
                 }
 
                 //loads the selected form if there is one
@@ -56,6 +61,7 @@ namespace Workflow
                     {
                         if (WorkflowUtil.DeleteWorkflow(w.WorkflowId))
                         {
+                            Log.Info(user.Identity + " deleted a workflow template " + w.WorkflowName);
                             ReloadSection();
                         }
                         else
@@ -107,7 +113,20 @@ namespace Workflow
             ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
             int loaded = Convert.ToInt32(ViewState["workflowcount"]);
 
-            List<WorkflowModel> workflows = WorkflowUtil.GetAllWorkflows();
+            List<WorkflowModel> workflows = new List<WorkflowModel>();
+            User user = (User) Session["User"];
+            if (user.RoleId == 1)
+            {
+                workflows = WorkflowUtil.GetCompanyWorkflows(user.CompanyId);
+            }
+            else if (user.RoleId == 2)
+            {
+                workflows = WorkflowUtil.GetCoachWorkflows(user.UserId);
+            }
+            else if (user.RoleId == 4 || user.RoleId == 3)
+            {
+                workflows = WorkflowUtil.GetWorkflows();
+            }
             if (loaded == 1)
             {
                 ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
@@ -115,10 +134,13 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
             {
-                User user = (User) Session["User"];
                 if(user.RoleId == 4)
                 {
                     MakeAdminText(workflows, workflowNode, i);
+                }
+                else if(user.RoleId == 1)
+                {
+                    MakeClientText(workflows, workflowNode, i);
                 }
                 else
                 {
@@ -129,6 +151,15 @@ namespace Workflow
             numberShowing.InnerHtml = "";
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
+        }
+
+        private void MakeClientText(List<WorkflowModel> workflows, String workflowNode, int i)
+        {
+            workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
+            workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "</div></div></div>";
+            workflowList.InnerHtml += workflowNode;
+            count++;
         }
 
         private void MakeText(List<WorkflowModel> workflows, String workflowNode, int i)
@@ -144,9 +175,8 @@ namespace Workflow
         private void MakeAdminText(List<WorkflowModel> workflows, String workflowNode, int i)
         {
             workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
-            workflowNode += "<div class=\"content\"><a class=\"header\">" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>View Workflow</a>" + " | ";
-            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
+            workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
+            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
             workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
             workflowList.InnerHtml += workflowNode;
             count++;
@@ -185,7 +215,7 @@ namespace Workflow
             List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
             for (int i = 0; i < 5 && i < workflows.Count; i++)
             {
-                MakeText(workflows, workflowNode, i);
+                MakeClientText(workflows, workflowNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + workflows.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -235,6 +265,8 @@ namespace Workflow
             if (WorkflowName.Text.Length > 0 && Request.QueryString["wid"] == null)
             {
                 WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " created a new workflow template " + w.WorkflowName);
                 SaveComponents(w.WorkflowId);
             }
             //update existing
@@ -249,6 +281,8 @@ namespace Workflow
 
         private void SaveComponents(int workflowId)
         {
+            User user = (User)Session["User"];
+            WorkflowModel w = WorkflowUtil.GetWorkflow(workflowId);
             List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             int i = 0;
             foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
@@ -259,6 +293,7 @@ namespace Workflow
                 DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
                 int formId = int.Parse(formSelector.SelectedValue);
                 WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
+                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
                 i++;
             }
         }
@@ -281,6 +316,8 @@ namespace Workflow
             else
             {
                 WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
                 workflowId = w.WorkflowId;
                 SaveComponents(workflowId);
                 wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
@@ -328,35 +365,6 @@ namespace Workflow
             uilefticon.Controls.Add(stepTitleTb);
             uilefticon.Controls.Add(icon);
             p.Controls.Add(uilefticon);
-
-            /*Panel dropdownPanel = new Panel();
-            SetID(dropdownPanel, "formSelector", id);
-            dropdownPanel.CssClass = "ui selection dropdown";
-
-
-            Literal input = new Literal();
-            input.Text = "<input type=\"hidden\">";
-            dropdownPanel.Controls.Add(input);
-            Literal icon = new Literal();
-            icon.Text = "<i class=\"dropdown icon\"></i>";
-            dropdownPanel.Controls.Add(icon);
-            Literal def = new Literal();
-            def.Text = "<div class=\"default text\">--SELECT WORKFLOW--</div>";
-            dropdownPanel.Controls.Add(def);
-
-            Panel dropdown = new Panel();
-            dropdown.CssClass = "menu";
-            SetID(dropdown, "menu", id);            
-            foreach(Form form in FormUtil.GetAllForms())
-            {
-                Panel item = new Panel();
-                item.CssClass = "item";
-                SetID(item, "item", id+form.FormId);
-                item.Attributes.Add("data-value", form.FormId.ToString());
-                item.Controls.Add(new LiteralControl(form.FormName));
-                item.DataBind();
-                dropdown.Controls.Add(item);
-            }*/
 
             DropDownList formSelector = new DropDownList();
             SetID(formSelector, "formSelector", id);
@@ -419,7 +427,7 @@ namespace Workflow
 
         protected void ProjectInformation(WorkflowModel workflow, List<WorkflowComponent> comps)
         {
-            workflowNode += "<h1>" + workflow.WorkflowName + "</h1><hr/><h2>Workflow Steps</h2>";
+            workflowNode += "<h1><a href='Workflows.aspx'>Workflows</a> > " + workflow.WorkflowName + "</h1><hr/><h2>Workflow Steps</h2>";
 
             List<Form> forms = new List<Form>();
             foreach (WorkflowComponent comp in comps)
@@ -434,8 +442,8 @@ namespace Workflow
                 foreach (WorkflowComponent com in comps)
                 {
                     workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                    workflowNode += "<span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + FormUtil.GetForm(com.FormID).FormName + "</h3></div></div></li>";
+                    workflowNode += "<span class=\"ProgressBar-stepLabel\"><a href='Forms.aspx?fid=" + com.FormID + "'>" + com.ComponentTitle + "</a></span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetForm(com.FormID).FormName + "</a></h3></div></div></li>";
                 }
             } catch (Exception e) { }
             workflowNode += "</ol></div>";
@@ -446,7 +454,7 @@ namespace Workflow
             {
                 foreach (Form form in forms)
                 {
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div>";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + form.FormId + "'>" + form.FormName + "</a></h3></div>";
                 }
             } catch(Exception e) { }
 
@@ -484,6 +492,11 @@ namespace Workflow
             Session.Clear();
             Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
         }
     }
 }
