@@ -51,11 +51,6 @@ namespace Workflow
                     CreateProjectPanel(allProjects);
                 }
             }
-            //kicks them out if they arent
-            else
-            {
-                Response.Redirect("Login.aspx");
-            }
         }
 
         private void LoadActivityFeed(int userId)

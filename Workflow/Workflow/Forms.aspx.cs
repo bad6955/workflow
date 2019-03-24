@@ -129,11 +129,6 @@ namespace Workflow
                     formBuilder.Visible = true;
                 }
             }
-            else
-            {
-                //kicks them out if they arent
-                Response.Redirect("Login.aspx");
-            }
         }
 
         private void ShowFormViewer(Form f, int roleId)

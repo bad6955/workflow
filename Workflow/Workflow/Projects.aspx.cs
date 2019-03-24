@@ -91,11 +91,6 @@ namespace Workflow
                     GenerateProjectDropdowns();
                 }
             }
-            else
-            {
-                //kicks them out if they arent
-                Response.Redirect("Login.aspx");
-            }
         }
 
         protected void ProjectView(Project p)

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Projects.aspx.cs" Inherits="Workflow.Projects" Title="Projects" %>
 
 
-<asp:Content ID="MasterDashboard" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
+<asp:Content ID="MasterProject" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
     <script>
         function saveSelection() {
             var companyEle = document.getElementById("MasterContentPlaceHolder_CompanySelect");

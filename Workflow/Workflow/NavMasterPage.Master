@@ -1,5 +1,15 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NavMasterPage.master.cs" Inherits="Workflow.NavMasterPage" %>
 
+<!-- 
+    * RIT TEAM LONDON SENIOR DEVELOPMENT PROJECT - VENTURE CREATIONS WORKFLOW SYSTEM.
+    * SPONSOR: Venture Creations
+    * DEVELOPMENT TEAM: Kevin Reynolds, Brie McIntosh, Ryan Plazony, Matt Mallette, Becca Dingman, Shawn Bishop, Adi Cengic
+    * ® 2018-2019
+    *
+    * This is the Master Page for navigation across all pages of the site.
+    -->
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
