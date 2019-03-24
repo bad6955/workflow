@@ -187,7 +187,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="NavMasterPage.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountSettings.aspx" />
@@ -227,13 +226,11 @@
     <Compile Include="Data\CompanyUtil.cs" />
     <Compile Include="Data\FeedUtil.cs" />
     <Compile Include="Data\FormUtil.cs" />
-    <Compile Include="Data\HelpSystemUtil.cs" />
     <Compile Include="Data\ProjectUtil.cs" />
     <Compile Include="Data\RoleUtil.cs" />
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowComponentUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
-    <Compile Include="Models\HelpSystem.cs" />
     <Compile Include="Utility\Log.cs" />
     <Compile Include="Utility\DBConn.cs" />
     <Compile Include="Data\FirebaseUtil.cs" />
@@ -285,13 +282,6 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\WorkflowModel.cs" />
-    <Compile Include="NavMasterPage.Master.cs">
-      <DependentUpon>NavMasterPage.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="NavMasterPage.Master.designer.cs">
-      <DependentUpon>NavMasterPage.Master</DependentUpon>
-    </Compile>
     <Compile Include="Workflows.aspx.cs">
       <DependentUpon>Workflows.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

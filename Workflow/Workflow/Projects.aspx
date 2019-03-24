@@ -58,9 +58,9 @@
                             <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" OnClick="FormBtn_Click" Text="Forms" /></li>
                     </ul>
                 </div>
-                <a id="help" href="javascript:void(0);" onclick="javascript:introJs().start();">
+                <div id="help">
                     <img src="assets/icons/help.png" />
-                </a>
+                </div>
             </div>
         </div>
         <div id="content-body">

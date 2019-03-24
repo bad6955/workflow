@@ -9,15 +9,13 @@ namespace Workflow.Models
     {
         int pageID;
         int roleID;
-        int step;
-        string intro;
+        string text;
 
-        public HelpSystem(int pid, int rid, int step,string intro)
+        public HelpSystem(int pid, int rid, string text)
         {
             this.pageID = pid;
             this.roleID = rid;
-            this.step = step;
-            this.intro = intro;
+            this.text = text;
         }
 
         public int PageID
@@ -32,16 +30,10 @@ namespace Workflow.Models
             set { roleID = value; }
         }
 
-        public int Step
+        public string Text
         {
-            get { return step; }
-            set { step = value; }
-        }
-
-        public string Intro
-        {
-            get { return intro; }
-            set { intro = value; }
+            get { return text; }
+            set { text = value; }
         }
     }
 }
