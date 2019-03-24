@@ -148,13 +148,14 @@ namespace Workflow
                 } catch(Exception e) { }
 
                 // Calculate percentage of steps completed using total steps and number completed 
-                int percent = Convert.ToInt32((stepsCompleted / totalSteps));
+                int percent = 30;//Convert.ToInt32((stepsCompleted / totalSteps));
 
                 projectNode += "<div class=\"item\"><div class=\"ui small image\">";
                 projectNode += "<div class=\"ui orange progress\" data-percent=" + percent + " id=\"project" + project.ProjectId + "\">";
                 projectNode += "<div class=\"bar\"><div class=\"progress\"></div></div><div class=\"label\">Completion</div></div>";
 
                 /*id for opening project?*/
+                projectNode += "<button class=\"ui brown basic button\">View Full Project</button></div>";
                 projectNode += "<div class=\"content\"><a class=\"header\" href='"+"Projects.aspx?pid="+project.ProjectId +"'>" + project.Name + "</a>";
                 projectNode += "<div class=\"description\">" + project.Notes + "</div>";
                 projectNode += "<div class=\"table\"><table class=\"ui celled table\"><thead><tr><th>Workflow Step</th><th>Status</th></tr></thead><tbody>";

@@ -258,7 +258,7 @@ namespace Workflow
         {
             User coach = UserUtil.GetCoach(projects[i].CoachId);
             WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
-            projectNode = "<div class=\"item\" id=\"projectList\"><div class=\"ui small image\"><i class=\"huge inbox icon\"/></i></div>";
+            projectNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge inbox icon\"/></i></div>";
             projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
             projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
             projectNode += projects[i].Notes + "</div></div></div>";

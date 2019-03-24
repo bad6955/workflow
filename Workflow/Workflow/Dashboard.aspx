@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Workflow.Dashboard" Title="Dashboard" %>
 
-<asp:Content ID="MasterDashboard" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
+<asp:Content ID="MasterDashboard" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <!-- everything has to be in content-body so it doesn't get cut off by the nav -->
     <div id="content-body">
         <div id="vc-coach-dashboard-top">
@@ -10,7 +10,7 @@
                         <!--<i class="ellipsis horizontal icon"></i>-->
                     </div>
                     <div class="middle aligned row">
-                        <div class="column" id="activity-feed-box">
+                        <div class="column">
                             <h2>Activity Feed</h2>
                             <div runat="server" class="ui relaxed divided list" id="activityFeed"></div>
                         </div>

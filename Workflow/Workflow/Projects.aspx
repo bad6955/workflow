@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Projects.aspx.cs" Inherits="Workflow.Projects" Title="Projects" %>
 
-<asp:Content ID="MasterProject" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
+<asp:Content ID="MasterDashboard" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script>
         function saveSelection() {
             var companyEle = document.getElementById("CompanySelect");
@@ -15,6 +15,7 @@
         }
     </script>
     <div id="content-body">
+
         <div runat="server" id="projectListing">
             <h1>Projects</h1>
             <asp:Button runat="server" ID="CreateNewProjectBtn" Text="Create New Project" OnClick="CreateNewProjectBtn_Click" CssClass="fluid ui button" />
