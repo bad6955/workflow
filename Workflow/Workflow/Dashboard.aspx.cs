@@ -27,7 +27,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.FullName;
+
                 //loads activity feeds
                 LoadActivityFeed(user.UserId);
 
@@ -49,10 +49,6 @@ namespace Workflow
                 {
                     CreateAdminGraph(allProjects);
                     CreateProjectPanel(allProjects);
-                    if (user.RoleId == 4)
-                    {
-                        AdminBtn.Visible = true;
-                    }
                 }
             }
             //kicks them out if they arent
@@ -199,33 +195,6 @@ namespace Workflow
                 // Add to page
                 projectParent.InnerHtml += projectNode;
             }
-        }
-
-        protected void ProjectBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void FormBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        protected void WorkflowBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void LogoutBtn_Click(object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("Login.aspx");
-        }
-
-        protected void AdminBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Admin.aspx");
         }
     }
 }

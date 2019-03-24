@@ -263,6 +263,10 @@ html, body {
     overflow-x: auto;
 }
 
+#activity-feed-parent {
+    height: 100%;
+}
+
 .table {
     overflow-x: auto;
     overflow-y: auto;
@@ -422,10 +426,10 @@ input:-webkit-autofill:active {
     margin: auto;
     text-align: center;
 }
-#ProjectNamePanel {
+#MasterContentPlaceHolder_ProjectNamePanel {
     width: 100%;
 }
-#ProjectNotes {
+#MasterContentPlaceHolder_ProjectNotes {
     width: 100%;
     border-radius: 4px;
 }
@@ -458,17 +462,17 @@ input:-webkit-autofill:active {
     padding-top: 2em;
 }
 /***************************************WORKFLOW PAGE*********************************************/
-#workflowList .ui.small.image {
+#MasterContentPlaceHolder_workflowList .ui.small.image {
     color: #dc7a32;
     text-align: center;
 }
 
-#projectList .ui.small.image {
+#MasterContentPlaceHolder_projectList .ui.small.image {
     color: #32cbdc;
     text-align: center;
 }
 
-#formList .ui.small.image {
+#MasterContentPlaceHolder_formList .ui.small.image {
     color: #5c3315;
     text-align: center;
 }

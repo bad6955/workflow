@@ -33,7 +33,6 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.FullName;
                 if (user.RoleId == 1)
                 {
                     CreateClientProjectList(user.CompanyId);
@@ -47,10 +46,6 @@ namespace Workflow
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     CreateAdminProjectList();
-                    if (user.RoleId == 4)
-                    {
-                        AdminBtn.Visible = true;
-                    }
                 }
 
                 //loads the selected form if there is one
@@ -202,38 +197,6 @@ namespace Workflow
             }
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
-        }
-
-        protected void DashboardBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void WorkflowBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void FormBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        protected void ProjectBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void LogoutBtn_Click(Object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("Login.aspx");
-        }
-
-        protected void AdminBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Admin.aspx");
         }
 
         protected void CreateProjectBtn_Click(object sender, EventArgs e)

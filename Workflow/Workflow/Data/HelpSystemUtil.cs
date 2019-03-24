@@ -12,7 +12,7 @@ namespace Workflow.Data
     {
         public static List<HelpSystem> GetHelp(int pageID, int roleID)
         {
-            string query = "SELECT PageID, RoleID, Text from HelpSystem WHERE PageID=@pageID AND RoleID=@roleID";
+            string query = "SELECT PageID, RoleID, Step, Intro from HelpSystem WHERE PageID=@pageID AND RoleID=@roleID";
 
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@pageID", pageID);
@@ -23,7 +23,7 @@ namespace Workflow.Data
             List<HelpSystem> helpSystem = new List<HelpSystem>();
             while (dr.Read())
             {
-                HelpSystem hs = new HelpSystem((int)dr["PageID"], (int)dr["RoleID"], (string)dr["Text"]);
+                HelpSystem hs = new HelpSystem((int)dr["PageID"], (int)dr["RoleID"], (int)dr["Step"],(string)dr["Intro"]);
                 helpSystem.Add(hs);
             }
             conn.CloseConnection();

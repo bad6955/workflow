@@ -34,7 +34,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-                userLbl.Text = user.FullName;
+
 
                 if (user.RoleId == 1)
                 {
@@ -64,10 +64,6 @@ namespace Workflow
                         CreateFullFormList();
                         FormTab.CssClass = "item active";
                         TemplateTab.CssClass = "item";
-                    }
-                    if (user.RoleId == 4)
-                    {
-                        AdminBtn.Visible = true;
                     }
                 }
 
@@ -199,41 +195,9 @@ namespace Workflow
             Response.Redirect(Request.RawUrl);
         }
 
-        protected void DashboardBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void ProjectBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void WorkflowBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void FormBtn_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
         protected void TemplateBtn_Click(Object sender, EventArgs e)
         {
             Response.Redirect("Forms.aspx?templates=1");
-        }
-
-        protected void LogoutBtn_Click(Object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("Login.aspx");
-        }
-
-        protected void AdminBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Admin.aspx");
         }
 
         private void CreateAdminFormList()
