@@ -29,6 +29,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
+                userLbl.Text = user.FullName;
                 if (user.RoleId == 1)
                 {
                     CreateClientProjectList(user.CompanyId);
@@ -199,7 +200,34 @@ namespace Workflow
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
         }
-        
+
+        protected void DashboardBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void WorkflowBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Workflows.aspx");
+        }
+
+        protected void FormBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        protected void ProjectBtn_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx");
+        }
+
+        protected void LogoutBtn_Click(Object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("Login.aspx");
+        }
+
         protected void CreateProjectBtn_Click(object sender, EventArgs e)
         {
             int companyId = int.Parse(SelectedCompany.Value);
