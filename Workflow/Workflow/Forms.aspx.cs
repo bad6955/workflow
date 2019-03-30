@@ -152,10 +152,21 @@ namespace Workflow
                 formViewerData.Value = f.FormData;
             }
 
-            if(f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+            if(roleId == 1)
             {
-                uploadedFiles.Visible = true;
-                UploadedName.Text = f.LocalPath;
+                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                {
+                    uploadedFiles.Visible = true;
+                    UploadedName.Text = f.LocalPath;
+                }
+            }
+            else if(roleId > 1)
+            {
+                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                {
+                    coachUploadedFiles.Visible = true;
+                    CoachUploadedName.Text = f.FilePath;
+                }
             }
 
             //the form has been submitted already
@@ -540,7 +551,7 @@ namespace Workflow
 
                 FormUtil.ApproveForm(formId);
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName);
+                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " +p.Name);
                 FormResult.CssClass = "success";
                 FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
@@ -575,7 +586,7 @@ namespace Workflow
                     denyText = "None specified";
                 }
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " with reason: " + denyText);
+                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " + p.Name + " with reason: " + denyText);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
             }
@@ -595,6 +606,37 @@ namespace Workflow
             {
                 Response.Redirect("Forms.aspx");
             }
+        }
+
+        protected void CoachDownloadBtn_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["pfid"] != null)
+            {
+                int formId = int.Parse(Request.QueryString["pfid"]);
+                Form f = FormUtil.GetForm(formId);
+                Project p = ProjectUtil.GetProject(f.ProjectId);
+                FormResult.CssClass = "success";
+                FormResult.Text = "Denied form " + f.FormName;
+
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " downloaded files from " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " + p.Name);
+                SendFile(f.FilePath);
+                FormResult.Visible = true;
+            }
+        }
+
+        private void SendFile(string path)
+        {
+            FileInfo f = new FileInfo(path);
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\"", path));
+            Response.AddHeader("Content-Length", f.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(f.FullName);
+            Response.End();
         }
     }
 }

@@ -265,6 +265,33 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Label UploadedName;
         
         /// <summary>
+        /// coachUploadedFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl coachUploadedFiles;
+        
+        /// <summary>
+        /// CoachUploadedName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CoachUploadedName;
+        
+        /// <summary>
+        /// CoachDownloadBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CoachDownloadBtn;
+        
+        /// <summary>
         /// SaveFormBtn control.
         /// </summary>
         /// <remarks>

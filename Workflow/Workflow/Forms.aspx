@@ -158,6 +158,11 @@
                                 <li><asp:Label runat="server" ID="UploadedName"></asp:Label></li>
                             </ul>
                     </div>
+                    <div runat="server" id="coachUploadedFiles" visible="false">
+                            Attached File:
+                                <p><asp:Label runat="server" ID="CoachUploadedName"></asp:Label></p>
+                                <asp:Button runat="server" ID="CoachDownloadBtn" OnClick="CoachDownloadBtn_Click" Text="Download File" CssClass="fluid ui button"/>
+                    </div>
                 </fieldset>
                 <br />
 
