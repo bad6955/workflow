@@ -18,6 +18,8 @@ namespace Workflow.Models
         string denialReason;
         int submission;
         int templateId;
+        string filePath;
+        string localPath;
 
         public Form(string name)
         {
@@ -56,6 +58,38 @@ namespace Workflow.Models
             this.denied = denied;
             this.denialReason = denialReason;
             this.templateId = formTemplateId;
+        }
+
+        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission, int approved, int denied, string denialReason, int formTemplateId, string filePath, string localPath)
+        {
+            this.id = formId;
+            this.name = name;
+            this.formData = formData;
+            this.projectId = projectId;
+            this.approvalRequiredId = approvalRequiredId;
+            this.statusId = statusId;
+            this.submission = submission;
+            this.approved = approved;
+            this.denied = denied;
+            this.denialReason = denialReason;
+            this.templateId = formTemplateId;
+            this.filePath = filePath;
+            this.localPath = localPath;
+        }
+
+        public Form(int formId, string name, string formData, int projectId, int submission, int approved, int denied, string denialReason, int formTemplateId, string filePath, string localPath)
+        {
+            this.id = formId;
+            this.name = name;
+            this.formData = formData;
+            this.projectId = projectId;
+            this.submission = submission;
+            this.approved = approved;
+            this.denied = denied;
+            this.denialReason = denialReason;
+            this.templateId = formTemplateId;
+            this.filePath = filePath;
+            this.localPath = localPath;
         }
 
         public Form(int formId, string name, string formData)
@@ -145,6 +179,18 @@ namespace Workflow.Models
         {
             get { return templateId; }
             set { templateId = value; }
+        }
+
+        public string FilePath
+        {
+            get { return filePath; }
+            set { filePath = value; }
+        }
+
+        public string LocalPath
+        {
+            get { return localPath; }
+            set { localPath = value; }
         }
     }
 }

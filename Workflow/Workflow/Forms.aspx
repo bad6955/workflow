@@ -19,7 +19,7 @@
 </head>
 <body>
     <%-- --%>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" enctype="multipart/form-data">
         <div id="navigation">
             <div id="top-bar">
                 <div id="right">
@@ -149,13 +149,26 @@
                     </h3>
                     <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
                 </div>
-                <div runat="server" id="renderWrap"></div>
-                <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
-                <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
-                <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" />
-                <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" Visible="false" />
-                <asp:Button runat="server" ID="DenyFormBtn" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" />
+                <fieldset class="formOutline">
+                    <div runat="server" id="renderWrap"></div>
+
+                    <div runat="server" id="uploadedFiles" visible="false">
+                        <span class="error">NOTE: Previously uploaded files will be erased if a new file is uploaded:</span><br />
+                            <ul>
+                                <li><asp:Label runat="server" ID="UploadedName"></asp:Label></li>
+                            </ul>
+                    </div>
+                </fieldset>
+                <br />
+
+                <asp:Button runat="server" ID="SaveFormBtn" CssClass="fluid ui button" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" UseSubmitBehavior="false" /><br />
+                <asp:Button runat="server" ID="SubmitFormBtn" CssClass="fluid ui button" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" UseSubmitBehavior="false" /><br />
+                <asp:Button runat="server" ID="ApproveFormBtn"  CssClass="fluid ui button" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" /><br />
+                <asp:Button runat="server" ID="DenyFormBtn" CssClass="fluid ui button" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" /><br />
+                <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" TextMode="MultiLine" Visible="false" />
                 <asp:HiddenField runat="server" ID="formViewerData" />
+                <asp:HiddenField runat="server" ID="fileUploadName" />
+                <asp:HiddenField runat="server" ID="fileInputName" />
                 <script>
                     var viewerOptions = {
                         dataType: 'json',
@@ -165,7 +178,18 @@
                     document.getElementById("formViewerData").value = formViewer.formData;
 
                     function SaveFormViewer() {
+                        SaveUploadedFiles();
                         document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
+                    }
+
+                    function SaveUploadedFiles() {
+                        var file = $("input:file")[0].files[0];
+                        var inputName = $("input:file")[0].name;
+
+                        if (file) {
+                            document.getElementById("fileUploadName").value = file.name;
+                            document.getElementById("fileInputName").value = inputName;
+                        }
                     }
 
                     function SubmitForm() {
@@ -195,7 +219,6 @@
 
                             console.log(renderedForm.html());
                             document.getElementById("formViewerData").value = renderedForm.html();
-                            //document.getElementById("formViewerData").value = $('#renderWrap').formRender('html');
                         });
                     }
                 </script>

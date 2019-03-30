@@ -94,15 +94,6 @@ namespace Workflow {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl formListing;
         
         /// <summary>
-        /// breadcrumbHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl breadcrumbHeader;
-        
-        /// <summary>
         /// CreateNewFormBtn control.
         /// </summary>
         /// <remarks>
@@ -256,6 +247,24 @@ namespace Workflow {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl renderWrap;
         
         /// <summary>
+        /// uploadedFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl uploadedFiles;
+        
+        /// <summary>
+        /// UploadedName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UploadedName;
+        
+        /// <summary>
         /// SaveFormBtn control.
         /// </summary>
         /// <remarks>
@@ -283,15 +292,6 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button ApproveFormBtn;
         
         /// <summary>
-        /// DenyReason control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DenyReason;
-        
-        /// <summary>
         /// DenyFormBtn control.
         /// </summary>
         /// <remarks>
@@ -301,6 +301,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button DenyFormBtn;
         
         /// <summary>
+        /// DenyReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DenyReason;
+        
+        /// <summary>
         /// formViewerData control.
         /// </summary>
         /// <remarks>
@@ -308,6 +317,24 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField formViewerData;
+        
+        /// <summary>
+        /// fileUploadName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField fileUploadName;
+        
+        /// <summary>
+        /// fileInputName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField fileInputName;
         
         /// <summary>
         /// formLocking control.

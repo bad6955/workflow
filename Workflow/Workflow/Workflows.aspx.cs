@@ -464,8 +464,6 @@ namespace Workflow
             workflowNode = "";
         }
 
-
-
         // ====== NAV ======
         protected void DashboardBtn_Click(Object sender, EventArgs e)
         {
