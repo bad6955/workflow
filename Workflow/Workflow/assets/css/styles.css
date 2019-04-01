@@ -464,6 +464,11 @@ input:-webkit-autofill:active {
     margin: auto;
     padding-top: 2em;
 }
+
+.formOutline{
+    border-radius: 25px;
+}
+
 /***************************************WORKFLOW PAGE*********************************************/
 #MasterContentPlaceHolder_workflowList .ui.small.image {
     color: #dc7a32;

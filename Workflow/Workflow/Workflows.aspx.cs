@@ -74,7 +74,6 @@ namespace Workflow
                         if (Request.QueryString["edit"] != null && user.RoleId == 4)
                         {
                             workflowBuilder.Visible = true;
-                            test.Visible = true;
                             WorkflowName.Text = w.WorkflowName;
                             CreateWorkflowBtn.Text = "Update Workflow";
 
@@ -94,7 +93,6 @@ namespace Workflow
                 {
                     workflowListing.Visible = false;
                     workflowBuilder.Visible = true;
-                    test.Visible = true;
                 }
             }
         }
@@ -157,8 +155,7 @@ namespace Workflow
         {
             workflowNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge sitemap icon\"/></i></div>";
             workflowNode += "<div class=\"content\"><a class=\"header\" href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "'>" + workflows[i].WorkflowName + "</a><div class=\"meta\">";
-            workflowNode += "<span class=\"stay\">" + "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&edit=1'>Edit Workflow</a>" + " | ";
-            workflowNode += "<a href='Workflows.aspx?wid=" + workflows[i].WorkflowId + "&del=1'>Delete Workflow</a>" + "</span></div></div></div>";
+            workflowNode += "</div></div></div>";
             workflowList.InnerHtml += workflowNode;
             count++;
         }
@@ -299,19 +296,25 @@ namespace Workflow
             WorkflowComponent wc = null;
             if (Request.QueryString["wid"] != null)
             {
-                workflowId = int.Parse(Request.QueryString["wid"]);
-                WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
-                SaveComponents(workflowId);
-                wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                if(WorkflowName.Text.Length > 0)
+                {
+                    workflowId = int.Parse(Request.QueryString["wid"]);
+                    WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
+                    SaveComponents(workflowId);
+                    wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                }
             }
             else
             {
-                WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
-                User user = (User)Session["User"];
-                Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
-                workflowId = w.WorkflowId;
-                SaveComponents(workflowId);
-                wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                if (WorkflowName.Text.Length > 0)
+                {
+                    WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                    User user = (User)Session["User"];
+                    Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
+                    workflowId = w.WorkflowId;
+                    SaveComponents(workflowId);
+                    wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                }
             }
             Panel componentPanel = CreateWorkflowStep(guid, wc);
             this.ControlIDs = ids;

@@ -93,8 +93,8 @@
                                 <asp:Button runat="server" class="btn btn-dark" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
                             </div>
                             <!-- HiddenFields don't need styles -->
-                            <asp:HiddenField runat="server" ID="SelectedRole" />
-                            <asp:HiddenField runat="server" ID="SelectedCompany" />
+                            <asp:HiddenField runat="server" ID="SelectedRole" Value="-1"/>
+                            <asp:HiddenField runat="server" ID="SelectedCompany" Value="-1"/>
                         </div>
                     </div>
                     <div class="middle aligned column">
@@ -136,7 +136,7 @@
                 <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />
                 <asp:DropDownList runat="server" ID="LockedAccountSelect" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList>
                 <asp:Button runat="server" type="button" class="btn btn-success " ID="UnlockAccountBtn" Text="Unlock Account" OnClick="UnlockAccountBtn_Click" />
-                <asp:HiddenField runat="server" ID="SelectedAccount" />
+                <asp:HiddenField runat="server" ID="SelectedAccount" Value="-1" />
             </div>
         </div>
     </form>

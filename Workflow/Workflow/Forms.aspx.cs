@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -140,6 +141,23 @@ namespace Workflow
             if(formViewerData.Value.Length == 0 || formViewerData.Value == "undefined")
             {
                 formViewerData.Value = f.FormData;
+            }
+
+            if(roleId == 1)
+            {
+                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                {
+                    uploadedFiles.Visible = true;
+                    UploadedName.Text = f.LocalPath;
+                }
+            }
+            else if(roleId > 1)
+            {
+                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                {
+                    coachUploadedFiles.Visible = true;
+                    CoachUploadedName.Text = f.FilePath;
+                }
             }
 
             //the form has been submitted already
@@ -404,12 +422,22 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["pfid"]);
                     Form f = FormUtil.GetForm(formId);
+                    Project p = ProjectUtil.GetProject(f.ProjectId);
                     FormUtil.UpdateForm(formId, f.FormName, formJson);
                     User user = (User)Session["User"];
-                    Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + "'s form " + f.FormName + " with " + formJson);
+                    Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + " a form" + f.FormName + " from project " + p.Name + " with " + formJson);
+
+                    if (fileInputName.Value.ToString().Length > 0)
+                    {
+                        string localName = fileUploadName.Value.ToString();
+                        string fileType = localName.Split('.')[1];
+                        string path = CompanyUtil.GetCompanyName(user.CompanyId) + "-" + p.Name + "-" + f.FormName + "."+fileType;
+                        SaveFiles(path);
+                        f = FormUtil.UpdateFormFile(f, path, localName);
+                        Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + " a form" + f.FormName + " from project " + p.Name + " added a file " + f.FilePath);
+                    }
                     FormResult.CssClass = "success";
                     FormResult.Text = "Updated form " + f.FormName;
-                    //Response.Redirect("Forms.aspx?pfid=" + formId);
                 }
             }
             else
@@ -418,6 +446,19 @@ namespace Workflow
                 FormResult.Text = "Please fill out the form";
             }
             FormResult.Visible = true;
+        }
+
+        private void SaveFiles(string path)
+        {
+            string inputName = fileInputName.Value.ToString();
+            if(inputName.Length > 0)
+            {
+                HttpPostedFile file = Request.Files[inputName];
+                if (file != null && file.ContentLength > 0)
+                {
+                    file.SaveAs(path);
+                }
+            }
         }
 
         //client submitting form
@@ -469,7 +510,7 @@ namespace Workflow
 
                 FormUtil.ApproveForm(formId);
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName);
+                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " +p.Name);
                 FormResult.CssClass = "success";
                 FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
@@ -504,7 +545,7 @@ namespace Workflow
                     denyText = "None specified";
                 }
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " with reason: " + denyText);
+                Log.Info(user.Identity + " denied " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " + p.Name + " with reason: " + denyText);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
                 FormResult.Visible = true;
             }
@@ -524,6 +565,37 @@ namespace Workflow
             {
                 Response.Redirect("Forms.aspx");
             }
+        }
+
+        protected void CoachDownloadBtn_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["pfid"] != null)
+            {
+                int formId = int.Parse(Request.QueryString["pfid"]);
+                Form f = FormUtil.GetForm(formId);
+                Project p = ProjectUtil.GetProject(f.ProjectId);
+                FormResult.CssClass = "success";
+                FormResult.Text = "Denied form " + f.FormName;
+
+                User user = (User)Session["User"];
+                Log.Info(user.Identity + " downloaded files from " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " + p.Name);
+                SendFile(f.FilePath);
+                FormResult.Visible = true;
+            }
+        }
+
+        private void SendFile(string path)
+        {
+            FileInfo f = new FileInfo(path);
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\"", path));
+            Response.AddHeader("Content-Length", f.Length.ToString());
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(f.FullName);
+            Response.End();
         }
     }
 }

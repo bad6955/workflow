@@ -38,7 +38,7 @@ namespace Workflow.Data
 
         public static Form GetForm(int formId)
         {
-            MySqlCommand cmd = new MySqlCommand("SELECT FormID, FormTemplateID, FormName, FormData, ProjectID, ApprovalRequiredID, ApprovalStatusID, Submission, Approved, Denied, DenialReason FROM Forms WHERE FormID = @formId");
+            MySqlCommand cmd = new MySqlCommand("SELECT FormID, FormTemplateID, FormName, FormData, ProjectID, ApprovalRequiredID, ApprovalStatusID, Submission, Approved, Denied, DenialReason, FilePath, UploadedFileName FROM Forms WHERE FormID = @formId");
             cmd.Parameters.AddWithValue("@formId", formId);
             DBConn conn = new DBConn();
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
@@ -48,7 +48,7 @@ namespace Workflow.Data
             {
                 while (dr.Read())
                 {
-                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"], (string)dr["FilePath"], (string)dr["UploadedFileName"]);
                 }
             } catch (Exception e) { }
             conn.CloseConnection();
@@ -168,6 +168,20 @@ namespace Workflow.Data
             cmd.Parameters.AddWithValue("@formName", formName);
             cmd.Parameters.AddWithValue("@formData", formData);
             cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return f;
+        }
+
+        public static Form UpdateFormFile(Form f, string path, string localPath)
+        {
+            f.FilePath = path;
+            f.LocalPath = localPath;
+            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET FilePath=@path, UploadedFileName=@localPath WHERE FormID=@formId");
+            cmd.Parameters.AddWithValue("@path", path);
+            cmd.Parameters.AddWithValue("@localPath", localPath);
+            cmd.Parameters.AddWithValue("@formId", f.FormId);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();

@@ -81,44 +81,68 @@
                 document.getElementById("MasterContentPlaceHolder_formBuilderData").value = formBuilder.formData;
                 console.log("FormData: " + formBuilder.formData);
 
-                function SaveFormEditor() {
-                    document.getElementById("MasterContentPlaceHolder_formBuilderData").value = formBuilder.formData;
-                }
-            </script>
-        </div>
-        <div runat="server" id="formViewer" visible="false">
-            <div>
-                <h3>
-                    <asp:Label runat="server" ID="FormNameLbl"></asp:Label>
-                </h3>
-                <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
-            </div>
-            <div runat="server" id="renderWrap"></div>
-            <asp:Button runat="server" ID="SaveFormBtn" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" />
-            <asp:Button runat="server" ID="SubmitFormBtn" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" />
-            <asp:Button runat="server" ID="ApproveFormBtn" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" />
-            <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" Visible="false" />
-            <asp:Button runat="server" ID="DenyFormBtn" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" />
-            <asp:HiddenField runat="server" ID="formViewerData" />
-            <script>
-                var viewerOptions = {
-                    dataType: 'json',
-                    formData: document.getElementById("formViewerData").value
-                };
-                var formViewer = $('#renderWrap').formRender(viewerOptions);
-                document.getElementById("formViewerData").value = formViewer.formData;
+            <div runat="server" id="formViewer" visible="false">
+                <div>
+                    <h3>
+                        <asp:Label runat="server" ID="FormNameLbl"></asp:Label>
+                    </h3>
+                    <asp:Label runat="server" ID="FormResult2" Visible="false"></asp:Label>
+                </div>
+                <fieldset class="formOutline">
+                    <div runat="server" id="renderWrap"></div>
 
-                function SaveFormViewer() {
-                    document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
-                }
+                    <div runat="server" id="uploadedFiles" visible="false">
+                        <span class="error">NOTE: Previously uploaded files will be erased if a new file is uploaded:</span><br />
+                            <ul>
+                                <li><asp:Label runat="server" ID="UploadedName"></asp:Label></li>
+                            </ul>
+                    </div>
+                    <div runat="server" id="coachUploadedFiles" visible="false">
+                            Attached File:
+                                <p><asp:Label runat="server" ID="CoachUploadedName"></asp:Label></p>
+                                <asp:Button runat="server" ID="CoachDownloadBtn" OnClick="CoachDownloadBtn_Click" Text="Download File" CssClass="fluid ui button"/>
+                    </div>
+                </fieldset>
+                <br />
 
-                function SubmitForm() {
-                    SaveFormViewer();
-                    jQuery(function () {
-                        formRenderOpts = {
-                            dataType: 'json',
-                            formData: formViewer.formData
-                        };
+                <asp:Button runat="server" ID="SaveFormBtn" CssClass="fluid ui button" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" UseSubmitBehavior="false" /><br />
+                <asp:Button runat="server" ID="SubmitFormBtn" CssClass="fluid ui button" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" UseSubmitBehavior="false" /><br />
+                <asp:Button runat="server" ID="ApproveFormBtn"  CssClass="fluid ui button" Text="Approve Form" OnClick="ApproveFormBtn_Click" Visible="false" OnClientClick="ApproveForm()" /><br />
+                <asp:Button runat="server" ID="DenyFormBtn" CssClass="fluid ui button" Text="Deny Form" OnClick="DenyFormBtn_Click" Visible="false" /><br />
+                <asp:TextBox runat="server" ID="DenyReason" Placeholder="Reason for denial" TextMode="MultiLine" Visible="false" />
+                <asp:HiddenField runat="server" ID="formViewerData" />
+                <asp:HiddenField runat="server" ID="fileUploadName" />
+                <asp:HiddenField runat="server" ID="fileInputName" />
+                <script>
+                    var viewerOptions = {
+                        dataType: 'json',
+                        formData: document.getElementById("formViewerData").value
+                    };
+                    var formViewer = $('#renderWrap').formRender(viewerOptions);
+                    document.getElementById("formViewerData").value = formViewer.formData;
+
+                    function SaveFormViewer() {
+                        SaveUploadedFiles();
+                        document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
+                    }
+
+                    function SaveUploadedFiles() {
+                        var file = $("input:file")[0].files[0];
+                        var inputName = $("input:file")[0].name;
+
+                        if (file) {
+                            document.getElementById("fileUploadName").value = file.name;
+                            document.getElementById("fileInputName").value = inputName;
+                        }
+                    }
+
+                    function SubmitForm() {
+                        SaveFormViewer();
+                        jQuery(function () {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formViewer.formData
+                            };
 
                         var renderedForm = $('<div>');
                         renderedForm.formRender(formRenderOpts);
@@ -137,18 +161,10 @@
                         var renderedForm = $('#renderWrap');
                         renderedForm.formRender(formRenderOpts);
 
-                        console.log(renderedForm.html());
-                        document.getElementById("formViewerData").value = renderedForm.html();
-                        //document.getElementById("formViewerData").value = $('#renderWrap').formRender('html');
-                    });
-                }
-            </script>
-            <div runat="server" id="formLocking" visible="false">
-                <script>
-                    $(function () {
-                        console.log("LOCKING FORM");
-                        $("#renderWrap :input").attr("disabled", true);
-                    })
+                            console.log(renderedForm.html());
+                            document.getElementById("formViewerData").value = renderedForm.html();
+                        });
+                    }
                 </script>
             </div>
         </div>

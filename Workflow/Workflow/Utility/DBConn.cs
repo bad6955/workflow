@@ -49,11 +49,6 @@ namespace Workflow.Utility
             }
 
             return insertedId;
-
-            //gets the ID of the inserted ^
-            //cmd.CommandText = "SELECT LAST_INSERT_ID()";
-            //int id = (int)cmd.ExecuteScalar();
-            //return id;
         }
 
         public MySqlDataReader ExecuteSelectCommand(MySqlCommand cmd)
@@ -65,15 +60,5 @@ namespace Workflow.Utility
             MySqlDataReader dr = cmd.ExecuteReader();
             return dr;
         }
-        /*
-        public int GetLastInsertID()
-        {
-            MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID();");
-            cmd.Connection = conn;
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-            return (int)cmd.LastInsertedId;
-        }
-        */
     }
 }

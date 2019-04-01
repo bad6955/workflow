@@ -47,13 +47,13 @@
             <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
         </div>
 
-        <div runat="server" id="test"></div>
-        <div runat="server" id="workflowBuilder" visible="false">
-            <div id="formName">
-                <div class="ui left corner labeled input">
-                    <asp:TextBox runat="server" ID="WorkflowName" placeholder="Workflow Name"></asp:TextBox>
-                    <div class="ui teal left corner label">
-                        <i class="white asterisk icon"></i>
+            <div runat="server" id="workflowBuilder" visible="false">
+                <div id="formName">
+                    <div class="ui left corner labeled input">
+                        <asp:TextBox runat="server" ID="WorkflowName" placeholder="Workflow Name"></asp:TextBox>
+                        <div class="ui teal left corner label">
+                            <i class="white asterisk icon"></i>
+                        </div>
                     </div>
                 </div>
             </div>
