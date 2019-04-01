@@ -218,6 +218,9 @@ html, body {
 #help {
     margin: 0 auto;
     text-align: center;
+    position: fixed;
+    width: 17em;
+    bottom: 1em;
 }
 
 /****************************** Offset to prevent content going under the nav *******************************/
