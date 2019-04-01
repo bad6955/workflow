@@ -102,7 +102,6 @@
                 <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
             </div>
 
-            <div runat="server" id="test"></div>
             <div runat="server" id="workflowBuilder" visible="false">
                 <div id="formName">
                     <div class="ui left corner labeled input">

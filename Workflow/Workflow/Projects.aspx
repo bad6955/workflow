@@ -135,9 +135,9 @@
                     <asp:DropDownList runat="server" ID="CoachSelect" class="ui fluid selection dropdown" onchange="saveSelection()" AutoPostBack="false"></asp:DropDownList><br />
                     <asp:TextBox runat="server" ID="ProjectNotes" class="ui form" Rows="6" placeholder="Project Notes (Optional)" TextMode="MultiLine"></asp:TextBox><br />
                     <asp:Button runat="server" ID="CreateProjectBtn" Text="Create Project" CssClass="ui teal button" OnClick="CreateProjectBtn_Click" />
-                    <asp:HiddenField runat="server" ID="SelectedCompany" />
-                    <asp:HiddenField runat="server" ID="SelectedWorkflow" />
-                    <asp:HiddenField runat="server" ID="SelectedCoach" />
+                    <asp:HiddenField runat="server" ID="SelectedCompany" Value="-1" />
+                    <asp:HiddenField runat="server" ID="SelectedWorkflow" Value="-1"  />
+                    <asp:HiddenField runat="server" ID="SelectedCoach" Value="-1" />
                 </div>
             </div>
 

@@ -345,7 +345,7 @@ namespace Workflow
             foreach (Company company in companies)
             {
                 if (company.CompanyId != -1 && company.CompanyId != -2)
-                    companyTable += "<tr><td>" + company.CompanyName+ "</td><td>Edit(?)</td></tr>";
+                    companyTable += "<tr><td>" + company.CompanyName+ "</td></tr>";
                
             }
             companyTable += "</tbody></table>";
