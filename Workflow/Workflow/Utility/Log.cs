@@ -60,7 +60,7 @@ namespace Workflow.Utility
     {
         public static void Info(string info)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("./log.txt", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\log.txt", true))
             {
                 DateTime now = DateTime.Now;
                 string line = String.Format("[{0} : {1}] {2}", now.ToShortDateString(), now.ToShortTimeString(), info);
@@ -71,7 +71,7 @@ namespace Workflow.Utility
         public static List<String> ReadLog()
         {
             List<string> logLines = new List<string>();
-            using (System.IO.StreamReader file = new System.IO.StreamReader("./log.txt"))
+            using (System.IO.StreamReader file = new System.IO.StreamReader("C:\\log.txt"))
             {
                 DateTime now = DateTime.Now;
                 string line;
