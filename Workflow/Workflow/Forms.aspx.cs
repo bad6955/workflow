@@ -162,10 +162,13 @@ namespace Workflow
             }
             else if(roleId > 1)
             {
-                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                if (Request.QueryString["pfid"] != null)
                 {
-                    coachUploadedFiles.Visible = true;
-                    CoachUploadedName.Text = f.FilePath;
+                    if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                    {
+                        coachUploadedFiles.Visible = true;
+                        CoachUploadedName.Text = f.FilePath;
+                    }
                 }
             }
 
