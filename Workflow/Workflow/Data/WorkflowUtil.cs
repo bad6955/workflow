@@ -143,7 +143,7 @@ namespace Workflow.Data
             List<Project> projects = ProjectUtil.GetWorkflowProjects(workflowId);
             if (projects.Count == 0)
             {
-                List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+                List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
                 foreach (WorkflowComponent item in comps)
                 {
                     WorkflowComponentUtil.DeleteWorkflowComponent(item.WFComponentID);
@@ -154,6 +154,19 @@ namespace Workflow.Data
                 DBConn conn = new DBConn();
                 conn.ExecuteInsertCommand(cmd);
                 conn.CloseConnection();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool EditableWorkflow(int workflowId)
+        {
+            List<Project> projects = ProjectUtil.GetWorkflowProjects(workflowId);
+            if (projects.Count == 0)
+            {
                 return true;
             }
             else
