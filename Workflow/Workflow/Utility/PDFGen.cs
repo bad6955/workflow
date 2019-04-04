@@ -9,6 +9,7 @@ namespace Workflow.Utility
         public static void CreateHTMLPDF(string html, string fileName)
         {
             string path = "./PDFGen/";
+            Directory.CreateDirectory(path);
             string fullPath = String.Format("{0}{1}.pdf", path, fileName);
             Byte[] pdfData = null;
             using (MemoryStream m = new MemoryStream())

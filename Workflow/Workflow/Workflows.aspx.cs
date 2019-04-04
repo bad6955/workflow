@@ -70,16 +70,25 @@ namespace Workflow
                     {
                         workflowListing.Visible = false;
 
-                        //if they are trying to edit and they are admin, show form builder
+                        //if they are trying to edit and they are admin, show workflow builder
                         if (Request.QueryString["edit"] != null && user.RoleId == 4)
                         {
-                            workflowBuilder.Visible = true;
-                            WorkflowName.Text = w.WorkflowName;
-                            CreateWorkflowBtn.Text = "Update Workflow";
+                            if (WorkflowUtil.EditableWorkflow(w.WorkflowId))
+                            {
+                                workflowBuilder.Visible = true;
+                                WorkflowName.Text = w.WorkflowName;
+                                CreateWorkflowBtn.Text = "Update Workflow";
 
-                            LoadWorkflowSteps(workflowId);
+                                LoadWorkflowSteps(workflowId);
+                            }
+                            else
+                            {
+                                workflowListing.Visible = true;
+                                WorkflowError.Visible = true;
+                                WorkflowError.Text = "Unable to edit Workflow " + w.WorkflowName + " while projects are assigned to it"; 
+                            }
                         }
-                        //otherwise just show the form viewer
+                        //otherwise just show the workflow viewer
                         else
                         {
                             workflowViewer.Visible = true;
@@ -232,7 +241,7 @@ namespace Workflow
         private void LoadWorkflowSteps(int workflowId)
         {
             List<Guid> ids = this.ControlIDs;
-            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
             int i = 0;
             foreach (WorkflowComponent item in compList)
             {
@@ -271,7 +280,7 @@ namespace Workflow
         {
             User user = (User)Session["User"];
             WorkflowModel w = WorkflowUtil.GetWorkflow(workflowId);
-            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
+            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
             int i = 0;
             foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
             {
@@ -280,8 +289,17 @@ namespace Workflow
                 TextBox stepTitle = (TextBox)div.FindControl("stepTitle" + id);
                 DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
                 int formId = int.Parse(formSelector.SelectedValue);
-                WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
-                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
+
+                if(formId != -1)
+                {
+                    WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
+                    Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
+                }
+                else
+                {
+                    WorkflowError.Visible = true;
+                    WorkflowError.Text = "You must select a Form for Component #" + (i+1);
+                }
                 i++;
             }
         }

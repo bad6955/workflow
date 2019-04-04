@@ -185,7 +185,14 @@ namespace Workflow
                                         {
                                             User u = UserUtil.CreateUser(roleId, companyId, email, firstName, lastName);
                                             User user = (User)Session["User"];
-                                            Log.Info(user.Identity + " created a new " + RoleUtil.GetRole(roleId).RoleName + " account under " + CompanyUtil.GetCompanyName(companyId) + " assigned to " +firstName + " " + lastName + " - " +email);
+                                            if(user != null)
+                                            {
+                                                Log.Info(user.Identity + " created a new " + RoleUtil.GetRole(roleId).RoleName + " account under " + CompanyUtil.GetCompanyName(companyId) + " assigned to " + firstName + " " + lastName + " - " + email);
+                                            }
+                                            else
+                                            {
+                                                Log.Info("System created a new " + RoleUtil.GetRole(roleId).RoleName + " account under " + CompanyUtil.GetCompanyName(companyId) + " assigned to " + firstName + " " + lastName + " - " + email);
+                                            }
                                             u.FirebaseUser = fbUser;
                                             //display user created msg
                                             UserCreateResult.Visible = true;
