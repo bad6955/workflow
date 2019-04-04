@@ -320,6 +320,7 @@ namespace Workflow
         protected void MakeUserTable()
         {
             List<User> users = UserUtil.GetUsers();
+            UserTable.InnerHtml = "";
             var userTable = "";
             userTable += "<table class=\"ui orange table\"><thead><tr><th>Name</th><th>Email</th><th>Company</th><th>Role</th></tr></thead>";
             userTable += "<tbody>";
@@ -339,6 +340,7 @@ namespace Workflow
         protected void MakeCompanyTable()
         {
             List<Company> companies = CompanyUtil.GetCompanies();
+            CompanyTable.InnerHtml = "";
             var companyTable = "";
             companyTable += "<table class=\"ui orange table\"><thead><tr><th>Company Name</th><th>Edit</th></tr></thead>";
             companyTable += "<tbody>";

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Workflow.Dashboard" Title="Dashboard" %>
 
-<asp:Content ID="MasterDashboard" ContentPlaceHolderID="MasterContentPlaceHolder" runat="server">
+<asp:Content ID="MasterDashboard" ContentPlaceHolderID="Content" runat="server">
     <div id="content-body">
         <div id="vc-coach-dashboard-top">
             <div class="ui placeholder segment">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div id="vc-coach-dashboard-bottom">
-            <h2 data-step="1" data-intro="This is a tooltip!">My Projects</h2>
+            <h2>My Projects</h2>
             <div class="vc-coach-dashboard-project">
             </div>
 

@@ -49,6 +49,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button logout;
         
         /// <summary>
+        /// li control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl li;
+        
+        /// <summary>
         /// dashboard control.
         /// </summary>
         /// <remarks>
@@ -85,12 +94,12 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.Button form;
         
         /// <summary>
-        /// MasterContentPlaceHolder control.
+        /// Content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MasterContentPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder Content;
     }
 }

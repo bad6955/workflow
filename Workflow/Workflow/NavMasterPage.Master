@@ -6,7 +6,7 @@
     * DEVELOPMENT TEAM: Kevin Reynolds, Brie McIntosh, Ryan Plazony, Matt Mallette, Becca Dingman, Shawn Bishop, Adi Cengic
     * ® 2018-2019
     *
-    * This is the Master Page for navigation across all pages of the site.
+    * 
     -->
 
 
@@ -19,13 +19,11 @@
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="assets/js/intro.min.js"></script>
     <script type="text/javascript" src="assets/js/form-builder.min.js"></script>
     <script type="text/javascript" src="assets/js/form-render.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
-    <link rel="stylesheet" href="assets/css/introjs.min.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 
     <title>Untitled Page</title>
@@ -41,7 +39,7 @@
                             <asp:Label runat="server" ID="userLbl"></asp:Label>
                         </h1>
                         <div id="dropdown-content">
-                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false"/>
+                            <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false" />
                             <a href="AccountSettings.aspx">
                                 <h2>Account Settings</h2>
                             </a>
@@ -52,25 +50,25 @@
             </div>
             <div id="side-bar">
                 <div id="side-bar-top-content">
-                    <ul>
-                        <li>
-                            <img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="dashboard" OnClick="DashboardBtn_Click" Text="Dashboard"></asp:Button></li>
-                        <li id="current-page">
-                            <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="current" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
-                        <li>
-                            <img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
-                        <li>
-                            <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" OnClick="FormBtn_Click" Text="Forms" /></li>
-                    </ul>
-                    <a id="help" href="javascript:void(0);" onclick="javascript:introJs().start();">
-                        <img src="assets/icons/help.png" />
-                    </a>
-                </div>
+                        <ul runat="server" id="li">
+                            <li>
+                                <img src="assets/icons/dashboard.png" /><asp:Button runat="server" ID="dashboard" OnClick="DashboardBtn_Click" Text="Dashboard"></asp:Button></li>
+                            <li> <!--id="current-page"-->
+                                <img src="assets/icons/workflow.png" /><asp:Button runat="server" ID="current" OnClick="WorkflowBtn_Click" Text="Workflows" /></li>
+                            <li>
+                                <img src="assets/icons/project.png" /><asp:Button runat="server" ID="project" OnClick="ProjectBtn_Click" Text="Projects" /></li>
+                            <li>
+                                <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" OnClick="FormBtn_Click" Text="Forms" /></li>
+                        </ul>
+                        <a id="help" href="javascript:void(0);" onclick="javascript:introJs().start();">
+                            <img src="assets/icons/help.png" />
+                        </a>
+                    </div>
             </div>
         </div>
 
         <div>
-            <asp:ContentPlaceHolder ID="MasterContentPlaceHolder" runat="server">
+            <asp:ContentPlaceHolder ID="Content" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </form>

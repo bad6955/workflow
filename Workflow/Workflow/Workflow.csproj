@@ -161,7 +161,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\css\introjs.min.css" />
     <Content Include="assets\css\semantic.css" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.eot" />
     <Content Include="assets\css\themes\default\assets\fonts\brand-icons.ttf" />
@@ -176,8 +175,12 @@
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.ttf" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff" />
     <Content Include="assets\css\themes\default\assets\fonts\outline-icons.woff2" />
+    <Content Include="assets\icons\banner.png" />
+    <Content Include="assets\icons\ritchie.png" />
     <Content Include="assets\js\form-render.min.js" />
     <Content Include="assets\js\form-builder.min.js" />
+    <Content Include="assets\js\script.js" />
+    <Content Include="FAQ.aspx" />
     <Content Include="NavMasterPage.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -201,7 +204,6 @@
     <Content Include="assets\icons\project.png" />
     <Content Include="assets\icons\workflow.png" />
     <Content Include="assets\js\Chart.js" />
-    <Content Include="assets\js\intro.min.js" />
     <Content Include="assets\js\semantic.js" />
     <Content Include="assets\js\jquery.js" />
     <Content Include="ForgotPassword.aspx" />
@@ -232,6 +234,13 @@
     <Compile Include="Data\UserUtil.cs" />
     <Compile Include="Data\WorkflowComponentUtil.cs" />
     <Compile Include="Data\WorkflowUtil.cs" />
+    <Compile Include="FAQ.aspx.cs">
+      <DependentUpon>FAQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FAQ.aspx.designer.cs">
+      <DependentUpon>FAQ.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Logs.aspx.cs">
       <DependentUpon>Logs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
