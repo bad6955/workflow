@@ -13,13 +13,14 @@ namespace Workflow.Models
         string formData;
         int statusId;
         int approvalRequiredId;
-        int approved;
-        int denied;
+        string approved;
+        string denied;
         string denialReason;
         int submission;
         int templateId;
         string filePath;
         string localPath;
+        string approverIDs;
 
         public Form(string name)
         {
@@ -32,7 +33,7 @@ namespace Workflow.Models
             this.name = name;
         }
 
-        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission, int approved, int denied, string denialReason, int formTemplateId)
+        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission, string approved, string denied, string denialReason, int formTemplateId)
         {
             this.id = formId;
             this.name = name;
@@ -47,7 +48,7 @@ namespace Workflow.Models
             this.templateId = formTemplateId;
         }
 
-        public Form(int formId, string name, string formData, int projectId, int submission, int approved, int denied, string denialReason, int formTemplateId)
+        public Form(int formId, string name, string formData, int projectId, int submission, string approved, string denied, string denialReason, int formTemplateId)
         {
             this.id = formId;
             this.name = name;
@@ -60,7 +61,7 @@ namespace Workflow.Models
             this.templateId = formTemplateId;
         }
 
-        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission, int approved, int denied, string denialReason, int formTemplateId, string filePath, string localPath)
+        public Form(int formId, string name, string formData, int projectId, int approvalRequiredId, int statusId, int submission, string approved, string denied, string denialReason, int formTemplateId, string filePath, string localPath)
         {
             this.id = formId;
             this.name = name;
@@ -77,7 +78,7 @@ namespace Workflow.Models
             this.localPath = localPath;
         }
 
-        public Form(int formId, string name, string formData, int projectId, int submission, int approved, int denied, string denialReason, int formTemplateId, string filePath, string localPath)
+        public Form(int formId, string name, string formData, int projectId, int submission, string approved, string denied, string denialReason, int formTemplateId, string filePath, string localPath)
         {
             this.id = formId;
             this.name = name;
@@ -90,6 +91,14 @@ namespace Workflow.Models
             this.templateId = formTemplateId;
             this.filePath = filePath;
             this.localPath = localPath;
+        }
+
+        public Form(int formId, string name, string formData, string approverIDs)
+        {
+            this.id = formId;
+            this.name = name;
+            this.formData = formData;
+            this.approverIDs = approverIDs;
         }
 
         public Form(int formId, string name, string formData)
@@ -156,13 +165,13 @@ namespace Workflow.Models
             set { submission = value; }
         }
 
-        public int Approved
+        public string Approved
         {
             get { return approved; }
             set { approved = value; }
         }
 
-        public int Denied
+        public string Denied
         {
             get { return denied; }
             set { denied = value; }
@@ -191,6 +200,12 @@ namespace Workflow.Models
         {
             get { return localPath; }
             set { localPath = value; }
+        }
+
+        public string ApproverIDs
+        {
+            get { return approverIDs; }
+            set { approverIDs = value; }
         }
     }
 }

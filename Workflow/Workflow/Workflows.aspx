@@ -1,29 +1,21 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Workflows.aspx.cs" Inherits="Workflow.Workflows" Title="Workflows" %>
 
 <asp:Content ID="MasterWorkflow" ContentPlaceHolderID="Content" runat="server">
-    <div id="content-body">
-        <div runat="server" id="workflowListing">
-            <h1>Workflows</h1>
-            <asp:Button runat="server" ID="CreateNewWorkflowBtn" Text="Create New Workflow" OnClick="CreateNewWorkflowBtn_Click" CssClass="fluid ui button" />
-            <asp:Label runat="server" ID="WorkflowError" Visible="false" CssClass="error"></asp:Label>
-            <div class="ui secondary segment">
-                <div class="ui floating dropdown labeled icon button">
-                    <i class="filter icon"></i>
-                    <span class="text">Sort Filter</span>
-                    <div class="menu">
-                        <div class="ui icon search input">
-                            <i class="search icon"></i>
-                            <input type="text" placeholder="Search..." />
+<div id="content-body">
+    <asp:Label runat="server" ID="WorkflowError" Visible="false" CssClass="error"></asp:Label>
+    <div runat="server" id="workflowListing">
+        <h1>Workflows</h1>
+        <asp:Button runat="server" ID="CreateNewWorkflowBtn" Text="Create New Workflow" OnClick="CreateNewWorkflowBtn_Click" CssClass="fluid ui button" />
+        <div class="ui secondary segment">
+            <div class="ui floating dropdown labeled icon button">
+                <i class="filter icon"></i>
+                <span class="text">Sort Filter</span>
+                <div class="menu">
+                    <div class="ui icon search input">
+                        <i class="search icon"></i>
+                        <input type="text" placeholder="Search..." />
+
                         </div>
-                        <div class="divider"></div>
-                        <div class="header">
-                            <i class="tags icon"></i>
-                            Sort Filter
-                        </div>
-                        <div class="scrolling menu">
-                            <div class="item">
-                                <div class="ui orange empty circular label"></div>
-                                All
                             </div>
                             <div class="item">
                                 <div class="ui red empty circular label"></div>

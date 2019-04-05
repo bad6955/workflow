@@ -12,12 +12,35 @@ namespace Workflow.Data
     {
         public static Form CreateForm(int formId, int projId)
         {
+            string defaultApproved = "0";
+            string defaultDenied = "0";
             Form f = GetFormTemplate(formId);
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO Forms (FormTemplateID, ProjectID, FormName, FormData) VALUES (@formId, @projId, @formName, @formData)");
+            string[] approvalIDs = null;
+            if(f.ApproverIDs.Length > 0)
+            {
+                approvalIDs = f.ApproverIDs.Split(',');
+            }
+
+            if(approvalIDs.Length > 0)
+            {
+                int i = 0;
+                foreach(string roleID in approvalIDs)
+                {
+                    if (i != 0)
+                    {
+                        defaultApproved += ",0";
+                        defaultDenied += ",0";
+                    }
+                    i++;
+                }
+            }
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Forms (FormTemplateID, ProjectID, FormName, FormData, Approved, Denied) VALUES (@formId, @projId, @formName, @formData, @approval, @denial)");
             cmd.Parameters.AddWithValue("@formId", formId);
             cmd.Parameters.AddWithValue("@projId", projId);
             cmd.Parameters.AddWithValue("@formName", f.FormName);
             cmd.Parameters.AddWithValue("@formData", f.FormData);
+            cmd.Parameters.AddWithValue("@approval", defaultApproved);
+            cmd.Parameters.AddWithValue("@denial", defaultDenied);
             DBConn conn = new DBConn();
             f.FormId = conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
@@ -48,7 +71,7 @@ namespace Workflow.Data
             {
                 while (dr.Read())
                 {
-                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"], (string)dr["FilePath"], (string)dr["UploadedFileName"]);
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"], (string)dr["FilePath"], (string)dr["UploadedFileName"]);
                 }
             } catch (Exception e) { }
             conn.CloseConnection();
@@ -67,7 +90,7 @@ namespace Workflow.Data
             {
                 while (dr.Read())
                 {
-                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], projectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], projectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
                 }
             } catch(Exception e) { }
             conn.CloseConnection();
@@ -88,7 +111,7 @@ namespace Workflow.Data
                 {
                     while (dr.Read())
                     {
-                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
                         formList.Add(f);
                     }
                 } catch (Exception e) { }
@@ -123,7 +146,7 @@ namespace Workflow.Data
                 {
                     while (dr.Read())
                     {
-                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (int)dr["Approved"], (int)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                        Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
                         formList.Add(f);
                     }
                 } catch (Exception e) { }
@@ -134,7 +157,7 @@ namespace Workflow.Data
 
         public static Form GetFormTemplate(int formId)
         {
-            MySqlCommand cmd = new MySqlCommand("SELECT FormTemplateID, FormName, FormData FROM FormTemplates WHERE FormTemplateID = @formId");
+            MySqlCommand cmd = new MySqlCommand("SELECT FormTemplateID, FormName, FormData, ApproverIDs FROM FormTemplates WHERE FormTemplateID = @formId");
             cmd.Parameters.AddWithValue("@formId", formId);
             DBConn conn = new DBConn();
             MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
@@ -142,7 +165,7 @@ namespace Workflow.Data
             Form f = null;
             while (dr.Read())
             {
-                f = new Form((int)dr["FormTemplateID"], (string)dr["FormName"], (string)dr["FormData"]);
+                f = new Form((int)dr["FormTemplateID"], (string)dr["FormName"], (string)dr["FormData"], (string)dr["ApproverIDs"]);
             }
             conn.CloseConnection();
             return f;
@@ -151,6 +174,7 @@ namespace Workflow.Data
         public static Form UpdateFormTemplate(int formId, string formName, string formData)
         {
             Form f = new Form(formId, formName, formData);
+
             MySqlCommand cmd = new MySqlCommand("UPDATE FormTemplates SET FormName=@formName, FormData=@formData WHERE FormTemplateID=@formId");
             cmd.Parameters.AddWithValue("@formName", formName);
             cmd.Parameters.AddWithValue("@formData", formData);
@@ -161,13 +185,51 @@ namespace Workflow.Data
             return f;
         }
 
+        public static Form UpdateFormTemplateApprovers(int formId, string approverIDs)
+        {
+            Form f = GetFormTemplate(formId);
+            MySqlCommand cmd = new MySqlCommand("UPDATE FormTemplates SET ApproverIDs=@approverIDs WHERE FormTemplateID=@formId");
+            cmd.Parameters.AddWithValue("@approverIDs", approverIDs);
+            cmd.Parameters.AddWithValue("@formId", formId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return f;
+        }
+
         public static Form UpdateForm(int formId, string formName, string formData)
         {
             Form f = new Form(formId, formName, formData);
-            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET FormName=@formName, FormData=@formData, Denied=0, Approved=0 WHERE FormID=@formId");
+            Form f2 = GetForm(formId);
+            string defaultApproved = "0";
+            string defaultDenied = "0";
+            Form ft = GetFormTemplate(f2.FormTemplateId);
+            string[] approvalIDs = null;
+            if (ft.ApproverIDs.Length > 0)
+            {
+                approvalIDs = ft.ApproverIDs.Split(',');
+            }
+
+            if (approvalIDs.Length > 0)
+            {
+                int i = 0;
+                foreach (string roleID in approvalIDs)
+                {
+                    if (i != 0)
+                    {
+                        defaultApproved += ",0";
+                        defaultDenied += ",0";
+                    }
+                    i++;
+                }
+            }
+
+            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET FormName=@formName, FormData=@formData, Denied=@denied, Approved=@approved WHERE FormID=@formId");
             cmd.Parameters.AddWithValue("@formName", formName);
             cmd.Parameters.AddWithValue("@formData", formData);
             cmd.Parameters.AddWithValue("@formId", formId);
+            cmd.Parameters.AddWithValue("@denied", defaultDenied);
+            cmd.Parameters.AddWithValue("@approved", defaultApproved);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
@@ -190,13 +252,38 @@ namespace Workflow.Data
 
         public static Form SubmitForm(int formId, string formName, string formData)
         {
+            string defaultApproved = "0";
+            string defaultDenied = "0";
             Form f = GetForm(formId);
+            Form ft = GetFormTemplate(f.FormTemplateId);
+            string[] approvalIDs = null;
+            if (ft.ApproverIDs.Length > 0)
+            {
+                approvalIDs = ft.ApproverIDs.Split(',');
+            }
+
+            if (approvalIDs.Length > 0)
+            {
+                int i = 0;
+                foreach (string roleID in approvalIDs)
+                {
+                    if (i != 0)
+                    {
+                        defaultApproved += ",0";
+                        defaultDenied += ",0";
+                    }
+                    i++;
+                }
+            }
+
             f.FormName = formName;
             f.FormData = formData;
-            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET FormName=@formName, FormData=@formData, Submission=1, Approved=0, Denied=0, DenialReason=\"\" WHERE FormID=@formId");
+            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET FormName=@formName, FormData=@formData, Submission=1, Approved=@approved, Denied=@denied, DenialReason=\"\" WHERE FormID=@formId");
             cmd.Parameters.AddWithValue("@formName", formName);
             cmd.Parameters.AddWithValue("@formData", formData);
             cmd.Parameters.AddWithValue("@formId", formId);
+            cmd.Parameters.AddWithValue("@denied", defaultDenied);
+            cmd.Parameters.AddWithValue("@approved", defaultApproved);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
@@ -205,42 +292,150 @@ namespace Workflow.Data
             return f;
         }
 
-        public static Form ApproveForm(int formId)
+        public static Form ApproveForm(int formId, int roleId)
         {
             Form f = GetForm(formId);
-            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET Approved=1 WHERE FormID=@formId");
-            cmd.Parameters.AddWithValue("@formId", formId);
-            DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
-            conn.CloseConnection();
-            Project p = ProjectUtil.GetProject(f.ProjectId);
-
-            //notify all clients of the approval
-            List<User> clients = UserUtil.GetClients(p.CompanyId);
-            foreach (User client in clients)
+            Form ft = GetFormTemplate(f.FormTemplateId);
+            int approvalItemCt = -1;
+            string[] approvalIDs = null;
+            if (ft.ApproverIDs.Length > 0)
             {
-                FeedUtil.CreateProjectFormFeedItem(f.FormName + " was approved by " + UserUtil.GetCoachName(p.CoachId), client.UserId, p.ProjectId, formId);
+                approvalIDs = ft.ApproverIDs.Split(',');
             }
+
+            if (approvalIDs.Length > 0)
+            {
+                int i = 0;
+                foreach (string roleID in approvalIDs)
+                {
+                    int userRoleID = int.Parse(roleID);
+
+                    //if they are one of the users who needs to approve the form
+                    if(userRoleID == roleId)
+                    {
+                        approvalItemCt = i;
+                    }
+                    i++;
+                }
+            }
+
+            if (approvalItemCt != -1)
+            {
+                string newApproval = "";
+                string[] currentApproval = f.Approved.Split(',');
+                if (currentApproval.Length > approvalItemCt)
+                {
+                    int i = 0;
+                    foreach(string approval in currentApproval)
+                    {
+                        if( i == approvalItemCt)
+                        {
+                            newApproval += "1";
+                        }
+                        else
+                        {
+                            newApproval += currentApproval[i];
+                        }
+
+                        i++;
+
+                        if(i != currentApproval.Length)
+                        {
+                            newApproval += ",";
+                        }
+                    }
+                }
+
+                MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET Approved=@approved WHERE FormID=@formId");
+                cmd.Parameters.AddWithValue("@formId", formId);
+                cmd.Parameters.AddWithValue("@approved", newApproval);
+                DBConn conn = new DBConn();
+                conn.ExecuteInsertCommand(cmd);
+                conn.CloseConnection();
+                Project p = ProjectUtil.GetProject(f.ProjectId);
+
+                //notify all clients of the approval
+                List<User> clients = UserUtil.GetClients(p.CompanyId);
+                foreach (User client in clients)
+                {
+                    FeedUtil.CreateProjectFormFeedItem(f.FormName + " was approved by " + UserUtil.GetCoachName(p.CoachId), client.UserId, p.ProjectId, formId);
+                }
+            }
+
             return f;
         }
 
-        public static Form DenyForm(int formId, string denialReason)
+        public static Form DenyForm(int formId, string denialReason, int roleId)
         {
             Form f = GetForm(formId);
-            MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET Denied=1, DenialReason=@denialReason, Submission=0 WHERE FormID=@formId");
-            cmd.Parameters.AddWithValue("@denialReason", denialReason);
-            cmd.Parameters.AddWithValue("@formId", formId);
-            DBConn conn = new DBConn();
-            conn.ExecuteInsertCommand(cmd);
-            conn.CloseConnection();
-            Project p = ProjectUtil.GetProject(f.ProjectId);
-
-            //notify all clients of the approval
-            List<User> clients = UserUtil.GetClients(p.CompanyId);
-            foreach (User client in clients)
+            Form ft = GetFormTemplate(f.FormTemplateId);
+            int denialItemCt = -1;
+            string[] approvalIDs = null;
+            if (ft.ApproverIDs.Length > 0)
             {
-                FeedUtil.CreateProjectFormFeedItem(f.FormName + " was denied by " + UserUtil.GetCoachName(p.CoachId), client.UserId, p.ProjectId, formId);
+                approvalIDs = ft.ApproverIDs.Split(',');
             }
+
+            if (approvalIDs.Length > 0)
+            {
+                int i = 0;
+                foreach (string roleID in approvalIDs)
+                {
+                    int userRoleID = int.Parse(roleID);
+
+                    //if they are one of the users who needs to approve the form
+                    if (userRoleID == roleId)
+                    {
+                        denialItemCt = i;
+                    }
+                    i++;
+                }
+            }
+
+            if (denialItemCt != -1)
+            {
+                string newDenial = "";
+                string[] currentDenial = f.Denied.Split(',');
+                if (currentDenial.Length > denialItemCt)
+                {
+                    int i = 0;
+                    foreach (string approval in currentDenial)
+                    {
+                        if (i == denialItemCt)
+                        {
+                            newDenial += "1";
+                        }
+                        else
+                        {
+                            newDenial += currentDenial[i];
+                        }
+
+                        i++;
+
+                        if (i != currentDenial.Length)
+                        {
+                            newDenial += ",";
+                        }
+                    }
+                }
+
+                MySqlCommand cmd = new MySqlCommand("UPDATE Forms SET Denied=@denied, DenialReason=@denialReason, Submission=0 WHERE FormID=@formId");
+                cmd.Parameters.AddWithValue("@denialReason", denialReason);
+                cmd.Parameters.AddWithValue("@formId", formId);
+                cmd.Parameters.AddWithValue("@denied", newDenial);
+                DBConn conn = new DBConn();
+                conn.ExecuteInsertCommand(cmd);
+                conn.CloseConnection();
+                Project p = ProjectUtil.GetProject(f.ProjectId);
+
+                //notify all clients of the approval
+                List<User> clients = UserUtil.GetClients(p.CompanyId);
+                foreach (User client in clients)
+                {
+                    FeedUtil.CreateProjectFormFeedItem(f.FormName + " was denied by " + UserUtil.GetCoachName(p.CoachId) + " for " + denialReason, client.UserId, p.ProjectId, formId);
+                }
+            }
+
             return f;
         }
 

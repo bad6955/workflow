@@ -18,6 +18,7 @@ namespace Workflow.Data
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
+            UserUtil.SendEmail(userId, feedText);
         }
 
         public static void CreateProjectFeedItem(string feedText, int userId, int projectId)
@@ -29,6 +30,8 @@ namespace Workflow.Data
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
+            UserUtil.SendEmail(userId, feedText);
+
         }
 
         public static void CreateProjectFormFeedItem(string feedText, int userId, int projectId, int formId)
@@ -41,6 +44,8 @@ namespace Workflow.Data
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();
+            UserUtil.SendEmail(userId, feedText);
+
         }
 
         public static List<FeedItem> GetFeed(int userId)

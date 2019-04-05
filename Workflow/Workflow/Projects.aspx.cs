@@ -41,7 +41,6 @@ namespace Workflow
                 else if (user.RoleId == 2)
                 {
                     CreateProjectList(user.UserId);
-                    CreateNewProjectBtn.Visible = false;
                 }
                 else if (user.RoleId == 4 || user.RoleId == 3)
                 {

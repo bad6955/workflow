@@ -241,7 +241,7 @@ namespace Workflow
         private void LoadWorkflowSteps(int workflowId)
         {
             List<Guid> ids = this.ControlIDs;
-            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
+            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             int i = 0;
             foreach (WorkflowComponent item in compList)
             {
@@ -280,7 +280,7 @@ namespace Workflow
         {
             User user = (User)Session["User"];
             WorkflowModel w = WorkflowUtil.GetWorkflow(workflowId);
-            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
+            List<WorkflowComponent> compList = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
             int i = 0;
             foreach (Panel panelControls in WorkflowSteps.Controls.OfType<Panel>())
             {
@@ -289,54 +289,53 @@ namespace Workflow
                 TextBox stepTitle = (TextBox)div.FindControl("stepTitle" + id);
                 DropDownList formSelector = (DropDownList)panelControls.FindControl("formSelector" + id);
                 int formId = int.Parse(formSelector.SelectedValue);
-
-                if(formId != -1)
-                {
-                    WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
-                    Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
-                }
-                else
-                {
-                    WorkflowError.Visible = true;
-                    WorkflowError.Text = "You must select a Form for Component #" + (i+1);
-                }
+                WorkflowComponentUtil.UpdateWorkflowComponent(compList[i].WFComponentID, stepTitle.Text, formId);
+                Log.Info(user.Identity + " updated " + w.WorkflowName + " with component " + stepTitle.Text + " assigned to form " + FormUtil.GetFormTemplate(formId).FormName);
                 i++;
             }
         }
 
         protected void AddWorkflowComponentBtn_Click(object sender, EventArgs e)
         {
-            int workflowId = 0;
-            List<Guid> ids = this.ControlIDs;
-            Guid guid = Guid.NewGuid();
-            ids.Add(guid);
-
-            WorkflowComponent wc = null;
-            if (Request.QueryString["wid"] != null)
+            if (WorkflowName.Text.Length > 0)
             {
-                if(WorkflowName.Text.Length > 0)
+                int workflowId = 0;
+                List<Guid> ids = this.ControlIDs;
+                Guid guid = Guid.NewGuid();
+                ids.Add(guid);
+
+                WorkflowComponent wc = null;
+                if (Request.QueryString["wid"] != null)
                 {
-                    workflowId = int.Parse(Request.QueryString["wid"]);
-                    WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
-                    SaveComponents(workflowId);
-                    wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                    if (WorkflowName.Text.Length > 0)
+                    {
+                        workflowId = int.Parse(Request.QueryString["wid"]);
+                        WorkflowUtil.UpdateWorkflow(workflowId, WorkflowName.Text);
+                        SaveComponents(workflowId);
+                        wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                    }
                 }
+                else
+                {
+                    if (WorkflowName.Text.Length > 0)
+                    {
+                        WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
+                        User user = (User)Session["User"];
+                        Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
+                        workflowId = w.WorkflowId;
+                        SaveComponents(workflowId);
+                        wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
+                    }
+                }
+                Panel componentPanel = CreateWorkflowStep(guid, wc);
+                this.ControlIDs = ids;
+                Response.Redirect("Workflows.aspx?edit=1&wid=" + workflowId);
             }
             else
             {
-                if (WorkflowName.Text.Length > 0)
-                {
-                    WorkflowModel w = WorkflowUtil.CreateWorkflow(WorkflowName.Text);
-                    User user = (User)Session["User"];
-                    Log.Info(user.Identity + " created workflow template " + w.WorkflowName);
-                    workflowId = w.WorkflowId;
-                    SaveComponents(workflowId);
-                    wc = WorkflowComponentUtil.CreateWorkflowComponent(workflowId);
-                }
+                WorkflowError.Visible = true;
+                WorkflowError.Text = "Please name the Workflow before adding steps";
             }
-            Panel componentPanel = CreateWorkflowStep(guid, wc);
-            this.ControlIDs = ids;
-            Response.Redirect("Workflows.aspx?edit=1&wid=" + workflowId);
         }
 
         private void DelWorkflowComponentBtn_Click(object sender, EventArgs e)
