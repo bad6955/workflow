@@ -143,7 +143,7 @@ namespace Workflow.Data
             List<Project> projects = ProjectUtil.GetWorkflowProjects(workflowId);
             if (projects.Count == 0)
             {
-                List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowEditorComponents(workflowId);
+                List<WorkflowComponent> comps = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
                 foreach (WorkflowComponent item in comps)
                 {
                     WorkflowComponentUtil.DeleteWorkflowComponent(item.WFComponentID);

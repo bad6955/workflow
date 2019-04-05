@@ -122,10 +122,48 @@
                 </div>
                 <div id="buildWrap"></div>
                 <div id="CreateFormBtnDiv">
+                    <hr />
+                    <h3>Form Required Approvals</h3>
+                    <p>Select the role(s) required to approve this form</p><br />
+                    <asp:DropDownList runat="server" ID="FormApproval1" onchange="saveSelection()" OnSelectedIndexChanged="FormApproval_SelectedIndexChanged" CssClass="form-selector-dropdown" /><br />
+                    <asp:DropDownList runat="server" ID="FormApproval2" Visible="false" OnSelectedIndexChanged="FormApproval_SelectedIndexChanged" onchange="saveSelection()" CssClass="form-selector-dropdown" /><br />
+                    <asp:DropDownList runat="server" ID="FormApproval3" Visible="false" OnSelectedIndexChanged="FormApproval_SelectedIndexChanged" onchange="saveSelection()" CssClass="form-selector-dropdown" /><br />
+                    <asp:DropDownList runat="server" ID="FormApproval4" Visible="false" OnSelectedIndexChanged="FormApproval_SelectedIndexChanged" onchange="saveSelection()" CssClass="form-selector-dropdown" /><br /><br />
+                    <asp:HiddenField runat="server" ID="SelectedApprover1" Value="-1" />
+                    <asp:HiddenField runat="server" ID="SelectedApprover2" Value="-1"  />
+                    <asp:HiddenField runat="server" ID="SelectedApprover3" Value="-1" />
+                    <asp:HiddenField runat="server" ID="SelectedApprover4" Value="-1" />
                     <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" CssClass="ui teal button" OnClick="CreateFormBtn_Click" OnClientClick="SaveFormEditor()" />
                 </div>
                 <asp:HiddenField runat="server" ID="formBuilderData" />
                 <script>
+                    function saveSelection() {
+                        console.log("Saving selectors");
+                        var app1 = document.getElementById("FormApproval1");
+                        var role1 = app1.options[app1.selectedIndex].value;
+                        document.getElementById("SelectedApprover1").value = role1;
+
+                        var app2 = document.getElementById("FormApproval2");
+                        if (app2 != null) {
+                            var role2 = app2.options[app2.selectedIndex].value;
+                            document.getElementById("SelectedApprover2").value = role2;
+                        }
+
+                        var app3 = document.getElementById("FormApproval3");
+                        if (app3 != null) {
+                            var role3 = app3.options[app3.selectedIndex].value;
+                            document.getElementById("SelectedApprover3").value = role3;
+                        }
+
+
+                        var app4 = document.getElementById("FormApproval4");
+                        if (app4 != null) {
+                            var role4 = app4.options[app4.selectedIndex].value;
+                            document.getElementById("SelectedApprover4").value = role4;
+                        }
+                        __doPostBack("<%=FormApproval1.ClientID %>", '');
+                    }
+
                     var builderOptions = {
                         dataType: 'json',
                         disabledActionButtons: ['data', 'save'],
@@ -165,6 +203,12 @@
                     </div>
                 </fieldset>
                 <br />
+                <hr />
+                <h3>Form Required Approvals</h3>
+                <asp:Label runat="server" ID="approvalLabel1" Visible="false"></asp:Label><br />
+                <asp:Label runat="server" ID="approvalLabel2" Visible="false"></asp:Label><br />
+                <asp:Label runat="server" ID="approvalLabel3" Visible="false"></asp:Label><br />
+                <asp:Label runat="server" ID="approvalLabel4" Visible="false"></asp:Label><br /><br />
 
                 <asp:Button runat="server" ID="SaveFormBtn" CssClass="fluid ui button" Text="Save Form" OnClick="SaveFormBtn_Click" OnClientClick="SaveFormViewer()" UseSubmitBehavior="false" /><br />
                 <asp:Button runat="server" ID="SubmitFormBtn" CssClass="fluid ui button" Text="Submit Form" OnClick="SubmitFormBtn_Click" OnClientClick="SubmitForm()" UseSubmitBehavior="false" /><br />
@@ -236,7 +280,6 @@
                     </script>
                 </div>
             </div>
-        </div>
         </div>
     </form>
 </body>

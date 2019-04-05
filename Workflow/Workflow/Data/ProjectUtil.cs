@@ -139,7 +139,7 @@ namespace Workflow.Data
             List<Form> forms = FormUtil.GetProjectForms(projectId);
             foreach (Form f in forms)
             {
-                if (f.Approved != 1)
+                if (f.Approved.Contains("0"))
                 {
                     complete = false;
                 }

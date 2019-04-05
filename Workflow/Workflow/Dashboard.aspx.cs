@@ -85,9 +85,9 @@ namespace Workflow
                 List<Form> completion = FormUtil.GetCoachForms(proj.CoachId);
                 foreach (Form comp in completion)
                 {
-                    if (comp.Approved == 0 && comp.Submission == 1)
+                    if (comp.Approved.Contains("0") && comp.Submission == 1)
                         waitingForApproval++;
-                    if (comp.Denied == 1)
+                    if (comp.Denied.Contains("1"))
                         waitingOnCompany++;
                 }
             }
@@ -143,7 +143,7 @@ namespace Workflow
                     {
                         Form f = FormUtil.GetProjectFormByTemplate(step.FormID, project.ProjectId);
                         formSteps.Add(f);
-                        if (f.Approved == 1)
+                        if (!f.Approved.Contains("0"))
                         {
                             stepsCompleted++;
                         }
@@ -170,15 +170,15 @@ namespace Workflow
                     foreach (WorkflowComponent step in steps)
                     {
                         Form f = formSteps[i];
-                        if (f.Approved == 1)
+                        if (!f.Approved.Contains("0"))
                         {
                             projectNode += "<tr class=\"positive\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
                         }
-                        else if (f.Denied == 1 && f.DenialReason.Length > 0)
+                        else if (f.Denied.Contains("1") && f.DenialReason.Length > 0)
                         {
                             projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
                         }
-                        else if (f.Denied == 1)
+                        else if (f.Denied.Contains("1"))
                         {
                             projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"close icon\"></i>Denied</td></tr>";
                         }

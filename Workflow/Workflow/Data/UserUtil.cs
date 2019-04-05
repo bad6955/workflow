@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Workflow.Models;
 using Workflow.Utility;
+using System.Net.Mail;
 
 namespace Workflow.Data
 {
@@ -62,6 +63,21 @@ namespace Workflow.Data
                 u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
             }
             conn.CloseConnection();
+            return u;
+        }
+
+        public static User SendEmail(int userId, string text)
+        {
+            User u = GetUser(userId);
+            MailMessage mail = new MailMessage("TeamLondonVCSystem@rit.edu", u.Email);
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Host = "mail.rit.edu";
+            mail.Subject = "ACTION REQUIRED - Venture Creations Notification";
+            mail.Body = text;
+            //client.Send(mail);
             return u;
         }
 

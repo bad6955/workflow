@@ -47,5 +47,11 @@ namespace Workflow.Data
             conn.CloseConnection();
             return role;
         }
+
+        public static string GetRoleName(int roleid)
+        {
+            Role r = GetRole(roleid);
+            return r.RoleName;
+        }
     }
 }

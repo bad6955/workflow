@@ -284,7 +284,14 @@ namespace Workflow
                 if (company != null)
                 {
                     User user = (User)Session["User"];
-                    Log.Info(user.Identity + " created a new company " + companyName);
+                    if (user != null)
+                    {
+                        Log.Info(user.Identity + " created a new company " + companyName);
+                    }
+                    else
+                    {
+                        Log.Info("System created a new company " + companyName);
+                    }                    
                     //display user created msg
                     CompanyResult.Visible = true;
                     CompanyResult.Text = "Created company " + companyName;
@@ -311,7 +318,14 @@ namespace Workflow
                 FirebaseUtil.ForgotPassword(lockedUser.Email);
                 UserUtil.ValidLogin(lockedUser);
                 User user = (User)Session["User"];
-                Log.Info(user.Identity + " unlocked an account " + user.Identity);
+                if(user != null)
+                {
+                    Log.Info(user.Identity + " unlocked an account " + user.Identity);
+                }
+                else
+                {
+                    Log.Info("System unlocked an account " + user.Identity);
+                }
                 UnlockResult.Visible = true;
                 UnlockResult.Text = "Unlocked account " + lockedUser.Identity;
             }
