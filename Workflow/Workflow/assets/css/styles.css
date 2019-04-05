@@ -246,6 +246,8 @@ html, body {
     height: 150px;
     margin: 0 auto;
     text-align: center;
+    font-weight:100;
+    font-size: 40px;
     background-image: url("../icons/banner.png");
     background-position: center;
     background-size: 800px;

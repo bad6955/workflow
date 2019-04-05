@@ -42,14 +42,20 @@
     <form class="omb_loginForm" id="form1" runat="server">
         <h1>Administration</h1>
         <div id="admin-top-panel">
-            <div class="admin-top-panel-items"><a href="Projects.aspx?edit=1"><i class="big inbox icon" style="color:#32cbdc"></i>
-                <h3>Create Project</h3></a>
+            <div class="admin-top-panel-items">
+                <a href="Projects.aspx?edit=1"><i class="big inbox icon" style="color: #32cbdc"></i>
+                    <h3>Create Project</h3>
+                </a>
             </div>
-            <div class="admin-top-panel-items"><a href="Forms.aspx?edit=1"><i class="big file icon" style="color:#5c3315"></i>
-                <h3>Create Form</h3></a>
+            <div class="admin-top-panel-items">
+                <a href="Forms.aspx?edit=1"><i class="big file icon" style="color: #5c3315"></i>
+                    <h3>Create Form</h3>
+                </a>
             </div>
-            <div class="admin-top-panel-items"><a href="Workflows.aspx?edit=1"><i class="big sitemap icon" style="color:#dc7a32"></i>
-                <h3>Create Workflow</h3></a>
+            <div class="admin-top-panel-items">
+                <a href="Workflows.aspx?edit=1"><i class="big sitemap icon" style="color: #dc7a32"></i>
+                    <h3>Create Workflow</h3>
+                </a>
             </div>
         </div>
         <div class="ui top attached tabular menu">
@@ -93,8 +99,8 @@
                                 <asp:Button runat="server" class="btn btn-dark" ID="RegisterBtn" Text="Register" OnClick="RegisterBtn_Click" />
                             </div>
                             <!-- HiddenFields don't need styles -->
-                            <asp:HiddenField runat="server" ID="SelectedRole" Value="-1"/>
-                            <asp:HiddenField runat="server" ID="SelectedCompany" Value="-1"/>
+                            <asp:HiddenField runat="server" ID="SelectedRole" Value="-1" />
+                            <asp:HiddenField runat="server" ID="SelectedCompany" Value="-1" />
                         </div>
                     </div>
                     <div class="middle aligned column">
@@ -139,11 +145,71 @@
                 <asp:HiddenField runat="server" ID="SelectedAccount" Value="-1" />
             </div>
         </div>
+
+        <div class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                Edit User
+            </div>
+            <div class="image content">
+                <div class="description">
+                    <div class="ui input">
+                        <asp:TextBox ID="user_firstname" runat="server" />
+                    </div>
+                    <div class="ui input">
+                        <asp:TextBox ID="user_lastname" runat="server" />
+                    </div>
+                    <div class="ui input">
+                        <asp:TextBox ID="user_email" runat="server" />
+                    </div>
+                </div>
+                <asp:DropDownList runat="server" ID="UserRole" onchange="saveUser()" AutoPostBack="false"></asp:DropDownList>
+                <asp:HiddenField runat="server" ID="UserID" Value="-1" />
+                <asp:HiddenField runat="server" ID="UserSelectedRole" Value="-1" />
+                <asp:Button runat="server" type="button" ID="SubmitUserChanges" OnClick="UpdateUser" Text="Save Changes" />
+            </div>
+        </div>
+
+
     </form>
     <script>
         $('.menu .item')
             .tab()
             ;
+        $('.ui.dropdown')
+            .dropdown()
+            ;
+
+        function EditUser(fname, lname, email, rolename, roleid, userid) {
+            $('.ui.modal').modal('show');
+            
+            document.getElementById("user_firstname").value = fname;
+            document.getElementById("user_lastname").value = lname;
+            document.getElementById("user_email").value = email;
+            document.getElementById("UserRole").value = roleid;
+            document.getElementById("UserID").value = userid;
+
+
+
+
+
+            console.log(document.getElementById("user_firstname").value+
+            document.getElementById("user_lastname").value+
+            document.getElementById("user_email").value+
+            document.getElementById("UserSelectedRole").value+
+            document.getElementById("UserID").value);
+
+
+
+
+        }
+
+        function saveUser() {
+            var roleEle = document.getElementById("UserRole");
+            var role = roleEle.options[roleEle.selectedIndex].value;
+
+            document.getElementById("UserSelectedRole").value = role;
+        }
     </script>
 </body>
 </html>

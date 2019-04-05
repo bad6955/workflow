@@ -117,14 +117,14 @@
                 <script>
                     var viewerOptions = {
                         dataType: 'json',
-                        formData: document.getElementById("formViewerData").value
+                        formData: document.getElementById("Content_formViewerData").value
                     };
-                    var formViewer = $('#renderWrap').formRender(viewerOptions);
-                    document.getElementById("formViewerData").value = formViewer.formData;
+                    var formViewer = $('#Content_renderWrap').formRender(viewerOptions);
+                    document.getElementById("Content_formViewerData").value = formViewer.formData;
 
                     function SaveFormViewer() {
                         SaveUploadedFiles();
-                        document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
+                        document.getElementById("Content_formViewerData").value = JSON.stringify(formViewer.userData);
                     }
 
                     function SaveUploadedFiles() {
@@ -132,8 +132,8 @@
                         var inputName = $("input:file")[0].name;
 
                         if (file) {
-                            document.getElementById("fileUploadName").value = file.name;
-                            document.getElementById("fileInputName").value = inputName;
+                            document.getElementById("Content_fileUploadName").value = file.name;
+                            document.getElementById("Content_fileInputName").value = inputName;
                         }
                     }
 
@@ -149,7 +149,7 @@
                             renderedForm.formRender(formRenderOpts);
 
                             console.log(renderedForm.html());
-                            document.getElementById("formViewerData").value = renderedForm.html();
+                            document.getElementById("Content_formViewerData").value = renderedForm.html();
                         });
                     }
 
@@ -159,11 +159,11 @@
                                 dataType: 'json',
                                 formData: formViewer.formData
                             };
-                            var renderedForm = $('#renderWrap');
+                            var renderedForm = $('#Content_renderWrap');
                             renderedForm.formRender(formRenderOpts);
 
                             console.log(renderedForm.html());
-                            document.getElementById("formViewerData").value = renderedForm.html();
+                            document.getElementById("Content_formViewerData").value = renderedForm.html();
                         });
                     }
                 </script>
@@ -171,10 +171,10 @@
                     <script>
                         $(function () {
                             console.log("LOCKING FORM");
-                            $("#renderWrap :input").attr("disabled", true);
+                            $("#Content_renderWrap :input").attr("disabled", true);
                         })
                         console.log(renderedForm.html());
-                        document.getElementById("formViewerData").value = renderedForm.html();
+                        document.getElementById("Content_formViewerData").value = renderedForm.html();
                         });
                     }
                 </script>

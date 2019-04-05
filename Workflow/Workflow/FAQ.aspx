@@ -215,8 +215,14 @@
     </div>
 
     <script>
-        $(".ui.accordion").accordion();
-        $(".ui.styled.accordion").accordion('open');
+        $(".ui.accordion").accordion({
+            selector: {
+                accordion: '.accordion',
+                title: '.title',
+                trigger: '.title',
+                content: '.content'
+            }
+        });
     </script>
 </body>
 </html>

@@ -55,6 +55,11 @@ namespace Workflow
             RoleSelect.DataBind();
             RoleSelect.SelectedIndex = 0;
 
+            UserRole.DataSource = RoleUtil.GetRoles();
+            UserRole.DataTextField = "roleName";
+            UserRole.DataValueField = "roleId";
+            UserRole.DataBind();
+
             //fills out company dropdown
             CompanySelect.DataSource = CompanyUtil.GetCompanies();
             CompanySelect.DataTextField = "companyName";
@@ -324,6 +329,18 @@ namespace Workflow
             ClearFields();
         }
 
+        protected void UpdateUser(object sender, EventArgs e)
+        {
+            Console.WriteLine("Works");
+            Console.Write("Works");
+            int roleID = int.Parse(UserSelectedRole.Value);
+            int userID = int.Parse(UserID.Value);
+            String fname = user_firstname.Text;
+            String lname = user_lastname.Text;
+            String email = user_email.Text;
+            User u = UserUtil.UpdateUser(userID, roleID, fname, lname, email);
+        }
+
         protected void MakeUserTable()
         {
             List<User> users = UserUtil.GetUsers();
@@ -337,7 +354,8 @@ namespace Workflow
                 {
                     Company company = CompanyUtil.GetCompany(user.CompanyId);
                     Role role = RoleUtil.GetRole(user.RoleId);
-                    userTable += "<tr><td>" + user.FullName + "</td><td>" + user.Email + "</td><td>" + company.CompanyName + "</td><td>" + role.RoleName + "</td></tr>";
+                    userTable += "<tr onclick=\"EditUser('"+user.FirstName+"','"+user.LastName+"','"+user.Email+"','"+role.RoleName+"','"+role.RoleId+"','"+user.UserId+"')\">" +
+                        "<td>" + user.FullName + "</td><td>" + user.Email + "</td><td>" + company.CompanyName + "</td><td>" + role.RoleName + "</td></tr>";
                 }
             }
             userTable += "</tbody></table>";
@@ -349,7 +367,7 @@ namespace Workflow
             List<Company> companies = CompanyUtil.GetCompanies();
             CompanyTable.InnerHtml = "";
             var companyTable = "";
-            companyTable += "<table class=\"ui orange table\"><thead><tr><th>Company Name</th><th>Edit</th></tr></thead>";
+            companyTable += "<table class=\"ui orange table\"><thead><tr><th>Company Name</th></tr></thead>";
             companyTable += "<tbody>";
             foreach (Company company in companies)
             {

@@ -47,13 +47,12 @@
             <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
         </div>
 
-            <div runat="server" id="workflowBuilder" visible="false">
-                <div id="formName">
-                    <div class="ui left corner labeled input">
-                        <asp:TextBox runat="server" ID="WorkflowName" placeholder="Workflow Name"></asp:TextBox>
-                        <div class="ui teal left corner label">
-                            <i class="white asterisk icon"></i>
-                        </div>
+        <div runat="server" id="workflowBuilder" visible="false">
+            <div id="formName">
+                <div class="ui left corner labeled input">
+                    <asp:TextBox runat="server" ID="WorkflowName" placeholder="Workflow Name"></asp:TextBox>
+                    <div class="ui teal left corner label">
+                        <i class="white asterisk icon"></i>
                     </div>
                 </div>
             </div>
@@ -62,8 +61,8 @@
                 <asp:Button runat="server" ID="AddWorkflowComponentBtn" CssClass="ui inverted secondary button" Text="Add Workflow Step" OnClick="AddWorkflowComponentBtn_Click" />
                 <asp:Button runat="server" ID="CreateWorkflowBtn" CssClass="ui teal button" Text="Create Workflow" OnClick="CreateWorkflowBtn_Click" />
             </div>
-        </div>
 
+        </div>
         <div runat="server" id="workflowViewer" visible="false">
         </div>
     </div>

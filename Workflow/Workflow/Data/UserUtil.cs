@@ -218,5 +218,25 @@ namespace Workflow.Data
             conn.CloseConnection();
             return clientList;
         }
+
+        public static User UpdateUser(int userID, int roleID, String fname, String lname, String email)
+        {
+            string createQuery = "UPDATE Users SET roleID = @roleID, FirstName = @fname, LastName = @lname, Email = @email WHERE userID = @userID";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@roleID", roleID);
+            cmd.Parameters.AddWithValue("@fname", fname);
+            cmd.Parameters.AddWithValue("@lname", lname);
+            cmd.Parameters.AddWithValue("@email", email);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            User user = null;
+            while (dr.Read())
+            {
+                user = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
+            }
+            return user;
+        }
     }
 }
