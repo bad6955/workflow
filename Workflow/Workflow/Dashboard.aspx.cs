@@ -99,18 +99,15 @@ namespace Workflow
             int hold = 0;
             foreach (Project proj in allProjects)
             {
-                if (proj.StatusId == 3)
-                    closed++;
-                if (proj.StatusId == 4)
-                    hold++;
-                if (proj.StatusId == 0 || proj.StatusId == 1)
-                    open++;
+                if (proj.StatusId == 3) { closed++; }
+                if (proj.StatusId == 4) { hold++; }
+                if (proj.StatusId == 0 || proj.StatusId == 1) { open++; }
             }
             var graphScript = "<canvas id=\"pie-chart\" width=\"800\" height=\"250\"></canvas>";
             graphScript += "<script>new Chart(document.getElementById(\"pie-chart\"), {type:'pie', data:{labels: [";
             graphScript += "\"Open\", \"Closed\", \"On Hold\"],";
             graphScript += "datasets: [{label: \"Total\", backgroundColor: [\"#dc7a32\", \"#04828F\", \"#5C3315\", \"#32CBDC\"],";
-            graphScript += "data: [" + allProjects.Count + ", " + open + ", " + closed + ", " + hold + "]}]}, options:{title:{display:true,text:'All Projects: " + projects.Count + "', position: 'bottom'}}});</script>";
+            graphScript += "data: [" + open + ", " + closed + ", " + hold + "]}]}, options:{title:{display:true,text:'All Projects: " + projects.Count + "', position: 'bottom'}}});</script>";
 
             piechart.InnerHtml += graphScript;
         }
@@ -142,7 +139,9 @@ namespace Workflow
                 } catch(Exception e) { }
 
                 // Calculate percentage of steps completed using total steps and number completed 
-                int percent = 30;//Convert.ToInt32((stepsCompleted / totalSteps));
+                int percent = 0;
+                if (stepsCompleted > 0)
+                    Convert.ToInt32((stepsCompleted / totalSteps));
 
                 projectNode += "<div class=\"item\"><div class=\"ui small image\">";
                 projectNode += "<div class=\"ui orange progress\" data-percent=" + percent + " id=\"project" + project.ProjectId + "\">";

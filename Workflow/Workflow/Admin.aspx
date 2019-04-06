@@ -146,11 +146,12 @@
             </div>
         </div>
 
-        <div class="ui modal">
+        <div class="ui small test modal transition" style="height: 200px; top: 25%; left: 25%;">
             <i class="close icon"></i>
             <div class="header">
                 Edit User
             </div>
+
             <div class="image content">
                 <div class="description">
                     <div class="ui input">
@@ -162,15 +163,31 @@
                     <div class="ui input">
                         <asp:TextBox ID="user_email" runat="server" />
                     </div>
+                    <asp:DropDownList runat="server" ID="UserRole" onchange="saveUser()" AutoPostBack="false"></asp:DropDownList>
                 </div>
-                <asp:DropDownList runat="server" ID="UserRole" onchange="saveUser()" AutoPostBack="false"></asp:DropDownList>
                 <asp:HiddenField runat="server" ID="UserID" Value="-1" />
                 <asp:HiddenField runat="server" ID="UserSelectedRole" Value="-1" />
-                <asp:Button runat="server" type="button" ID="SubmitUserChanges" OnClick="UpdateUser" Text="Save Changes" />
+            </div>
+            <div class="actions">
+                <button class="ui negative left labeled icon button" onclick="DisplayDeleteUser()"><i class='trash icon'></i>Delete User</button>
+                <div class="ui black deny button">
+                    Cancel
+                </div>
+                <asp:LinkButton class="ui positive right labeled icon button" runat="server" type="button" ID="Button1" OnClick="UpdateUser" Text="<i class='checkmark icon'></i>Save Changes" />
             </div>
         </div>
+        <div class="ui tiny delete modal">
+            <div class="header">
+                Are you sure you want to delete this user?
+            </div>
+            <div class="actions">
+                <div class="ui black deny button">
+                    Cancel
+                </div>
+                <asp:LinkButton class="ui negative left labeled icon button" runat="server" type="button" ID="LinkButton1" OnClick="DeleteUser" Text="<i class='trash icon'></i>Delete User" />
 
-
+            </div>
+        </div>
     </form>
     <script>
         $('.menu .item')
@@ -179,10 +196,13 @@
         $('.ui.dropdown')
             .dropdown()
             ;
+        function DisplayDeleteUser() {
+            $('.ui.tiny.delete.modal').modal('show');
+        }
 
         function EditUser(fname, lname, email, rolename, roleid, userid) {
-            $('.ui.modal').modal('show');
-            
+            $('.ui.small.test.modal').modal('show');
+
             document.getElementById("user_firstname").value = fname;
             document.getElementById("user_lastname").value = lname;
             document.getElementById("user_email").value = email;
@@ -190,17 +210,11 @@
             document.getElementById("UserID").value = userid;
 
 
-
-
-
-            console.log(document.getElementById("user_firstname").value+
-            document.getElementById("user_lastname").value+
-            document.getElementById("user_email").value+
-            document.getElementById("UserSelectedRole").value+
-            document.getElementById("UserID").value);
-
-
-
+            console.log(document.getElementById("user_firstname").value +
+                document.getElementById("user_lastname").value +
+                document.getElementById("user_email").value +
+                document.getElementById("UserSelectedRole").value +
+                document.getElementById("UserID").value);
 
         }
 

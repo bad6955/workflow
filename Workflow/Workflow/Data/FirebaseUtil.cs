@@ -23,6 +23,11 @@ namespace Workflow.Data
             return null;
         }
 
+        public static void DeleteUserAccess(string email)
+        {
+            
+        }
+
         public static User LoginUser(string email, string pass)
         {
             FirebaseAuthLink auth = FirebaseFunctions.AttemptLoginUser(email, pass);
@@ -58,6 +63,11 @@ namespace Workflow.Data
                 }
             }
             return null;
+        }
+
+        public static void AttemptDeleteUser(string email)
+        {
+            //Task<FirebaseAuthLink> task = FirebaseUtil.GetAuthProvider().SignInWithEmailAndPasswordAsync
         }
 
 

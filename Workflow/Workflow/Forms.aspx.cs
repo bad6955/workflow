@@ -29,6 +29,40 @@ namespace Workflow
             base.OnInit(e);
         }
 
+
+        protected void DashboardBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void ProjectBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx");
+        }
+
+        protected void FormBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        protected void WorkflowBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Workflows.aspx");
+        }
+
+        protected void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
+            Response.Redirect("Login.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ClientScript.GetPostBackEventReference(this, string.Empty);
@@ -36,7 +70,7 @@ namespace Workflow
             if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
-
+                userLbl.Text = user.FullName;
 
                 if (user.RoleId == 1)
                 {
@@ -48,7 +82,11 @@ namespace Workflow
                     CreateFormList(user.UserId);
                     CreateNewFormBtn.Visible = false;
                 }
-                else if (user.RoleId == 4 || user.RoleId == 3)
+                else if (user.RoleId == 4)
+                {
+                    AdminBtn.Visible = true;
+                }
+                if (user.RoleId == 4 || user.RoleId == 3)
                 {
                     tabMenu.Visible = true;
                     FormTab.Visible = true;
@@ -123,6 +161,10 @@ namespace Workflow
                     formBuilder.Visible = true;
                 }
             }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
 
         private void ShowFormBuilder(Form f, int roleId)
@@ -186,6 +228,7 @@ namespace Workflow
             formListing.Visible = false;
             formBuilder.Visible = false;
             formViewer.Visible = true;
+            try { 
             if(formViewerData.Value.Length == 0 || formViewerData.Value == "undefined")
             {
                 formViewerData.Value = f.FormData;
@@ -247,125 +290,127 @@ namespace Workflow
                 FormResult2.Text = "Denied :" + f.DenialReason;
             }
 
-            if (f.Submission == 1)
-            {
-                formLocking.Visible = true;
-                SubmitFormBtn.Visible = false;
-                SaveFormBtn.Visible = false;
-
-                //form has been approved
-                string[] approvals = f.Approved.Split(',');
-                string[] denials = f.Denied.Split(',');
-
-                FormResult2.Visible = true;
-                FormResult2.CssClass = "success";
-                FormResult2.Text = "Submitted: waiting for approval";
-
-                //if its a required approver viewing the form,
-                //show approve / deny buttons
-                foreach (string approvalRoleID in approvalIDs)
+                if (f.Submission == 1)
                 {
-                    int appRoleID = int.Parse(approvalRoleID);
-                    if (roleId == appRoleID)
-                    {
-                        ApproveFormBtn.Visible = true;
-                        DenyFormBtn.Visible = true;
-                        DenyReason.Visible = true;
-                    }
-                }
+                    formLocking.Visible = true;
+                    SubmitFormBtn.Visible = false;
+                    SaveFormBtn.Visible = false;
 
-                if (approvals.Length > 0)
-                {
-                    int i = 0;
-                    foreach (string approval in approvals)
-                    {
-                        if (i == 0 && approval == "0")
-                        {
-                            approvalLabel1.Text += " - Waiting on Approval";
-                        }
-                        else if(i == 0 && approval == "1")
-                        {
-                            approvalLabel1.Text += " - Approved!";
-                            approvalLabel1.CssClass = "success";
-                        }
+                    //form has been approved
+                    string[] approvals = f.Approved.Split(',');
+                    string[] denials = f.Denied.Split(',');
 
-                        if (i == 1 && approval == "0")
-                        {
-                            approvalLabel2.Text += " - Waiting on Approval";
-                        }
-                        else if (i == 1 && approval == "1")
-                        {
-                            approvalLabel2.Text += " - Approved!";
-                            approvalLabel2.CssClass = "success";
-                        }
-
-                        if (i == 2 && approval == "0")
-                        {
-                            approvalLabel3.Text += " - Waiting on Approval";
-                        }
-                        else if (i == 2 && approval == "1")
-                        {
-                            approvalLabel3.Text += " - Approved!";
-                            approvalLabel3.CssClass = "success";
-                        }
-
-                        if (i == 3 && approval == "0")
-                        {
-                            approvalLabel4.Text += " - Waiting on Approval";
-                        }
-                        else if (i == 3 && approval == "1")
-                        {
-                            approvalLabel4.Text += " - Approved!";
-                            approvalLabel4.CssClass = "success";
-                        }
-
-                        i++;    
-                    }
-                }
-                //form has been denied and the reason
-                else if (denials.Length > 0)
-                {
-                    int i = 0;
-                    foreach (string denial in denials)
-                    {
-                        if (i == 0 && denial == "1")
-                        {
-                            approvalLabel1.Text += " - Denied!";
-                            approvalLabel1.CssClass = "error";
-                        }
-
-                         if (i == 1 && denial == "1")
-                        {
-                            approvalLabel2.Text += " - Denied!";
-                            approvalLabel2.CssClass = "error";
-                        }
-
-                        if (i == 2 && denial == "1")
-                        {
-                            approvalLabel3.Text += " - Denied!";
-                            approvalLabel3.CssClass = "error";
-                        }
-
-                        if (i == 3 && denial == "1")
-                        {
-                            approvalLabel4.Text += " - Denied!";
-                            approvalLabel4.CssClass = "error";
-                        }
-
-                        i++;
-                    }
-                    //FormResult2.Visible = true;
-                    //FormResult2.CssClass = "success";
-                    //FormResult2.Text = "APPROVED";
-                }
-                /*
-                else if (f.Denied == 1)
-                {
                     FormResult2.Visible = true;
-                    FormResult2.Text = "DENIED: " + f.DenialReason;
+                    FormResult2.CssClass = "success";
+                    FormResult2.Text = "Submitted: waiting for approval";
+
+                    //if its a required approver viewing the form,
+                    //show approve / deny buttons
+                    foreach (string approvalRoleID in approvalIDs)
+                    {
+                        int appRoleID = int.Parse(approvalRoleID);
+                        if (roleId == appRoleID)
+                        {
+                            ApproveFormBtn.Visible = true;
+                            DenyFormBtn.Visible = true;
+                            DenyReason.Visible = true;
+                        }
+                    }
+
+                    if (approvals.Length > 0)
+                    {
+                        int i = 0;
+                        foreach (string approval in approvals)
+                        {
+                            if (i == 0 && approval == "0")
+                            {
+                                approvalLabel1.Text += " - Waiting on Approval";
+                            }
+                            else if (i == 0 && approval == "1")
+                            {
+                                approvalLabel1.Text += " - Approved!";
+                                approvalLabel1.CssClass = "success";
+                            }
+
+                            if (i == 1 && approval == "0")
+                            {
+                                approvalLabel2.Text += " - Waiting on Approval";
+                            }
+                            else if (i == 1 && approval == "1")
+                            {
+                                approvalLabel2.Text += " - Approved!";
+                                approvalLabel2.CssClass = "success";
+                            }
+
+                            if (i == 2 && approval == "0")
+                            {
+                                approvalLabel3.Text += " - Waiting on Approval";
+                            }
+                            else if (i == 2 && approval == "1")
+                            {
+                                approvalLabel3.Text += " - Approved!";
+                                approvalLabel3.CssClass = "success";
+                            }
+
+                            if (i == 3 && approval == "0")
+                            {
+                                approvalLabel4.Text += " - Waiting on Approval";
+                            }
+                            else if (i == 3 && approval == "1")
+                            {
+                                approvalLabel4.Text += " - Approved!";
+                                approvalLabel4.CssClass = "success";
+                            }
+
+                            i++;
+                        }
+                    }
+                    //form has been denied and the reason
+                    else if (denials.Length > 0)
+                    {
+                        int i = 0;
+                        foreach (string denial in denials)
+                        {
+                            if (i == 0 && denial == "1")
+                            {
+                                approvalLabel1.Text += " - Denied!";
+                                approvalLabel1.CssClass = "error";
+                            }
+
+                            if (i == 1 && denial == "1")
+                            {
+                                approvalLabel2.Text += " - Denied!";
+                                approvalLabel2.CssClass = "error";
+                            }
+
+                            if (i == 2 && denial == "1")
+                            {
+                                approvalLabel3.Text += " - Denied!";
+                                approvalLabel3.CssClass = "error";
+                            }
+
+                            if (i == 3 && denial == "1")
+                            {
+                                approvalLabel4.Text += " - Denied!";
+                                approvalLabel4.CssClass = "error";
+                            }
+
+                            i++;
+                        }
+                        //FormResult2.Visible = true;
+                        //FormResult2.CssClass = "success";
+                        //FormResult2.Text = "APPROVED";
+                    }
+                    /*
+                    else if (f.Denied == 1)
+                    {
+                        FormResult2.Visible = true;
+                        FormResult2.Text = "DENIED: " + f.DenialReason;
+                    }
+                    */
                 }
-                */
             }
+            catch (Exception e) { }
         }
 
         private void ReloadSection()

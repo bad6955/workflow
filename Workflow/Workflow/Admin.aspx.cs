@@ -345,14 +345,16 @@ namespace Workflow
 
         protected void UpdateUser(object sender, EventArgs e)
         {
-            Console.WriteLine("Works");
-            Console.Write("Works");
             int roleID = int.Parse(UserSelectedRole.Value);
             int userID = int.Parse(UserID.Value);
             String fname = user_firstname.Text;
             String lname = user_lastname.Text;
             String email = user_email.Text;
-            User u = UserUtil.UpdateUser(userID, roleID, fname, lname, email);
+            UserUtil.UpdateUser(userID, roleID, fname, lname, email);
+        }
+        protected void DeleteUser(object sender, EventArgs e)
+        {
+            UserUtil.DeleteUser();
         }
 
         protected void MakeUserTable()
