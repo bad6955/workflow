@@ -27,7 +27,6 @@
             <h2>My Projects</h2>
             <div class="vc-coach-dashboard-project">
             </div>
-
             <div runat="server" class="ui items" id="projectParent">
             </div>
         </div>

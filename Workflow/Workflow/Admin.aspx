@@ -10,6 +10,7 @@
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 
@@ -22,28 +23,7 @@
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
 
 </head>
-<script>
-    function saveSelection() {
-        var roleEle = document.getElementById("RoleSelect");
-        var role = roleEle.options[roleEle.selectedIndex].value;
-
-        var companyEle = document.getElementById("CompanySelect");
-        var company = companyEle.options[companyEle.selectedIndex].value;
-
-        var accountEle = document.getElementById("LockedAccountSelect");
-        var account = accountEle.options[accountEle.selectedIndex].value;
-
-        document.getElementById("SelectedRole").value = role;
-        document.getElementById("SelectedCompany").value = company;
-        document.getElementById("SelectedAccount").value = account;
-
-        /* if selected role is not a Client, default company to VC */
-        if (role != 1) {
-            document.getElementById("CompanySelect").value = 1;
-        }
-    }
-</script>
-<body>
+<body onload="AdminPageLoaded()">
     <form class="omb_loginForm" id="form1" runat="server">
         <h1>Administration</h1>
         <div id="admin-top-panel">
@@ -117,6 +97,11 @@
                     <i class="user circle icon"></i>
                 </div>
             </div>
+
+            <asp:HiddenField runat="server" ID="UserID" Value="-1" />
+            <asp:HiddenField runat="server" ID="UserSelectedRole" Value="-1" />
+            <asp:HiddenField runat="server" ID="UserFirstName" />
+            <asp:HiddenField runat="server" ID="UserLastName" />
         </div>
         <div class="ui bottom attached tab segment" data-tab="company">
             <div class="ui placeholder segment">
@@ -150,6 +135,8 @@
                 <asp:HiddenField runat="server" ID="SelectedAccount" Value="-1" />
             </div>
         </div>
+        <asp:Button runat="server" type="button" ID="UpdateUserButton" OnClick="UpdateUser" Style="display: none;" />
+
 
         <div class="ui small test modal transition" style="height: 200px; top: 25%; left: 25%;">
             <i class="close icon"></i>
@@ -160,25 +147,20 @@
             <div class="image content">
                 <div class="description">
                     <div class="ui input">
-                        <asp:TextBox ID="user_firstname" runat="server" />
+                        <asp:TextBox ID="user_firstname" runat="server" onchange="saveUser()" />
                     </div>
                     <div class="ui input">
-                        <asp:TextBox ID="user_lastname" runat="server" />
-                    </div>
-                    <div class="ui input">
-                        <asp:TextBox ID="user_email" runat="server" />
+                        <asp:TextBox ID="user_lastname" runat="server" onchange="saveUser()" />
                     </div>
                     <asp:DropDownList runat="server" ID="UserRole" onchange="saveUser()" AutoPostBack="false"></asp:DropDownList>
                 </div>
-                <asp:HiddenField runat="server" ID="UserID" Value="-1" />
-                <asp:HiddenField runat="server" ID="UserSelectedRole" Value="-1" />
             </div>
             <div class="actions">
                 <button class="ui negative left labeled icon button" onclick="DisplayDeleteUser()"><i class='trash icon'></i>Delete User</button>
                 <div class="ui black deny button">
                     Cancel
                 </div>
-                <asp:LinkButton class="ui positive right labeled icon button" runat="server" type="button" ID="Button1" OnClick="UpdateUser" Text="<i class='checkmark icon'></i>Save Changes" />
+                <button class="ui green right labeled icon button" onclick="document.getElementById('UpdateUserButton').click()"><i class='checkmark icon'></i>Save</button>
             </div>
         </div>
         <div class="ui tiny delete modal">
@@ -190,45 +172,8 @@
                     Cancel
                 </div>
                 <asp:LinkButton class="ui negative left labeled icon button" runat="server" type="button" ID="LinkButton1" OnClick="DeleteUser" Text="<i class='trash icon'></i>Delete User" />
-
             </div>
         </div>
     </form>
-    <script>
-        $('.menu .item')
-            .tab()
-            ;
-        $('.ui.dropdown')
-            .dropdown()
-            ;
-        function DisplayDeleteUser() {
-            $('.ui.tiny.delete.modal').modal('show');
-        }
-
-        function EditUser(fname, lname, email, rolename, roleid, userid) {
-            $('.ui.small.test.modal').modal('show');
-
-            document.getElementById("user_firstname").value = fname;
-            document.getElementById("user_lastname").value = lname;
-            document.getElementById("user_email").value = email;
-            document.getElementById("UserRole").value = roleid;
-            document.getElementById("UserID").value = userid;
-
-
-            console.log(document.getElementById("user_firstname").value +
-                document.getElementById("user_lastname").value +
-                document.getElementById("user_email").value +
-                document.getElementById("UserSelectedRole").value +
-                document.getElementById("UserID").value);
-
-        }
-
-        function saveUser() {
-            var roleEle = document.getElementById("UserRole");
-            var role = roleEle.options[roleEle.selectedIndex].value;
-
-            document.getElementById("UserSelectedRole").value = role;
-        }
-    </script>
 </body>
 </html>

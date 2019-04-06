@@ -1,21 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Projects.aspx.cs" Inherits="Workflow.Projects" Title="Projects" %>
 
-
 <asp:Content ID="MasterProject" ContentPlaceHolderID="Content" runat="server">
-    <script>
-        function saveSelection() {
-            var companyEle = document.getElementById("Content_CompanySelect");
-            var company = companyEle.options[companyEle.selectedIndex].value;
-            var workflowEle = document.getElementById("Content_WorkflowSelect");
-            var workflow = workflowEle.options[workflowEle.selectedIndex].value;
-            var coachEle = document.getElementById("Content_CoachSelect");
-            var coach = coachEle.options[coachEle.selectedIndex].value;
-            document.getElementById("Content_SelectedCompany").value = company;
-            document.getElementById("Content_SelectedWorkflow").value = workflow;
-            document.getElementById("Content_SelectedCoach").value = coach;
-        }
-    </script>
-    <div id="content-body">
+    <div id="content-body" onload="ProjectPageLoaded()">
         <div runat="server" id="projectListing">
             <h1>Projects</h1>
             <asp:Button runat="server" ID="CreateNewProjectBtn" Text="Create New Project" OnClick="CreateNewProjectBtn_Click" CssClass="fluid ui button" />
@@ -63,10 +49,6 @@
                     </div>
                 </div>
                 <p runat="server" id="numberShowing"></p>
-                <script>
-                    $('.ui.dropdown')
-                        .dropdown();
-                </script>
             </div>
             <div runat="server" class="ui items" id="projectList">
             </div>

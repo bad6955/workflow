@@ -235,16 +235,15 @@ namespace Workflow.Data
             return clientList;
         }
 
-        public static void UpdateUser(int userID, int roleID, String fname, String lname, String email)
+        public static void UpdateUser(int userID, int roleID, String fname, String lname)
         {
-            string query = "UPDATE Users SET roleID = @roleID, FirstName = @fname, LastName = @lname, Email = @email WHERE userID = @userID";
+            string query = "UPDATE Users SET RoleID = @roleID, FirstName = @fname, LastName = @lname WHERE UserID = @userID";
 
             MySqlCommand cmd = new MySqlCommand(query);
-            cmd.Parameters.AddWithValue("@userID", userID);
             cmd.Parameters.AddWithValue("@roleID", roleID);
             cmd.Parameters.AddWithValue("@fname", fname);
             cmd.Parameters.AddWithValue("@lname", lname);
-            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@userID", userID);
             DBConn conn = new DBConn();
             conn.ExecuteInsertCommand(cmd);
             conn.CloseConnection();

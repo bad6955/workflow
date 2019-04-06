@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="assets/js/form-builder.min.js"></script>
     <script type="text/javascript" src="assets/js/form-render.min.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />

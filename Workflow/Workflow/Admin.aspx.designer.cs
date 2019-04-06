@@ -166,6 +166,42 @@ namespace Workflow {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl UserTable;
         
         /// <summary>
+        /// UserID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UserID;
+        
+        /// <summary>
+        /// UserSelectedRole control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UserSelectedRole;
+        
+        /// <summary>
+        /// UserFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UserFirstName;
+        
+        /// <summary>
+        /// UserLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UserLastName;
+        
+        /// <summary>
         /// CompanyResult control.
         /// </summary>
         /// <remarks>
@@ -256,6 +292,15 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.HiddenField SelectedAccount;
         
         /// <summary>
+        /// UpdateUserButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button UpdateUserButton;
+        
+        /// <summary>
         /// user_firstname control.
         /// </summary>
         /// <remarks>
@@ -274,15 +319,6 @@ namespace Workflow {
         protected global::System.Web.UI.WebControls.TextBox user_lastname;
         
         /// <summary>
-        /// user_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox user_email;
-        
-        /// <summary>
         /// UserRole control.
         /// </summary>
         /// <remarks>
@@ -290,33 +326,6 @@ namespace Workflow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList UserRole;
-        
-        /// <summary>
-        /// UserID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField UserID;
-        
-        /// <summary>
-        /// UserSelectedRole control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField UserSelectedRole;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button1;
         
         /// <summary>
         /// LinkButton1 control.

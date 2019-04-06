@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/NavMasterPage.Master" AutoEventWireup="true" CodeBehind="Workflows.aspx.cs" Inherits="Workflow.Workflows" Title="Workflows" %>
 
 <asp:Content ID="MasterWorkflow" ContentPlaceHolderID="Content" runat="server">
-    <div id="content-body">
+    <div id="content-body" onload="WorkflowPageLoaded()">
         <asp:Label runat="server" ID="WorkflowError" Visible="false" CssClass="error"></asp:Label>
         <div runat="server" id="workflowListing">
             <h1>Workflows</h1>
@@ -28,10 +28,6 @@
             </div>
         <p runat="server" id="numberShowing"></p>
         </div>
-        <script>
-            $('.ui.dropdown')
-                .dropdown();
-        </script>
     </div>
     <div runat="server" class="ui items" id="workflowList">
     </div>
@@ -56,8 +52,4 @@
         </div>
     <div runat="server" id="workflowViewer" visible="false">
     </div>
-
-    <script>
-        $('.ui.selection.dropdown').dropdown();
-    </script>
 </asp:Content>

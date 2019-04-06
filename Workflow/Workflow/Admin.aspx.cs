@@ -348,10 +348,10 @@ namespace Workflow
         {
             int roleID = int.Parse(UserSelectedRole.Value);
             int userID = int.Parse(UserID.Value);
-            String fname = user_firstname.Text;
-            String lname = user_lastname.Text;
-            String email = user_email.Text;
-            UserUtil.UpdateUser(userID, roleID, fname, lname, email);
+            String fname = UserFirstName.Value.ToString();
+            String lname = UserLastName.Value.ToString();
+            UserUtil.UpdateUser(userID, roleID, fname, lname);
+            Response.Redirect("Admin.aspx");
         }
         protected void DeleteUser(object sender, EventArgs e)
         {
@@ -371,7 +371,7 @@ namespace Workflow
                 {
                     Company company = CompanyUtil.GetCompany(user.CompanyId);
                     Role role = RoleUtil.GetRole(user.RoleId);
-                    userTable += "<tr onclick=\"EditUser('"+user.FirstName+"','"+user.LastName+"','"+user.Email+"','"+role.RoleName+"','"+role.RoleId+"','"+user.UserId+"')\">" +
+                    userTable += "<tr onclick=\"EditUser('"+user.FirstName+"','"+user.LastName+"','"+role.RoleName+"',"+role.RoleId+","+user.UserId+")\">" +
                         "<td>" + user.FullName + "</td><td>" + user.Email + "</td><td>" + company.CompanyName + "</td><td>" + role.RoleName + "</td></tr>";
                 }
             }
