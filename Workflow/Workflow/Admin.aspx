@@ -36,6 +36,11 @@
         document.getElementById("SelectedRole").value = role;
         document.getElementById("SelectedCompany").value = company;
         document.getElementById("SelectedAccount").value = account;
+
+        /* if selected role is not a Client, default company to VC */
+        if (role != 1) {
+            document.getElementById("CompanySelect").value = 1;
+        }
     }
 </script>
 <body>

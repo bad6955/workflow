@@ -280,6 +280,7 @@ namespace Workflow
             CompanyError.Visible = false;
 
             string companyName = Company.Text;
+            Company.Text = "";
 
             //Validate that the logged in user has permissions to do this
 
