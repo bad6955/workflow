@@ -53,7 +53,7 @@
                 <div class="ui two column very relaxed stackable grid">
                     <div class="column">
                         <div class="ui form">
-                            <h3>User Registration</h3>
+                            <h3>User Registration <i class="small disabled question circle icon"></i></h3>
                             <asp:Label runat="server" ID="UserCreateResult" CssClass="success" Visible="false"></asp:Label>
                             <asp:Label runat="server" ID="EmailError" CssClass="error" Visible="false"></asp:Label>
                             <div class="input-group">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="middle aligned column">
-                        <h3>All Users</h3>
+                        <h3>All Users <i class="small disabled question circle icon"></i></h3>
                         <div runat="server" class="middle aligned column" id="UserTable"></div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
         </div>
         <div class="ui bottom attached tab segment" data-tab="unlock">
             <div>
-                <h3><span>Unlock Accounts</span><br />
+                <h3><span>Unlock Account <i class="small disabled question circle icon"></i></span><br />
                 </h3>
                 <asp:Label runat="server" ID="UnlockResult" CssClass="success" Visible="false"></asp:Label>
                 <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />

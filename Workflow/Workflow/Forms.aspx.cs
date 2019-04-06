@@ -29,40 +29,6 @@ namespace Workflow
             base.OnInit(e);
         }
 
-
-        protected void DashboardBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void ProjectBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Projects.aspx");
-        }
-
-        protected void FormBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Forms.aspx");
-        }
-
-        protected void WorkflowBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Workflows.aspx");
-        }
-
-        protected void LogoutBtn_Click(object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
-            Response.Redirect("Login.aspx");
-        }
-
-        protected void AdminBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Admin.aspx");
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             ClientScript.GetPostBackEventReference(this, string.Empty);
@@ -112,7 +78,7 @@ namespace Workflow
                 {
                     int formId = int.Parse(Request.QueryString["fid"]);
                     Form f = FormUtil.GetFormTemplate(formId);
-                    FormNameLbl.Text = " <a href='Forms.aspx?templates=1'>Forms</a> > "+f.FormName;
+                    FormNameLbl.Text = " <a href='Forms.aspx?templates=1'>Forms</a> > " + f.FormName;
 
                     //admin and trying to del
                     if (Request.QueryString["del"] != null && user.RoleId == 4)
@@ -167,6 +133,39 @@ namespace Workflow
             }
         }
 
+        protected void DashboardBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void ProjectBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Projects.aspx");
+        }
+
+        protected void FormBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Forms.aspx");
+        }
+
+        protected void WorkflowBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Workflows.aspx");
+        }
+
+        protected void AdminBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx");
+        }
+
+        protected void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
+            Response.Redirect("Login.aspx");
+        }
+
         private void ShowFormBuilder(Form f, int roleId)
         {
             formListing.Visible = false;
@@ -184,7 +183,7 @@ namespace Workflow
             FormApproval1.DataValueField = "RoleId";
             FormApproval1.DataTextField = "RoleName";
             FormApproval1.DataBind();
-            if(f.ApproverIDs.Length > 0)
+            if (f.ApproverIDs.Length > 0)
             {
                 FormApproval1.SelectedIndex = int.Parse(approverIDs[0]);
                 FormApproval2.Visible = true;
@@ -228,67 +227,68 @@ namespace Workflow
             formListing.Visible = false;
             formBuilder.Visible = false;
             formViewer.Visible = true;
-            try { 
-            if(formViewerData.Value.Length == 0 || formViewerData.Value == "undefined")
+            try
             {
-                formViewerData.Value = f.FormData;
-            }
-
-            if(roleId == 1)
-            {
-                if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                if (formViewerData.Value.Length == 0 || formViewerData.Value == "undefined")
                 {
-                    uploadedFiles.Visible = true;
-                    UploadedName.Text = f.LocalPath;
+                    formViewerData.Value = f.FormData;
                 }
-            }
-            else if(roleId > 1)
-            {
-                if (Request.QueryString["pfid"] != null)
+
+                if (roleId == 1)
                 {
                     if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
                     {
-                        coachUploadedFiles.Visible = true;
-                        CoachUploadedName.Text = f.LocalPath;
+                        uploadedFiles.Visible = true;
+                        UploadedName.Text = f.LocalPath;
                     }
                 }
-            }
-
-            string[] approvalIDs = null;
-            if (Request.QueryString["pfid"] != null)
-            {
-                Form ft = FormUtil.GetFormTemplate(f.FormTemplateId);
-                if (ft.ApproverIDs.Length > 0)
+                else if (roleId > 1)
                 {
-                    approvalIDs = ft.ApproverIDs.Split(',');
-                    approvalLabel1.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[0]));
-                    approvalLabel1.Visible = true;
-                    if (approvalIDs.Length > 1)
+                    if (Request.QueryString["pfid"] != null)
                     {
-                        approvalLabel2.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[1]));
-                        approvalLabel2.Visible = true;
-                    }
-                    if (approvalIDs.Length > 2)
-                    {
-                        approvalLabel3.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[2]));
-                        approvalLabel3.Visible = true;
-                    }
-                    if (approvalIDs.Length > 3)
-                    {
-                        approvalLabel4.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[3]));
-                        approvalLabel4.Visible = true;
+                        if (f.FilePath.Length > 0 && f.LocalPath.Length > 0)
+                        {
+                            coachUploadedFiles.Visible = true;
+                            CoachUploadedName.Text = f.LocalPath;
+                        }
                     }
                 }
-            }
 
-            //the form has been submitted already
-            //lock it all down and get rid of submit/save btns
-            if(f.DenialReason.Length > 0)
-            {
-                FormResult2.Visible = true;
-                FormResult2.CssClass = "error";
-                FormResult2.Text = "Denied :" + f.DenialReason;
-            }
+                string[] approvalIDs = null;
+                if (Request.QueryString["pfid"] != null)
+                {
+                    Form ft = FormUtil.GetFormTemplate(f.FormTemplateId);
+                    if (ft.ApproverIDs.Length > 0)
+                    {
+                        approvalIDs = ft.ApproverIDs.Split(',');
+                        approvalLabel1.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[0]));
+                        approvalLabel1.Visible = true;
+                        if (approvalIDs.Length > 1)
+                        {
+                            approvalLabel2.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[1]));
+                            approvalLabel2.Visible = true;
+                        }
+                        if (approvalIDs.Length > 2)
+                        {
+                            approvalLabel3.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[2]));
+                            approvalLabel3.Visible = true;
+                        }
+                        if (approvalIDs.Length > 3)
+                        {
+                            approvalLabel4.Text = RoleUtil.GetRoleName(int.Parse(approvalIDs[3]));
+                            approvalLabel4.Visible = true;
+                        }
+                    }
+                }
+
+                //the form has been submitted already
+                //lock it all down and get rid of submit/save btns
+                if (f.DenialReason.Length > 0)
+                {
+                    FormResult2.Visible = true;
+                    FormResult2.CssClass = "error";
+                    FormResult2.Text = "Denied :" + f.DenialReason;
+                }
 
                 if (f.Submission == 1)
                 {
@@ -504,7 +504,7 @@ namespace Workflow
             }
             else if (user.RoleId == 4 || user.RoleId == 3)
             {
-                if(Request.QueryString["templates"] != null)
+                if (Request.QueryString["templates"] != null)
                 {
                     forms = FormUtil.GetFormTemplates();
                 }
@@ -579,11 +579,11 @@ namespace Workflow
         {
             FormResult.Visible = false;
 
-            if(FormName.Text.Length > 0)
+            if (FormName.Text.Length > 0)
             {
                 string formJson = formBuilderData.Value.ToString();
 
-                if(formJson.Length > 0 && formJson != "undefined")
+                if (formJson.Length > 0 && formJson != "undefined")
                 {
                     User user = (User)Session["User"];
                     //updating a form not, creating it
@@ -594,7 +594,7 @@ namespace Workflow
                         Log.Info(user.Identity + " updated a form template " + FormName.Text + " with " + formJson);
                         FormResult.CssClass = "success";
                         FormResult.Text = "Updated form " + FormName.Text;
-                        Response.Redirect("Forms.aspx?fid="+ formId);
+                        Response.Redirect("Forms.aspx?fid=" + formId);
                     }
                     else
                     {
@@ -647,7 +647,7 @@ namespace Workflow
                     {
                         string localName = fileUploadName.Value.ToString();
                         string fileType = localName.Split('.')[1];
-                        string path = CompanyUtil.GetCompanyName(user.CompanyId) + "-" + p.Name + "-" + f.FormName + "."+fileType;
+                        string path = CompanyUtil.GetCompanyName(user.CompanyId) + "-" + p.Name + "-" + f.FormName + "." + fileType;
                         SaveFiles(path);
                         f = FormUtil.UpdateFormFile(f, path, localName);
                         Log.Info(user.Identity + " edited " + CompanyUtil.GetCompanyName(user.CompanyId) + " a form" + f.FormName + " from project " + p.Name + " added a file " + f.FilePath);
@@ -667,7 +667,7 @@ namespace Workflow
         private void SaveFiles(string path)
         {
             string inputName = fileInputName.Value.ToString();
-            if(inputName.Length > 0)
+            if (inputName.Length > 0)
             {
                 HttpPostedFile file = Request.Files[inputName];
                 if (file != null && file.ContentLength > 0)
@@ -725,7 +725,7 @@ namespace Workflow
 
                 User user = (User)Session["User"];
                 FormUtil.ApproveForm(formId, user.RoleId);
-                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " +p.Name);
+                Log.Info(user.Identity + " approved " + CompanyUtil.GetCompanyName(p.CompanyId) + "'s form " + f.FormName + " - " + p.Name);
                 FormResult.CssClass = "success";
                 FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
@@ -753,7 +753,7 @@ namespace Workflow
                 FormUtil.DenyForm(formId, denyText, user.RoleId);
                 FormResult.CssClass = "success";
                 FormResult.Text = "Denied form " + f.FormName;
-                if(denyText.Length > 0)
+                if (denyText.Length > 0)
                 {
                     FormResult.Text += ": " + denyText;
                 }
@@ -777,7 +777,7 @@ namespace Workflow
 
         protected void FormTab_Click(object sender, EventArgs e)
         {
-            if(Request.QueryString["templates"] != null)
+            if (Request.QueryString["templates"] != null)
             {
                 Response.Redirect("Forms.aspx");
             }

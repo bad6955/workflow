@@ -16,7 +16,8 @@
 <body id="faq-background">
     <div id="faq-body">
         <div id="faq-header">
-            <h1>Frequently Asked Questions</h1>
+            <h1>FAQ</h1>
+            <h2>Topics are ordered by page</h2>
         </div>
         <div id="faq-general">
             <div class="ui accordion">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="content">
                     <div class="content">
-                        <div class="ui styled accordion">
+                        <div class="ui accordion">
                             <div class="title">
                                 <i class="dropdown icon"></i>
                                 How do I get access?
@@ -71,7 +72,7 @@
                 </div>
                 <div class="content">
                     <div class="content">
-                        <div class="ui styled accordion">
+                        <div class="ui accordion">
                             <div class="title">
                                 <i class="dropdown icon"></i>
                                 What's the difference between a form and a template?
@@ -148,7 +149,7 @@
                 </div>
                 <div class="content">
                     <div class="content">
-                        <div class="ui styled accordion">
+                        <div class="ui accordion">
                             <div class="title">
                                 <i class="dropdown icon"></i>
                                 Why can I not make changes to a workflow?
@@ -179,7 +180,7 @@
                 </div>
                 <div class="content">
                     <div class="content">
-                        <div class="ui styled accordion">
+                        <div class="ui accordion">
                             <div class="title">
                                 <i class="dropdown icon"></i>
                                 I am trying to make a new project but I cannot find the right company in the list?

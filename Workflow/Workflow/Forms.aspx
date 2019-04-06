@@ -1,8 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" ValidateRequest="false" Title="Forms" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Workflow.Forms" ValidateRequest="false" %>
 
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <title>Forms</title>
     <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png" />
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
@@ -10,15 +12,13 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="assets/js/form-builder.min.js"></script>
     <script type="text/javascript" src="assets/js/form-render.min.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/semantic.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
-
-    <title>Forms</title>
 </head>
 <body>
+    <%-- --%>
     <form id="form1" runat="server" enctype="multipart/form-data">
         <div id="navigation">
             <div id="top-bar">
@@ -55,7 +55,8 @@
                 </div>
             </div>
         </div>
-        <div id="content-body"  onload="FormsPageLoaded()">
+        <div id="content-body">
+
             <div runat="server" id="formListing">
                 <h1>Forms</h1>
                 <asp:Button runat="server" ID="CreateNewFormBtn" Text="Create New Template" OnClick="CreateNewFormBtn_Click" CssClass="fluid ui button" />
@@ -91,6 +92,12 @@
                         </div>
                     </div>
                     <p runat="server" id="numberShowing"></p>
+                    <script>
+                        $('.ui.dropdown')
+                            .dropdown();
+                        $('.menu .item')
+                            .tab();
+                    </script>
                 </div>
                 <div runat="server" id="tabMenu" visible="false" class="ui top attached tabular menu">
                     <asp:Button runat="server" ID="FormTab" Visible="false" class="item active" data-tab="forms" Text="Forms" OnClick="FormTab_Click"></asp:Button>
@@ -102,7 +109,7 @@
             </div>
 
             <div runat="server" id="formBuilder" visible="false">
-                <div onload="FormBuilder()">
+                <div>
                     <asp:Label runat="server" ID="FormResult" Visible="false"></asp:Label>
                     <div id="formName">
                         <div class="ui left corner labeled input">
@@ -131,6 +138,42 @@
                     <asp:Button runat="server" ID="CreateFormBtn" Text="Create Form" CssClass="ui teal button" OnClick="CreateFormBtn_Click" OnClientClick="SaveFormEditor()" />
                 </div>
                 <asp:HiddenField runat="server" ID="formBuilderData" />
+                <script>
+                    function saveSelection() {
+                        console.log("Saving selectors");
+                        var app1 = document.getElementById("FormApproval1");
+                        var role1 = app1.options[app1.selectedIndex].value;
+                        document.getElementById("SelectedApprover1").value = role1;
+                        var app2 = document.getElementById("FormApproval2");
+                        if (app2 != null) {
+                            var role2 = app2.options[app2.selectedIndex].value;
+                            document.getElementById("SelectedApprover2").value = role2;
+                        }
+                        var app3 = document.getElementById("FormApproval3");
+                        if (app3 != null) {
+                            var role3 = app3.options[app3.selectedIndex].value;
+                            document.getElementById("SelectedApprover3").value = role3;
+                        }
+                        var app4 = document.getElementById("FormApproval4");
+                        if (app4 != null) {
+                            var role4 = app4.options[app4.selectedIndex].value;
+                            document.getElementById("SelectedApprover4").value = role4;
+                        }
+                        __doPostBack("<%=FormApproval1.ClientID %>", '');
+                    }
+                    var builderOptions = {
+                        dataType: 'json',
+                        disabledActionButtons: ['data', 'save'],
+                        controlPosition: 'left',
+                        formData: document.getElementById("formBuilderData").value
+                    };
+                    var formBuilder = $('#buildWrap').formBuilder(builderOptions);
+                    document.getElementById("formBuilderData").value = formBuilder.formData;
+                    console.log("FormData: " + formBuilder.formData);
+                    function SaveFormEditor() {
+                        document.getElementById("formBuilderData").value = formBuilder.formData;
+                    }
+                </script>
             </div>
 
             <div runat="server" id="formViewer" visible="false">
@@ -153,8 +196,7 @@
                     <div runat="server" id="coachUploadedFiles" visible="false">
                         Attached File:
                                 <p>
-                                    <asp:Label runat="server" ID="CoachUploadedName"></asp:Label>
-                                </p>
+                                    <asp:Label runat="server" ID="CoachUploadedName"></asp:Label></p>
                         <asp:Button runat="server" ID="CoachDownloadBtn" OnClick="CoachDownloadBtn_Click" Text="Download File" CssClass="fluid ui button" />
                     </div>
                 </fieldset>
@@ -175,7 +217,51 @@
                 <asp:HiddenField runat="server" ID="formViewerData" />
                 <asp:HiddenField runat="server" ID="fileUploadName" />
                 <asp:HiddenField runat="server" ID="fileInputName" />
-
+                <script>
+                    var viewerOptions = {
+                        dataType: 'json',
+                        formData: document.getElementById("formViewerData").value
+                    };
+                    var formViewer = $('#renderWrap').formRender(viewerOptions);
+                    document.getElementById("formViewerData").value = formViewer.formData;
+                    function SaveFormViewer() {
+                        SaveUploadedFiles();
+                        document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
+                    }
+                    function SaveUploadedFiles() {
+                        var file = $("input:file")[0].files[0];
+                        var inputName = $("input:file")[0].name;
+                        if (file) {
+                            document.getElementById("fileUploadName").value = file.name;
+                            document.getElementById("fileInputName").value = inputName;
+                        }
+                    }
+                    function SubmitForm() {
+                        SaveFormViewer();
+                        jQuery(function () {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formViewer.formData
+                            };
+                            var renderedForm = $('<div>');
+                            renderedForm.formRender(formRenderOpts);
+                            console.log(renderedForm.html());
+                            document.getElementById("formViewerData").value = renderedForm.html();
+                        });
+                    }
+                    function ApproveForm() {
+                        jQuery(function () {
+                            formRenderOpts = {
+                                dataType: 'json',
+                                formData: formViewer.formData
+                            };
+                            var renderedForm = $('#renderWrap');
+                            renderedForm.formRender(formRenderOpts);
+                            console.log(renderedForm.html());
+                            document.getElementById("formViewerData").value = renderedForm.html();
+                        });
+                    }
+                </script>
                 <div runat="server" id="formLocking" visible="false">
                     <script>
                         $(function () {
@@ -188,5 +274,4 @@
         </div>
     </form>
 </body>
-
 </html>

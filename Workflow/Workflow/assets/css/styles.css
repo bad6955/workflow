@@ -235,34 +235,52 @@ html, body {
 
 /****************************** FAQ PAGE *******************************/
 #faq-background {
-    background-color: #D95E00;
+    background: rgb(217,94,0);
+    background: linear-gradient(0deg, rgba(217,94,0,1) 0%, rgba(255,181,111,1) 38%, rgba(255,255,255,1) 100%);
 }
 #faq-body {
-    width: 85%;
+    width: 50%;
     margin: auto;
 }
 #faq-header {
     width: 100%;
-    height: 150px;
     margin: 0 auto;
     text-align: center;
     font-weight:100;
     font-size: 40px;
-    background-image: url("../icons/banner.png");
     background-position: center;
-    background-size: 800px;
 }
+#faq-header h1 {
+    padding-top: 3em;
+    color: rgb(217,94,0);
+}
+    #faq-header h2 {
+        padding-top: 0;
+        color: #999999;
+        font-weight: 100;
+    }
 
 #faq-general {
-    background-color: #efefef;
-    min-height: 79vh;
+    background-color: #f9f9f9;
+    border: 2px solid #e2e2e2;
+    border-radius: 2px;
 }
-#faq-general .title {
-    font-size: 24px;
-}
+    #faq-general .title {
+        font-size: 24px;
+        color: #999999;
+        font-weight:100;
+    }
+    #faq-general .content .content .title {
+        font-size: 15px;
+        width: 100%;
+    }
 
     #faq-general .title .content .title {
         font-size: 20px;
+    }
+    #faq-general .ui.accordion {
+        width: 90%;
+        margin: auto;
     }
 /****************************** DASHBOARD PAGE *******************************/
 
@@ -460,10 +478,15 @@ input:-webkit-autofill:active {
     margin: auto;
     text-align: center;
 }
-#Content_ProjectNamePanel {
+
+#extra-project-info {
+    width: 80%;
+    margin: auto;
+}
+#ProjectNamePanel {
     width: 100%;
 }
-#Content_ProjectNotes {
+#ProjectNotes {
     width: 100%;
     border-radius: 4px;
 }
@@ -501,17 +524,17 @@ input:-webkit-autofill:active {
 }
 
 /***************************************WORKFLOW PAGE*********************************************/
-#Content_workflowList .ui.small.image {
+#workflowList .ui.small.image {
     color: #dc7a32;
     text-align: center;
 }
 
-#Content_projectList .ui.small.image {
+#projectList .ui.small.image {
     color: #32cbdc;
     text-align: center;
 }
 
-#Content_formList .ui.small.image {
+#formList .ui.small.image {
     color: #5c3315;
     text-align: center;
 }
