@@ -5,6 +5,7 @@ using System.Web.UI;
 using Workflow.Data;
 using Workflow.Utility;
 using Workflow.Models;
+using System.Configuration;
 
 namespace Workflow
 {
@@ -23,32 +24,32 @@ namespace Workflow
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string lockoutSetting = ConfigurationManager.AppSettings.Get("AdminPageLockout");
             //validates that the user is logged in
-            if (Session["User"] != null)
+            if (Session["User"] != null || lockoutSetting.Equals("false"))
             {
                 User user = (User)Session["User"];
 
                 //checks user is an admin
-                if (user.RoleId == 4)
+                if (user.RoleId == 4 || lockoutSetting.Equals("false"))
                 {
-                    //DEBUG move selectors from below, here
+                    SetupAdminPage();
                 }
                 else
                 {
                     //kicks them out if they arent
-                    //DEBUG uncomment the below in production
-                    //Response.Redirect("Login.aspx");
+                    Response.Redirect("Login.aspx");
                 }
             }
             else
             {
                 //kicks them out if they arent
-                //DEBUG uncomment the below in production
-                //Response.Redirect("Login.aspx");
+                Response.Redirect("Login.aspx");
             }
+        }
 
-            //DEBUG move into the nested if above
-            //fills out role selector dropdown
+        private void SetupAdminPage()
+        {
             RoleSelect.DataSource = RoleUtil.GetRoles();
             RoleSelect.DataTextField = "roleName";
             RoleSelect.DataValueField = "roleId";
@@ -60,7 +61,6 @@ namespace Workflow
             UserRole.DataValueField = "roleId";
             UserRole.DataBind();
 
-            //fills out company dropdown
             CompanySelect.DataSource = CompanyUtil.GetCompanies();
             CompanySelect.DataTextField = "companyName";
             CompanySelect.DataValueField = "companyId";
@@ -72,7 +72,6 @@ namespace Workflow
             LockedAccountSelect.DataValueField = "UserId";
             LockedAccountSelect.DataBind();
             LockedAccountSelect.SelectedIndex = 0;
-            //DEBUG end move
 
             MakeUserTable();
             MakeCompanyTable();
