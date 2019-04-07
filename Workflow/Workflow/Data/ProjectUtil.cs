@@ -30,13 +30,16 @@ namespace Workflow.Data
             foreach(WorkflowComponent wc in workflowComponents)
             {
                 //create completion status and forms for the project
-                Form f = FormUtil.CreateForm(wc.FormID, p.ProjectId);
-
-                //creates notifications for each member of the company and each form
-                List<User> clients = UserUtil.GetClients(companyId);
-                foreach(User client in clients)
+                if (wc.FormID != -1)
                 {
-                    FeedUtil.CreateProjectFormFeedItem("Form " + f.FormName + " needs completion for " + name, client.UserId, p.ProjectId, f.FormId);
+                    Form f = FormUtil.CreateForm(wc.FormID, p.ProjectId);
+
+                    //creates notifications for each member of the company and each form
+                    List<User> clients = UserUtil.GetClients(companyId);
+                    foreach (User client in clients)
+                    {
+                        FeedUtil.CreateProjectFormFeedItem("Form " + f.FormName + " needs completion for " + name, client.UserId, p.ProjectId, f.FormId);
+                    }
                 }
             }
 

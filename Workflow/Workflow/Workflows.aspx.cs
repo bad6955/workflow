@@ -493,9 +493,12 @@ namespace Workflow
             {
                 foreach (WorkflowComponent com in comps)
                 {
-                    workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
-                    workflowNode += "<span class=\"ProgressBar-stepLabel\"><a href='Forms.aspx?fid=" + com.FormID + "'>" + com.ComponentTitle + "</a></span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetFormTemplate(com.FormID).FormName + "</a></h3></div></div></li>";
+                    if (com.FormID != -1)
+                    {
+                        workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
+                        workflowNode += "<span class=\"ProgressBar-stepLabel\"><a href='Forms.aspx?fid=" + com.FormID + "'>" + com.ComponentTitle + "</a></span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                        workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetFormTemplate(com.FormID).FormName + "</a></h3></div></div></li>";
+                    }
                 }
             } catch (Exception e) { }
             workflowNode += "</ol></div>";
