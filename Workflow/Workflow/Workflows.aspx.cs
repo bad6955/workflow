@@ -484,7 +484,7 @@ namespace Workflow
             List<Form> forms = new List<Form>();
             foreach (WorkflowComponent comp in comps)
             {
-                forms.Add(FormUtil.GetForm(comp.FormID));
+                forms.Add(FormUtil.GetFormTemplate(comp.FormID));
 
             }
             workflowNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
@@ -495,7 +495,7 @@ namespace Workflow
                 {
                     workflowNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\"><svg class=\"ProgressBar-icon\"><use xlink:href=\"#checkmark-bold\"/></svg>";
                     workflowNode += "<span class=\"ProgressBar-stepLabel\"><a href='Forms.aspx?fid=" + com.FormID + "'>" + com.ComponentTitle + "</a></span><div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetForm(com.FormID).FormName + "</a></h3></div></div></li>";
+                    workflowNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3><a href='Forms.aspx?fid=" + com.FormID + "'>" + FormUtil.GetFormTemplate(com.FormID).FormName + "</a></h3></div></div></li>";
                 }
             } catch (Exception e) { }
             workflowNode += "</ol></div>";
