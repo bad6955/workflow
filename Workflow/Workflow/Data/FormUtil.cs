@@ -127,7 +127,10 @@ namespace Workflow.Data
             List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId);
             foreach (WorkflowComponent wc in workflowComponents)
             {
-                formList.Add(GetProjectFormByTemplate(wc.FormID, projectId));
+                if(wc.FormID != -1)
+                {
+                    formList.Add(GetProjectFormByTemplate(wc.FormID, projectId));
+                }
             }
             return formList;
         }
