@@ -202,23 +202,23 @@ namespace Workflow
                         Form f = formSteps[i];
                         if (!f.Approved.Contains("0"))
                         {
-                            projectNode += "<tr class=\"positive\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"icon checkmark\"></i>Approved</td></tr>";
+                            projectNode += "<tr><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td class=\"positive\"><i class=\"icon checkmark\"></i>Approved</td></tr>";
                         }
                         else if (f.Denied.Contains("1") && f.DenialReason.Length > 0)
                         {
-                            projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
+                            projectNode += "<tr><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td class=\"negative\"><i class=\"pencil alternate icon\"></i>Needs Modification</td></tr>";
                         }
                         else if (f.Denied.Contains("1"))
                         {
-                            projectNode += "<tr class=\"negative\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"close icon\"></i>Denied</td></tr>";
+                            projectNode += "<tr><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td class=\"negative\"><i class=\"close icon\"></i>Denied</td></tr>";
                         }
                         else if (f.Submission == 1)
-                        {
-                            projectNode += "<tr class=\"disabled\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"battery half icon\"></i>In Progress</td></tr>";
+                        { 
+                            projectNode += "<tr><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td class=\"disabled\"><i class=\"battery half icon\"></i>In Progress</td></tr>";
                         }
                         else
                         {
-                            projectNode += "<tr class=\"disabled\"><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td><i class=\"close icon\"></i>Not Started</td></tr>";
+                            projectNode += "<tr><td><a href='Forms.aspx?pfid=" + f.FormId + "'>" + step.ComponentTitle + "</a></td><td class=\"disabled\"><i class=\"close icon\"></i>Not Started</td></tr>";
                         }
                         i++;
                     }
