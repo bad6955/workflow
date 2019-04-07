@@ -53,7 +53,9 @@
                 <div class="ui two column very relaxed stackable grid">
                     <div class="column">
                         <div class="ui form">
-                            <h3>User Registration <i class="small disabled question circle icon"></i></h3>
+                            <h3>User Registration 
+                                <i data-content="A user can select to change passwords after account creation." class="small disabled question circle icon"></i>
+                            </h3>
                             <asp:Label runat="server" ID="UserCreateResult" CssClass="success" Visible="false"></asp:Label>
                             <asp:Label runat="server" ID="EmailError" CssClass="error" Visible="false"></asp:Label>
                             <div class="input-group">
@@ -89,7 +91,7 @@
                         </div>
                     </div>
                     <div class="middle aligned column">
-                        <h3>All Users <i class="small disabled question circle icon"></i></h3>
+                        <h3>All Users <i data-content="Click on a user to edit." class="small disabled question circle icon"></i></h3>
                         <div runat="server" class="middle aligned column" id="UserTable"></div>
                     </div>
                 </div>
@@ -126,7 +128,8 @@
         </div>
         <div class="ui bottom attached tab segment" data-tab="unlock">
             <div>
-                <h3><span>Unlock Account <i class="small disabled question circle icon"></i></span><br />
+                <h3><span>Unlock Account <i class="small disabled question circle icon"></i></span>
+                    <br />
                 </h3>
                 <asp:Label runat="server" ID="UnlockResult" CssClass="success" Visible="false"></asp:Label>
                 <asp:Label runat="server" ID="UnlockError" CssClass="error" Visible="false"></asp:Label><br />
@@ -163,7 +166,7 @@
                 <button class="ui green right labeled icon button" onclick="document.getElementById('UpdateUserButton').click()"><i class='checkmark icon'></i>Save</button>
             </div>
         </div>
-        <div class="ui tiny delete modal">
+        <div class="ui tiny delete modal" style="height: 120px; top: 45%; left: 30%;">
             <div class="header">
                 Are you sure you want to delete this user?
             </div>
@@ -174,6 +177,9 @@
                 <asp:LinkButton class="ui negative left labeled icon button" runat="server" type="button" ID="LinkButton1" OnClick="DeleteUser" Text="<i class='trash icon'></i>Delete User" />
             </div>
         </div>
+        <script>
+            $('.small.disabled.question.circle.icon').popup();
+        </script>
     </form>
 </body>
 </html>

@@ -216,14 +216,7 @@
     </div>
 
     <script>
-        $(".ui.accordion").accordion({
-            selector: {
-                accordion: '.accordion',
-                title: '.title',
-                trigger: '.title',
-                content: '.content'
-            }
-        });
+        $(".ui.accordion").accordion();
     </script>
 </body>
 </html>

@@ -27,7 +27,6 @@
                         <i class="large user circle outline icon"></i>
                         <h1>
                             <asp:Label runat="server" ID="userLbl"></asp:Label></h1>
-                        <!-- not passing argument ID=user -->
                         <div id="dropdown-content">
                             <asp:Button runat="server" ID="AdminBtn" Text="Admin Panel" OnClick="AdminBtn_Click" Visible="false" />
                             <a href="AccountSettings.aspx">
@@ -50,9 +49,9 @@
                         <li>
                             <img src="assets/icons/form.png" /><asp:Button runat="server" ID="form" OnClick="FormBtn_Click" Text="Forms" /></li>
                     </ul>
-                    <div id="help">
+                    <a id="help" href="FAQ.aspx">
                         <img src="assets/icons/help.png" />
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

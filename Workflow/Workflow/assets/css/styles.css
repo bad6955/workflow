@@ -246,8 +246,9 @@ html, body {
     width: 100%;
     margin: 0 auto;
     text-align: center;
-    font-weight:100;
+    font-weight: 100;
     font-size: 40px;
+    padding-bottom: 2em;
     background-position: center;
 }
 #faq-header h1 {
@@ -256,8 +257,10 @@ html, body {
 }
     #faq-header h2 {
         padding-top: 0;
-        color: #999999;
+        color: #666666;
         font-weight: 100;
+        font-size: 14px;
+        margin-top: 0;
     }
 
 #faq-general {
@@ -479,7 +482,7 @@ input:-webkit-autofill:active {
     text-align: center;
 }
 
-#extra-project-info {
+#extra-project-info, #more-project-info {
     width: 80%;
     margin: auto;
 }

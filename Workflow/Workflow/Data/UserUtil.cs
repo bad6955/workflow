@@ -98,6 +98,24 @@ namespace Workflow.Data
             return users;
         }
 
+        public static List<User> GetUsersByCompany(int compID)
+        {
+            string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users WHERE CompanyID=@companyID";
+
+            MySqlCommand cmd = new MySqlCommand(createQuery);
+            cmd.Parameters.AddWithValue("@companyID", compID);
+            DBConn conn = new DBConn();
+            MySqlDataReader dr = conn.ExecuteSelectCommand(cmd);
+            List<User> users = new List<User>();
+            while (dr.Read())
+            {
+                User u = new User((int)dr["UserID"], (int)dr["RoleID"], (int)dr["CompanyID"], (string)dr["Email"], (string)dr["FirstName"], (string)dr["LastName"], (int)dr["InvalidLoginCt"], (int)dr["AdminPanelToggle"]);
+                users.Add(u);
+            }
+            conn.CloseConnection();
+            return users;
+        }
+
         public static User GetUser(int userId)
         {
             string createQuery = "SELECT UserID, RoleID, CompanyID, Token, Email, FirstName, LastName, InvalidLoginCt, AdminPanelToggle from Users where UserID = @userId";

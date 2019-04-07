@@ -77,7 +77,7 @@ namespace Workflow
                     else
                     {
                         projectViewer.Visible = true;
-                        if(user.RoleId == 4 || user.RoleId == 3)
+                        if (user.RoleId == 4 || user.RoleId == 3)
                         {
                             if (ProjectUtil.CheckProjectCompletion(projId))
                             {
@@ -135,29 +135,38 @@ namespace Workflow
 
         protected void ProjectView(Project p)
         {
+            Company c = CompanyUtil.GetCompany(p.CompanyId);
+            List<User> users = UserUtil.GetUsersByCompany(c.CompanyId);
             projectNode += "<h2><a href='Projects.aspx'>Projects</a> > " + p.Name + "</h2><div id=\"project-top-div\"><div class=\"project-info\"><div id=\"project-top\"><div class=\"project-item\">";
-            projectNode += "<i class=\"huge circular building icon\"></i><h3>" + CompanyUtil.GetCompany(p.CompanyId).CompanyName + "</h3></div><div class=\"project-item\">";
+            projectNode += "<i class=\"huge circular building icon\"></i><h3>" + c.CompanyName + "</h3></div><div class=\"project-item\">";
             projectNode += "<i class=\"huge circular user icon\"></i><h3>" + UserUtil.GetCoach(p.CoachId).FullName + "</h3></div>";
             projectNode += "<div class=\"project-item\"><i class=\"huge circular money icon\"></i>";
             projectNode += "<h3>Funding Source</h3></div></div></div>";
-            projectNode += "<div id=\"extra-project-info\">";
-            projectNode += "<h3 style=\"font-weight:100\">Project Notes:</h3><p>" + p.Notes + "</p></div></div>";
+
+
+            projectNode += "<div id=\"more-project-info\"><div class=\"ui accordion\"><div class=\"title\"><i class=\"dropdown icon\"></i>Company Contact";
+            projectNode += "</div><div class=\"content\">";
+
+            foreach (User i in users)
+                projectNode += "<p>" + i.FullName + " | " + i.Email + "</p><br>";
+
+            projectNode += "</div></div><div class=\"ui accordion\"><div class=\"title\"><i class=\"dropdown icon\"></i>Project Notes</div>";
+            projectNode += "<div class=\"content\"><p class=\"transition hidden\">" + p.Notes + "</p></div></div></div></div></div>";
+            projectNode += "<script>$('.ui.accordion').accordion();</script>";
 
             projectNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
             try
             {
                 foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
                 {
-                    if (com.FormID != -1)
-                    {
-                        Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
-                        projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
-                        projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";
-                        projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                        projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
-                    }
+                    Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
+                    projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
+                    projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";
+                    projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
                 }
-            } catch(Exception e) { }
+            }
+            catch (Exception e) { }
             projectNode += "</ol></div>";
 
             projectViewer.InnerHtml += projectNode;
@@ -256,7 +265,7 @@ namespace Workflow
                         {
                             Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
                             User user = (User)Session["User"];
-                            Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " +UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
+                            Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " + UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
                             Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
                         }
                     }

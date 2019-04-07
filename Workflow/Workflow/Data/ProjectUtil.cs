@@ -67,7 +67,7 @@ namespace Workflow.Data
 
         public static List<Project> GetProjects()
         {
-            string query = "SELECT ProjectID, WorkflowID, CompanyID, StatusID, CoachID, ProjectName, ProjectNotes from Project";
+            string query = "SELECT ProjectID, WorkflowID, CompanyID, StatusID, CoachID, ProjectName, ProjectNotes from Project ORDER BY ProjectID DESC";
 
             MySqlCommand cmd = new MySqlCommand(query);
             DBConn conn = new DBConn();

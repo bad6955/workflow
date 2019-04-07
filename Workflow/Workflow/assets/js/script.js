@@ -55,26 +55,7 @@ function saveUser() {
  * ******* FORMS JS
  */
 function FormsPageLoaded() {
-    $('.ui.dropdown')
-        .dropdown();
-    $('.menu .item')
-        .tab();
-    var viewerOptions = {
-        dataType: 'json',
-        formData: document.getElementById("formViewerData").value
-    };
-    var formViewer = $('#renderWrap').formRender(viewerOptions);
-    document.getElementById("formViewerData").value = formViewer.formData;
 
-    var builderOptions = {
-        dataType: 'json',
-        disabledActionButtons: ['data', 'save'],
-        controlPosition: 'left',
-        formData: document.getElementById("formBuilderData").value
-    };
-    var formBuilder = $('#buildWrap').formBuilder(builderOptions);
-    document.getElementById("formBuilderData").value = formBuilder.formData;
-    console.log("FormData: " + formBuilder.formData);
 }
 function SaveFormViewer() {
     SaveUploadedFiles();
