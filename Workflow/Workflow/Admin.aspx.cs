@@ -26,12 +26,12 @@ namespace Workflow
         {
             string lockoutSetting = ConfigurationManager.AppSettings.Get("AdminPageLockout");
             //validates that the user is logged in
-            if (Session["User"] != null || lockoutSetting.Equals("false"))
+            if (Session["User"] != null)
             {
                 User user = (User)Session["User"];
 
                 //checks user is an admin
-                if (user.RoleId == 4 || lockoutSetting.Equals("false"))
+                if (user.RoleId == 4)
                 {
                     SetupAdminPage();
                 }
@@ -40,6 +40,10 @@ namespace Workflow
                     //kicks them out if they arent
                     Response.Redirect("Login.aspx");
                 }
+            }
+            else if (lockoutSetting.Equals("false"))
+            {
+                SetupAdminPage();
             }
             else
             {
