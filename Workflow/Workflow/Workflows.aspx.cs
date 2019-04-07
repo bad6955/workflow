@@ -484,8 +484,10 @@ namespace Workflow
             List<Form> forms = new List<Form>();
             foreach (WorkflowComponent comp in comps)
             {
-                forms.Add(FormUtil.GetFormTemplate(comp.FormID));
-
+                if(comp.FormID != -1)
+                {
+                    forms.Add(FormUtil.GetFormTemplate(comp.FormID));
+                }
             }
             workflowNode += "<div class=\"wrapper\"><ol class=\"ProgressBar\">";
 

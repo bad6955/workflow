@@ -148,11 +148,14 @@ namespace Workflow
             {
                 foreach (WorkflowComponent com in WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId))
                 {
-                    Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
-                    projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
-                    projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";      
-                    projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
-                    projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
+                    if (com.FormID != -1)
+                    {
+                        Form form = FormUtil.GetProjectFormByTemplate(com.FormID, p.ProjectId);
+                        projectNode += "<li class=\"ProgressBar-step\" id=\"li" + com.WFComponentID + "\">";
+                        projectNode += "<svg class=\"ProgressBar-icon\"></svg><a href='Forms.aspx?pfid=" + form.FormId + "'><span class=\"ProgressBar-stepLabel\">" + com.ComponentTitle + "</a></span>";
+                        projectNode += "<div class=\"li-dropdown\" id=\"li-drop" + com.WFComponentID + "\">";
+                        projectNode += "<div class=\"workflow-form\"><i class=\"big inbox icon\"></i><h3>" + form.FormName + "</h3></div></div></li>";
+                    }
                 }
             } catch(Exception e) { }
             projectNode += "</ol></div>";
