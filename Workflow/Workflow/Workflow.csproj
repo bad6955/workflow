@@ -181,7 +181,7 @@
     <Content Include="assets\icons\ritchie.png" />
     <Content Include="assets\js\form-render.min.js" />
     <Content Include="assets\js\form-builder.min.js" />
-    <Content Include="assets\js\script.js" />
+    <Content Include="assets\js\formScript.js" />
     <Content Include="FAQ.aspx" />
     <Content Include="NavMasterPage.Master" />
     <None Include="packages.config">
@@ -193,6 +193,9 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="assets\js\adminScript.js" />
+    <Content Include="assets\js\workflowScript.js" />
+    <Content Include="assets\js\projectScript.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountSettings.aspx" />

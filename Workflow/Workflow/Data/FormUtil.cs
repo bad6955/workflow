@@ -207,7 +207,7 @@ namespace Workflow.Data
             string defaultApproved = "0";
             string defaultDenied = "0";
             Form ft = GetFormTemplate(f2.FormTemplateId);
-            string[] approvalIDs = null;
+            string[] approvalIDs = new string[0];
             if (ft.ApproverIDs.Length > 0)
             {
                 approvalIDs = ft.ApproverIDs.Split(',');
@@ -259,7 +259,7 @@ namespace Workflow.Data
             string defaultDenied = "0";
             Form f = GetForm(formId);
             Form ft = GetFormTemplate(f.FormTemplateId);
-            string[] approvalIDs = null;
+            string[] approvalIDs = new string[0];
             if (ft.ApproverIDs.Length > 0)
             {
                 approvalIDs = ft.ApproverIDs.Split(',');
@@ -300,7 +300,7 @@ namespace Workflow.Data
             Form f = GetForm(formId);
             Form ft = GetFormTemplate(f.FormTemplateId);
             int approvalItemCt = -1;
-            string[] approvalIDs = null;
+            string[] approvalIDs = new string[0];
             if (ft.ApproverIDs.Length > 0)
             {
                 approvalIDs = ft.ApproverIDs.Split(',');
@@ -373,7 +373,7 @@ namespace Workflow.Data
             Form f = GetForm(formId);
             Form ft = GetFormTemplate(f.FormTemplateId);
             int denialItemCt = -1;
-            string[] approvalIDs = null;
+            string[] approvalIDs = new string[0];
             if (ft.ApproverIDs.Length > 0)
             {
                 approvalIDs = ft.ApproverIDs.Split(',');

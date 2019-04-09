@@ -6,11 +6,10 @@
 <head runat="server">
     <title>Venture Creations Admin Page</title>
     <link rel="shortcut icon" type="image/png" href="assets/icons/rit_insignia.png" />
-
+    <script type="text/javascript" src="assets/js/adminScript.js"></script>
     <script type="text/javascript" src="assets/js/jquery.js"></script>
     <script type="text/javascript" src="assets/js/semantic.js"></script>
     <script type="text/javascript" src="assets/js/Chart.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 
