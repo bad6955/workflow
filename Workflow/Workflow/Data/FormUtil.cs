@@ -207,7 +207,7 @@ namespace Workflow.Data
             string defaultApproved = "0";
             string defaultDenied = "0";
             Form ft = GetFormTemplate(f2.FormTemplateId);
-            string[] approvalIDs = null;
+            string[] approvalIDs = new string[0];
             if (ft.ApproverIDs.Length > 0)
             {
                 approvalIDs = ft.ApproverIDs.Split(',');

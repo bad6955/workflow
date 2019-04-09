@@ -229,11 +229,14 @@
                         document.getElementById("formViewerData").value = JSON.stringify(formViewer.userData);
                     }
                     function SaveUploadedFiles() {
-                        var file = $("input:file")[0].files[0];
-                        var inputName = $("input:file")[0].name;
-                        if (file) {
-                            document.getElementById("fileUploadName").value = file.name;
-                            document.getElementById("fileInputName").value = inputName;
+                        if($("input:file")[0] != null)
+                        {
+                            var file = $("input:file")[0].files[0];
+                            var inputName = $("input:file")[0].name;
+                            if (file) {
+                                document.getElementById("fileUploadName").value = file.name;
+                                document.getElementById("fileInputName").value = inputName;
+                            }
                         }
                     }
                     function SubmitForm() {
