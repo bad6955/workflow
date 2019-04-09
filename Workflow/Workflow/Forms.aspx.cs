@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using HtmlAgilityPack;
 using Workflow.Data;
 using Workflow.Models;
 using Workflow.Utility;
@@ -731,8 +732,50 @@ namespace Workflow
                 FormResult.Visible = true;
 
                 //pdf generation
+                HtmlDocument doc = new HtmlDocument();
                 string pdfName = string.Format("{0} - {1} - {2}", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
                 string html = formViewerData.Value;
+                if (html.Contains("user-data"))
+                {
+                    html = html.Replace("user-data", "value");
+                }
+                if (html.Contains("\""))
+                {
+                    html = html.Replace("\"", "'");
+                }
+                doc.LoadHtml(html);
+                doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
+
+                foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@value]"))
+                {
+                    HtmlAttribute value = link.Attributes["value"];
+                    if (link.Attributes.Contains("placeholder"))
+                    {
+                        link.Attributes.Remove("placeholder");
+                    }
+                    string val = value.Value;
+                    link.InnerHtml = val;
+                    link.Attributes.Remove("value");
+                }
+
+                foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//textarea[@value]"))
+                {
+                    HtmlAttribute value = link.Attributes["value"];
+                    if (link.Attributes.Contains("placeholder"))
+                    {
+                        link.Attributes.Remove("placeholder");
+                    }
+                    string val = value.Value;
+                    link.InnerHtml = val;
+                    link.Attributes.Remove("value");
+                }
+                doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
+                doc.Load("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
+                html = doc.Text;
+
+
+                PDFGen.CreateHTMLPDF(html, pdfName);
+                Response.Redirect("Forms.aspx?pfid=" + formId);
                 PDFGen.CreateHTMLPDF(html, pdfName);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
             }
