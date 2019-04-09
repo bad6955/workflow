@@ -234,6 +234,7 @@ html, body {
 }
 
 /****************************** FAQ PAGE *******************************/
+
 #faq-background {
     background: rgb(217,94,0);
     background: linear-gradient(0deg, rgba(217,94,0,1) 0%, rgba(255,181,111,1) 38%, rgba(255,255,255,1) 100%);
@@ -273,7 +274,7 @@ html, body {
         color: #999999;
         font-weight:100;
     }
-    #faq-general .content .content .title {
+    #faq-general .accordion .content .title {
         font-size: 15px;
         width: 100%;
     }
