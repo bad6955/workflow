@@ -99,7 +99,7 @@
                 </div>
                 <div runat="server" class="ui items" id="workflowList">
                 </div>
-                <asp:Button runat="server" ID="Button2" Text="Show 5 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
+                <asp:Button runat="server" ID="Button2" Text="Show 10 More..." OnClick="LoadMoreWorkflows" CssClass="fluid ui button" />
             </div>
 
             <div runat="server" id="workflowBuilder" visible="false">

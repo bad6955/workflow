@@ -225,7 +225,7 @@ namespace Workflow
             projectList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Project> projects = ProjectUtil.GetCoachProjects(userId);
-            for (int i = 0; i < projects.Count && i < 5; i++)
+            for (int i = 0; i < projects.Count && i < 10; i++)
             {
                 MakeAdminText(projects, projectNode, i);
             }
@@ -239,7 +239,7 @@ namespace Workflow
             projectList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Project> projects = ProjectUtil.GetProjects();
-            for (int i = 0; i < projects.Count && i < 5; i++)
+            for (int i = 0; i < projects.Count && i < 10; i++)
             {
                 //MakeText(projects, projectNode, i);
                 MakeAdminText(projects, projectNode, i);
@@ -255,7 +255,7 @@ namespace Workflow
             projectList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Project> projects = ProjectUtil.GetCompanyProjects(companyId);
-            for (int i = 0; i < projects.Count && i < 5; i++)
+            for (int i = 0; i < projects.Count && i < 10; i++)
             {
                 MakeText(projects, projectNode, i);
             }
@@ -321,7 +321,7 @@ namespace Workflow
                 ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
                 loaded = Convert.ToInt32(ViewState["count"]);
             }
-            for (int i = 5; i < loaded * 5 && i < projects.Count; i++)
+            for (int i = 10; i < loaded * 10 && i < projects.Count; i++)
             {
                 if (user.RoleId > 1)
                 {

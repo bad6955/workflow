@@ -435,7 +435,7 @@ namespace Workflow
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetFormTemplates();
-            for (int i = 0; i < 5 && i < forms.Count; i++)
+            for (int i = 0; i < 10 && i < forms.Count; i++)
             {
                 MakeAdminText(forms, formNode, i);
             }
@@ -450,7 +450,7 @@ namespace Workflow
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetCompanyForms(companyId);
-            for (int i = 0; i < 5 && i < forms.Count; i++)
+            for (int i = 0; i < 10 && i < forms.Count; i++)
             {
                 MakeText(forms, formNode, i);
             }
@@ -465,7 +465,7 @@ namespace Workflow
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetForms();
-            for (int i = 0; i < 5 && i < forms.Count; i++)
+            for (int i = 0; i < 10 && i < forms.Count; i++)
             {
                 MakeText(forms, formNode, i);
             }
@@ -479,7 +479,7 @@ namespace Workflow
             formList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<Form> forms = FormUtil.GetCoachForms(userId);
-            for (int i = 0; i < 5 && i < forms.Count; i++)
+            for (int i = 0; i < 10 && i < forms.Count; i++)
             {
                 MakeText(forms, formNode, i);
             }
@@ -520,7 +520,7 @@ namespace Workflow
                 ViewState["formcount"] = Convert.ToInt32(ViewState["formcount"]) + 1;
                 loaded = Convert.ToInt32(ViewState["formcount"]);
             }
-            for (int i = 5; i < loaded * 5 && i < forms.Count; i++)
+            for (int i = 10; i < loaded * 10 && i < forms.Count; i++)
             {
                 if (user.RoleId == 4)
                 {

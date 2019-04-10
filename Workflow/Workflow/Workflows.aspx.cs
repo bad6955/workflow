@@ -138,7 +138,6 @@ namespace Workflow
         {
             Session.Clear();
             Session.Abandon();
-            //FormAuthentication.SignOut(); if we are using the form authenication, then remove the // else remove entirely
             Response.Redirect("Login.aspx");
         }
 
@@ -171,7 +170,7 @@ namespace Workflow
                 ViewState["workflowcount"] = Convert.ToInt32(ViewState["workflowcount"]) + 1;
                 loaded = Convert.ToInt32(ViewState["workflowcount"]);
             }
-            for (int i = 5; i < loaded * 5 && i < workflows.Count; i++)
+            for (int i = 10; i < loaded * 10 && i < workflows.Count; i++)
             {
                 if(user.RoleId == 4)
                 {
@@ -236,7 +235,7 @@ namespace Workflow
             workflowList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetWorkflows();
-            for (int i = 0; i < 5 && i < workflows.Count; i++)
+            for (int i = 0; i < 10 && i < workflows.Count; i++)
             {
                 MakeAdminText(workflows, workflowNode, i);
             }
@@ -251,7 +250,7 @@ namespace Workflow
             workflowList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetCompanyWorkflows(companyId);
-            for (int i = 0; i < 5 && i < workflows.Count; i++)
+            for (int i = 0; i < 10 && i < workflows.Count; i++)
             {
                 MakeClientText(workflows, workflowNode, i);
             }
@@ -265,7 +264,7 @@ namespace Workflow
             workflowList.InnerHtml = "";
             numberShowing.InnerHtml = "";
             List<WorkflowModel> workflows = WorkflowUtil.GetCoachWorkflows(userId);
-            for (int i = 0; i < 5 && i < workflows.Count; i++)
+            for (int i = 0; i < 10 && i < workflows.Count; i++)
             {
                 MakeText(workflows, workflowNode, i);
             }
