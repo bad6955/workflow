@@ -745,6 +745,35 @@ namespace Workflow
                 }
                 doc.LoadHtml(html);
                 doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
+                //radiobtns
+                foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@type]"))
+                {
+                    HtmlAttribute type = link.Attributes["type"];
+                    if (type.Value.Equals("radio"))
+                    {
+                        if (link.Attributes.Contains("checked"))
+                        {
+
+                        }
+                        else
+                        {
+                            if (link.Attributes.Contains("id"))
+                            {
+                                string toDelId = link.Attributes["id"].Value;
+
+                                foreach (HtmlNode label in doc.DocumentNode.SelectNodes("//label[@for]"))
+                                {
+                                    string forId = label.Attributes["for"].Value;
+                                    if (forId.Equals(toDelId))
+                                    {
+                                        label.Remove();
+                                    }
+                                }
+                            }
+                        }
+                        link.Attributes.Remove("value");
+                    }
+                }
 
                 //text fields, dates, + similar
                 foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@value]"))
