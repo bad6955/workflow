@@ -731,7 +731,7 @@ namespace Workflow
                 FormResult.Text = "Approved form " + f.FormName;
                 FormResult.Visible = true;
 
-                //pdf generation
+                //prep html for pdf generation
                 HtmlDocument doc = new HtmlDocument();
                 string pdfName = string.Format("{0} - {1} - {2}", w.WorkflowName, f.FormName, CompanyUtil.GetCompanyName(p.CompanyId));
                 string html = formViewerData.Value;
@@ -746,6 +746,7 @@ namespace Workflow
                 doc.LoadHtml(html);
                 doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
 
+                //text fields, dates, + similar
                 foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@value]"))
                 {
                     HtmlAttribute value = link.Attributes["value"];
@@ -758,6 +759,7 @@ namespace Workflow
                     link.Attributes.Remove("value");
                 }
 
+                //text areas
                 foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//textarea[@value]"))
                 {
                     HtmlAttribute value = link.Attributes["value"];
@@ -769,13 +771,26 @@ namespace Workflow
                     link.InnerHtml = val;
                     link.Attributes.Remove("value");
                 }
+
+                //attached files
+                if (f.FilePath.Length > 0)
+                {
+                    foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@type]"))
+                    {
+                        HtmlAttribute type = link.Attributes["type"];
+                        if (type.Value.Equals("file"))
+                        {
+                            string fileType = f.FilePath.Split('.')[1];
+                            string fileName = string.Format("{0} {1} Attachment.{2}", CompanyUtil.GetCompanyName(p.CompanyId), f.FormName, fileType);
+                            link.InnerHtml = "See " + fileName;
+                        }
+                    }
+                }
                 doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
                 doc.Load("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
                 html = doc.Text;
 
-
-                PDFGen.CreateHTMLPDF(html, pdfName);
-                Response.Redirect("Forms.aspx?pfid=" + formId);
+                //pdf gen
                 PDFGen.CreateHTMLPDF(html, pdfName);
                 Response.Redirect("Forms.aspx?pfid=" + formId);
             }

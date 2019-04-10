@@ -340,6 +340,12 @@ namespace Workflow
                     foreach (WorkflowComponent wc in workflowComponents)
                     {
                         Form f = FormUtil.GetProjectFormByTemplate(wc.FormID, projId);
+                        if (f.FilePath.Length > 0)
+                        {
+                            string fileType = f.FilePath.Split('.')[1];
+                            string fileName = string.Format("{0} {1} Attachment.{2}", CompanyUtil.GetCompanyName(p.CompanyId), f.FormName, fileType);
+                            zip.CreateEntryFromFile(f.FilePath, fileName);
+                        }
                         string pdfName = string.Format("{0} - {1} - {2}.pdf", w.WorkflowName, f.FormName, c.CompanyName);
                         string pdfPath = string.Format("./PDFGen/{0}", pdfName);
                         zip.CreateEntryFromFile(pdfPath, pdfName);
