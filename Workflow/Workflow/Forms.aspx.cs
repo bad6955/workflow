@@ -53,7 +53,7 @@ namespace Workflow
                 {
                     AdminBtn.Visible = true;
                 }
-                if (user.RoleId == 4 || user.RoleId == 3)
+                if (user.RoleId > 2)
                 {
                     tabMenu.Visible = true;
                     FormTab.Visible = true;
@@ -82,7 +82,7 @@ namespace Workflow
                     FormNameLbl.Text = " <a href='Forms.aspx?templates=1'>Forms</a> > " + f.FormName;
 
                     //admin and trying to del
-                    if (Request.QueryString["del"] != null && user.RoleId == 4)
+                    if (Request.QueryString["del"] != null && user.RoleId > 1)
                     {
                         if (FormUtil.DeleteForm(f.FormId))
                         {
@@ -98,7 +98,7 @@ namespace Workflow
                     else
                     {
                         //if they are trying to edit and they are admin, show form builder
-                        if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                        if (Request.QueryString["edit"] != null && user.RoleId > 1)
                         {
                             ShowFormBuilder(f, user.RoleId);
                         }
@@ -122,7 +122,7 @@ namespace Workflow
                     ShowFormViewer(f, user.RoleId);
                 }
                 //if theyre an admin and trying to make a new form
-                else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId == 4)
+                else if (Request.QueryString["edit"] != null && Request.QueryString["fid"] == null && user.RoleId > 1)
                 {
                     formListing.Visible = false;
                     formBuilder.Visible = true;
@@ -745,6 +745,7 @@ namespace Workflow
                 }
                 doc.LoadHtml(html);
                 doc.Save("PDFGen/" + CompanyUtil.GetCompanyName(p.CompanyId) + "_" + f.FormName + "_" + p.Name + ".html");
+
                 //radiobtns
                 foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//input[@type]"))
                 {

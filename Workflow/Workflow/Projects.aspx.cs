@@ -60,8 +60,13 @@ namespace Workflow
                     Project p = ProjectUtil.GetProject(projId);
 
 
+                    if (Request.QueryString["del"] != null && user.RoleId > 1)
+                    {
+                        ProjectUtil.DeleteProject(projId);
+                        ReloadSection();
+                    }
                     //if they are trying to edit and they are admin, show project builder
-                    if (Request.QueryString["edit"] != null && user.RoleId == 4)
+                    else if (Request.QueryString["edit"] != null && user.RoleId > 1)
                     {
                         projectBuilder.Visible = true;
                         GenerateProjectDropdowns();
@@ -71,13 +76,14 @@ namespace Workflow
                         CompanySelect.SelectedValue = p.CompanyId.ToString();
                         CoachSelect.SelectedValue = p.CoachId.ToString();
                         WorkflowSelect.SelectedValue = p.WorkflowId.ToString();
+                        WorkflowSelect.Visible = false;
                         ProjectNotes.Text = p.Notes;
                     }
                     //otherwise just show the project viewer
                     else
                     {
                         projectViewer.Visible = true;
-                        if (user.RoleId == 4 || user.RoleId == 3)
+                        if (user.RoleId > 1)
                         {
                             if (ProjectUtil.CheckProjectCompletion(projId))
                             {
@@ -88,7 +94,7 @@ namespace Workflow
                     }
                 }
                 //if theyre an admin and trying to make a new project
-                else if (Request.QueryString["edit"] != null && Request.QueryString["pid"] == null && user.RoleId == 4)
+                else if (Request.QueryString["edit"] != null && Request.QueryString["pid"] == null && user.RoleId > 1)
                 {
                     projectListing.Visible = false;
                     projectBuilder.Visible = true;
@@ -118,6 +124,16 @@ namespace Workflow
         protected void WorkflowBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("Workflows.aspx");
+        }
+
+        private void ReloadSection()
+        {
+            Response.Redirect("Projects.aspx");
+        }
+
+        private void ReloadCurrentPage()
+        {
+            Response.Redirect(Request.RawUrl);
         }
 
         protected void LogoutBtn_Click(object sender, EventArgs e)
@@ -211,7 +227,7 @@ namespace Workflow
             List<Project> projects = ProjectUtil.GetCoachProjects(userId);
             for (int i = 0; i < projects.Count && i < 5; i++)
             {
-                MakeText(projects, projectNode, i);
+                MakeAdminText(projects, projectNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -225,8 +241,8 @@ namespace Workflow
             List<Project> projects = ProjectUtil.GetProjects();
             for (int i = 0; i < projects.Count && i < 5; i++)
             {
-                MakeText(projects, projectNode, i);
-                //MakeAdminText(projects, projectNode, i);
+                //MakeText(projects, projectNode, i);
+                MakeAdminText(projects, projectNode, i);
             }
             var showing = "Showing 1 - " + count + " of " + projects.Count + " Results";
             numberShowing.InnerHtml += showing;
@@ -263,10 +279,21 @@ namespace Workflow
                     {
                         if (coachId != -1)
                         {
-                            Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
-                            User user = (User)Session["User"];
-                            Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " + UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
-                            Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
+                            if (Request.QueryString["pid"] != null)
+                            {
+                                int projId = int.Parse(Request.QueryString["pid"]);
+                                Project p = ProjectUtil.UpdateProject(projId, projectName, companyId, coachId, projectNotes);
+                                User user = (User)Session["User"];
+                                Log.Info(user.Identity + " updated project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " + UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
+                                Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
+                            }
+                            else
+                            {
+                                Project p = ProjectUtil.CreateProject(projectName, workflowId, companyId, coachId, projectNotes);
+                                User user = (User)Session["User"];
+                                Log.Info(user.Identity + " created project " + projectName + " with a Workflow of " + WorkflowUtil.GetWorklowName(workflowId) + " assigned to " + CompanyUtil.GetCompanyName(companyId) + " under Coach " + UserUtil.GetCoachName(coachId) + " with notes: " + projectNotes);
+                                Response.Redirect("Projects.aspx?pid=" + p.ProjectId);
+                            }
                         }
                     }
                 }
@@ -284,6 +311,7 @@ namespace Workflow
 
         protected void LoadMoreProjects(object sender, EventArgs e)
         {
+            User user = (User)Session["User"];
             ViewState["count"] = Convert.ToInt32(ViewState["count"]) + 1;
             int loaded = Convert.ToInt32(ViewState["count"]);
 
@@ -295,7 +323,14 @@ namespace Workflow
             }
             for (int i = 5; i < loaded * 5 && i < projects.Count; i++)
             {
-                MakeText(projects, projectNode, i);
+                if (user.RoleId > 1)
+                {
+                    MakeAdminText(projects, projectNode, i);
+                }
+                else
+                {
+                    MakeText(projects, projectNode, i);
+                }
             }
 
             numberShowing.InnerHtml = "";
@@ -309,7 +344,22 @@ namespace Workflow
             WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
             projectNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge inbox icon\"/></i></div>";
             projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
-            projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + "</span></div><div class=\"description\">";
+            projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + " | <a href='Projects.aspx?pid=" + projects[i].ProjectId + "&del=1'>Delete Project</a></span></div><div class=\"description\">";
+            projectNode += projects[i].Notes + "</div></div></div>";
+
+
+            projectList.InnerHtml += projectNode;
+            projectNode = "";
+            count++;
+        }
+
+        private void MakeAdminText(List<Project> projects, string projectNode, int i)
+        {
+            User coach = UserUtil.GetCoach(projects[i].CoachId);
+            WorkflowModel workflow = WorkflowUtil.GetWorkflow(projects[i].WorkflowId);
+            projectNode = "<div class=\"item\"><div class=\"ui small image\"><i class=\"huge inbox icon\"/></i></div>";
+            projectNode += "<div class=\"content\"><a class=\"header\" href='Projects.aspx?pid=" + projects[i].ProjectId + "'>" + projects[i].Name + "</a><div class=\"meta\">";
+            projectNode += "<span class=\"stay\">" + coach.FullName + " | " + workflow.WorkflowName + " | <a href='Projects.aspx?pid=" + projects[i].ProjectId + "&edit=1'>Edit Project</a>" + " | <a href='Projects.aspx?pid=" + projects[i].ProjectId + "&del=1'>Delete Project</a></span></div><div class=\"description\">";
             projectNode += projects[i].Notes + "</div></div></div>";
 
 

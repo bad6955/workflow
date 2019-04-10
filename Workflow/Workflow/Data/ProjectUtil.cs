@@ -27,7 +27,7 @@ namespace Workflow.Data
             FeedUtil.CreateProjectFeedItem("Added as a coach for " + name, coachId, p.ProjectId);
 
             List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(workflowId);
-            foreach(WorkflowComponent wc in workflowComponents)
+            foreach (WorkflowComponent wc in workflowComponents)
             {
                 //create completion status and forms for the project
                 if (wc.FormID != -1)
@@ -63,6 +63,40 @@ namespace Workflow.Data
             }
             conn.CloseConnection();
             return p;
+        }
+
+        public static void DeleteProject(int projectId)
+        {
+            //delete associated forms
+            List<Form> projectForms = FormUtil.GetProjectForms(projectId);
+            foreach (Form f in projectForms)
+            {
+                FormUtil.DeleteForm(f.FormId);
+            }
+
+            string query = "DELETE from Project where ProjectID = @projectId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+        }
+
+        public static Project UpdateProject(int projectId, string projectName, int companyId, int coachId, string projectNotes)
+        {
+            string query = "UPDATE Project SET ProjectName=@projectName, CompanyID=@companyId, CoachID=@coachId, ProjectNotes=@projectNotes where ProjectID = @projectId";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@projectName", projectName);
+            cmd.Parameters.AddWithValue("@companyId", companyId);
+            cmd.Parameters.AddWithValue("@coachId", coachId);
+            cmd.Parameters.AddWithValue("@projectNotes", projectNotes);
+            cmd.Parameters.AddWithValue("@projectId", projectId);
+            DBConn conn = new DBConn();
+            conn.ExecuteInsertCommand(cmd);
+            conn.CloseConnection();
+            return GetProject(projectId);
         }
 
         public static List<Project> GetProjects()

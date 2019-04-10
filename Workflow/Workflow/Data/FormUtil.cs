@@ -16,15 +16,15 @@ namespace Workflow.Data
             string defaultDenied = "0";
             Form f = GetFormTemplate(formId);
             string[] approvalIDs = new string[0];
-            if(f.ApproverIDs.Length > 0)
+            if (f.ApproverIDs.Length > 0)
             {
                 approvalIDs = f.ApproverIDs.Split(',');
             }
 
-            if(approvalIDs.Length > 0)
+            if (approvalIDs.Length > 0)
             {
                 int i = 0;
-                foreach(string roleID in approvalIDs)
+                foreach (string roleID in approvalIDs)
                 {
                     if (i != 0)
                     {
@@ -73,7 +73,8 @@ namespace Workflow.Data
                 {
                     f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"], (string)dr["FilePath"], (string)dr["UploadedFileName"]);
                 }
-            } catch (Exception e) { }
+            }
+            catch (Exception e) { }
             conn.CloseConnection();
             return f;
         }
@@ -81,7 +82,7 @@ namespace Workflow.Data
         public static Form GetProjectFormByTemplate(int formTemplateId, int projectId)
         {
             Form f = null;
-            MySqlCommand cmd = new MySqlCommand("SELECT FormID, FormTemplateID, FormName, FormData, ProjectID, ApprovalRequiredID, ApprovalStatusID, Submission, Approved, Denied, DenialReason FROM Forms WHERE ProjectId = @projId AND FormTemplateID = @formTemplateId");
+            MySqlCommand cmd = new MySqlCommand("SELECT FormID, FormTemplateID, FormName, FormData, ProjectID, ApprovalRequiredID, ApprovalStatusID, Submission, Approved, Denied, DenialReason, FilePath, UploadedFileName FROM Forms WHERE ProjectId = @projId AND FormTemplateID = @formTemplateId");
             cmd.Parameters.AddWithValue("@projId", projectId);
             cmd.Parameters.AddWithValue("@formTemplateId", formTemplateId);
             DBConn conn = new DBConn();
@@ -90,9 +91,10 @@ namespace Workflow.Data
             {
                 while (dr.Read())
                 {
-                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], projectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
+                    f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], (int)dr["ProjectID"], (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"], (string)dr["FilePath"], (string)dr["UploadedFileName"]);
                 }
-            } catch(Exception e) { }
+            }
+            catch (Exception e) { }
             conn.CloseConnection();
             return f;
         }
@@ -114,7 +116,8 @@ namespace Workflow.Data
                         Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
                         formList.Add(f);
                     }
-                } catch (Exception e) { }
+                }
+                catch (Exception e) { }
                 conn.CloseConnection();
             }
             return formList;
@@ -127,7 +130,7 @@ namespace Workflow.Data
             List<WorkflowComponent> workflowComponents = WorkflowComponentUtil.GetWorkflowComponents(p.WorkflowId);
             foreach (WorkflowComponent wc in workflowComponents)
             {
-                if(wc.FormID != -1)
+                if (wc.FormID != -1)
                 {
                     formList.Add(GetProjectFormByTemplate(wc.FormID, projectId));
                 }
@@ -152,8 +155,9 @@ namespace Workflow.Data
                         Form f = new Form((int)dr["FormID"], (string)dr["FormName"], (string)dr["FormData"], p.ProjectId, (int)dr["Submission"], (string)dr["Approved"], (string)dr["Denied"], (string)dr["DenialReason"], (int)dr["FormTemplateID"]);
                         formList.Add(f);
                     }
-                } catch (Exception e) { }
-            conn.CloseConnection();
+                }
+                catch (Exception e) { }
+                conn.CloseConnection();
             }
             return formList;
         }
@@ -314,7 +318,7 @@ namespace Workflow.Data
                     int userRoleID = int.Parse(roleID);
 
                     //if they are one of the users who needs to approve the form
-                    if(userRoleID == roleId)
+                    if (userRoleID == roleId)
                     {
                         approvalItemCt = i;
                     }
@@ -329,9 +333,9 @@ namespace Workflow.Data
                 if (currentApproval.Length > approvalItemCt)
                 {
                     int i = 0;
-                    foreach(string approval in currentApproval)
+                    foreach (string approval in currentApproval)
                     {
-                        if( i == approvalItemCt)
+                        if (i == approvalItemCt)
                         {
                             newApproval += "1";
                         }
@@ -342,7 +346,7 @@ namespace Workflow.Data
 
                         i++;
 
-                        if(i != currentApproval.Length)
+                        if (i != currentApproval.Length)
                         {
                             newApproval += ",";
                         }
